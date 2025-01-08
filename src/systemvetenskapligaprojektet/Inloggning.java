@@ -12,6 +12,7 @@ import oru.inf.InfException; //importeras i alla klasser som vi ska använda
 public class Inloggning extends javax.swing.JFrame {
 
     private static InfDB idb;
+    private Validering validera;
     /**
      * Creates new form Inloggning
      */
@@ -121,22 +122,32 @@ public class Inloggning extends javax.swing.JFrame {
         String losen = tfLosenord.getText(); //Ska inte synas i fönstret
         
         try{
-            String selectLosenord = "select losenord from anstalld where epost = '" + ePost + "';";
-            String selectJobbTitel = "select aid from admin where aid = (select aid from anstalld where epost = '" + ePost + "');";
-            //System.out.println(selectLosenord);
-            String dbLosen = idb.fetchSingle(selectLosenord); //dbLosen är den den variabel som får svaret ifrån frågan som skickas in. Använder objektet som har en databasuppkoppling
-            String jobbTitel = idb.fetchSingle(selectJobbTitel);
-            if(losen.equals(dbLosen)){ //Viktigt att det som står före equals inte är null. Detta eftersom att null inte har några metoder (t.ex equals)
-                if(jobbTitel == null){
-                    new MenyHandlaggare(idb,ePost).setVisible(true);
+            lblFelmeddelande.setVisible(false);
+            if(validera.valideringEmail(ePost)){
+                String selectLosenord = "select losenord from anstalld where epost = '" + ePost + "';";
+                String selectJobbTitel = "select aid from admin where aid = (select aid from anstalld where epost = '" + ePost + "');";
+                //System.out.println(selectLosenord);
+                String dbLosen = idb.fetchSingle(selectLosenord); //dbLosen är den den variabel som får svaret ifrån frågan som skickas in. Använder objektet som har en databasuppkoppling
+                String jobbTitel = idb.fetchSingle(selectJobbTitel);
+                if(losen.equals(dbLosen)){ //Viktigt att det som står före equals inte är null. Detta eftersom att null inte har några metoder (t.ex equals)
+                    if(jobbTitel == null){
+                        new MenyHandlaggare(idb,ePost).setVisible(true);
+                    }
+                    else{
+                        new MenyAdmin(idb,ePost).setVisible(true);
+                    }
+                    this.setVisible(false); //Döljer detta fönstret
                 }
                 else{
-                    new MenyAdmin(idb,ePost).setVisible(true);
+                    lblFelmeddelande.setVisible(true);
+                    lblFelmeddelande.setText("Fel epostadress eller lösenord");
+                    tfEPost.setText("");
+                    tfLosenord.setText("");
                 }
-                this.setVisible(false); //Döljer detta fönstret
             }
             else{
                 lblFelmeddelande.setVisible(true);
+                lblFelmeddelande.setText("Ange en korrekt epostadress");
                 tfEPost.setText("");
                 tfLosenord.setText("");
             }

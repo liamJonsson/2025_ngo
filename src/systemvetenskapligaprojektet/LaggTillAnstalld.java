@@ -15,10 +15,10 @@ import java.util.Random;
  *
  * @author lisas
  */
-public class LaggTillAnstalld extends javax.swing.JFrame {
-    
+public class LaggTillAnstalld extends javax.swing.JFrame {  
     private InfDB idb;
     private String inloggadAnvandare;
+    private Validering validera;
 
     /**
      * Creates new form LaggTillAnstalld
@@ -30,7 +30,8 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
         lblFelID.setVisible(false); //Felmeddelanden som inte syns till en början
         lblFelEpost.setVisible(false); 
         lblFelAnstDatum.setVisible(false); 
-        lblFelAvdelning.setVisible(false); 
+        lblFelAvdelning.setVisible(false);
+        lblFelTelefon.setVisible(false);
     }
 
     /**
@@ -71,6 +72,7 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
         lblFelEpost = new javax.swing.JLabel();
         lblFelAnstDatum = new javax.swing.JLabel();
         lblFelAvdelning = new javax.swing.JLabel();
+        lblFelTelefon = new javax.swing.JLabel();
 
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
@@ -141,6 +143,10 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
         lblFelAvdelning.setForeground(new java.awt.Color(255, 0, 0));
         lblFelAvdelning.setText("Avdelningen finns ej");
 
+        lblFelTelefon.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        lblFelTelefon.setForeground(new java.awt.Color(255, 0, 0));
+        lblFelTelefon.setText("Vänligen fyll i ett giltigt telefonnummer");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -182,7 +188,8 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
                                         .addComponent(tfAnstallningsLosenord, javax.swing.GroupLayout.Alignment.LEADING))
                                     .addComponent(lblFelEpost)
                                     .addComponent(lblFelAnstDatum)
-                                    .addComponent(lblFelAvdelning))))
+                                    .addComponent(lblFelAvdelning)
+                                    .addComponent(lblFelTelefon))))
                         .addContainerGap(48, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblAllaAnstallda)
@@ -221,7 +228,9 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTelefonnummer)
                     .addComponent(tfAnstallningsTelefonnummer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(2, 2, 2)
+                .addComponent(lblFelTelefon)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAnstallningsDatum)
                     .addComponent(tfAnstallningsDatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -242,7 +251,7 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
                     .addComponent(btnSlumpaLosenord)
                     .addComponent(btnLaggTill)
                     .addComponent(btnTillbaka1))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
@@ -261,6 +270,11 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
 
     private void btnLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillActionPerformed
         try{
+           lblFelID.setVisible(false); //Felmeddelanden som inte syns till en början
+           lblFelEpost.setVisible(false); 
+           lblFelAnstDatum.setVisible(false); 
+           lblFelAvdelning.setVisible(false);
+           lblFelTelefon.setVisible(false);
            String textAID = tfAnstallningsID.getText(); 
            String fornamn = tfAnstallningsFornamn.getText();
            String efternamn = tfAnstallningsEfternamn.getText();
@@ -271,45 +285,62 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
            String losenord = tfAnstallningsLosenord.getText();
            String avdelningsID = tfAnstallningsAvdelning.getText(); 
            
-           
-           int aid = Integer.parseInt(textAID); //Gör om från String till int
-           int avdelning = Integer.parseInt(avdelningsID); //Gör om från String till int
-           
-           
-           //Kollar ifall aid redan finns i databasen
-           String checkaID = "select aid from anstalld where aid = " + aid + ";";
-           String idFinns = idb.fetchSingle(checkaID);
-           
-           //Kollar ifall avdelning redan finns i databasen
-           String checkaAvdid = "select avdelning from anstalld where avdelning = " + avdelning + ";";
-           String avdidFinns = idb.fetchSingle(checkaAvdid);
-           
-           
-           //Ifall idFinns finns i databasen så visas felmeddelandet
-           if(idFinns != null){ 
-               lblFelID.setVisible(true);
+           if(validera.valideringEmail(epost) && validera.valideringTelefon(telefon) && validera.valideringDatum(anstallningsDatum)){
+               int aid = Integer.parseInt(textAID); //Gör om från String till int
+               int avdelning = Integer.parseInt(avdelningsID); //Gör om från String till int
+
+
+               //Kollar ifall aid redan finns i databasen
+               String checkaID = "select aid from anstalld where aid = " + aid + ";";
+               String idFinns = idb.fetchSingle(checkaID);
+
+               //Kollar ifall avdelning redan finns i databasen
+               String checkaAvdid = "select avdelning from anstalld where avdelning = " + avdelning + ";";
+               String avdidFinns = idb.fetchSingle(checkaAvdid);
+
+
+               //Ifall idFinns finns i databasen så visas felmeddelandet
+               if(idFinns != null){ 
+                   lblFelID.setVisible(true);
+               }
+
+               //Ifall avdidFinns inte finns i databasen så visas felmeddelandet
+               if(avdidFinns == null) {
+                   lblFelAvdelning.setVisible(true);
+               }
+
+               /*SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd"); // Konvertera anställningsdatum till rätt format
+               inputFormat.setLenient(false); // Gör parsning strikt
+               Date datumString = inputFormat.parse(anstallningsDatum); // Konvertera strängen till ett Date-objekt
+
+               String datum = inputFormat.format(datumString); // Om allt är OK, formatera datumet och sätt in i databasen*/
+
+               String insertNyAnstalld = "insert into anstalld (aid, fornamn, efternamn, adress, epost, telefon, anstallningsdatum, losenord, avdelning) values (" + aid + ", '" + fornamn + "', '" + efternamn + "', '" + adress + "', '" + epost + "', '" + telefon + "', '" + anstallningsDatum + "', '" + losenord + "', " + avdelning +");";
+               idb.insert(insertNyAnstalld);
+
+               new AllaAnstallda(idb,inloggadAnvandare).setVisible(true);
+               this.setVisible(false);
            }
-           
-           //Ifall avdidFinns inte finns i databasen så visas felmeddelandet
-           if(avdidFinns == null) {
-               lblFelAvdelning.setVisible(true);
+           else{
+               if(!validera.valideringEmail(epost)){
+                   lblFelEpost.setVisible(true);
+               }
+               else if(!validera.valideringTelefon(telefon)){
+                   lblFelTelefon.setVisible(true);
+               }
+               else if(!validera.valideringDatum(anstallningsDatum)){
+                   lblFelAnstDatum.setVisible(true);
+               }
+               else{
+                   lblFelEpost.setVisible(true);
+                   lblFelTelefon.setVisible(true);
+                   lblFelAnstDatum.setVisible(true);
+               }
            }
-           
-           SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd"); // Konvertera anställningsdatum till rätt format
-           inputFormat.setLenient(false); // Gör parsning strikt
-           Date datumString = inputFormat.parse(anstallningsDatum); // Konvertera strängen till ett Date-objekt
-           
-           String datum = inputFormat.format(datumString); // Om allt är OK, formatera datumet och sätt in i databasen
-           
-           String insertNyAnstalld = "insert into anstalld (aid, fornamn, efternamn, adress, epost, telefon, anstallningsdatum, losenord, avdelning) values (" + aid + ", '" + fornamn + "', '" + efternamn + "', '" + adress + "', '" + epost + "', '" + telefon + "', '" + datum + "', '" + losenord + "', " + avdelning +");";
-           idb.insert(insertNyAnstalld);
-           
-           new AllaAnstallda(idb,inloggadAnvandare).setVisible(true);
-           this.setVisible(false);
-           }
-        catch(ParseException ex) {
-            lblFelAnstDatum.setVisible(true); // Visa felmeddelandet om datumformatet är felaktigt
         }
+        /*catch(ParseException ex) {
+            lblFelAnstDatum.setVisible(true); // Visa felmeddelandet om datumformatet är felaktigt
+        }*/
         
         catch(NumberFormatException ex) {
             lblFelID.setVisible(true); // Om aid inte är ett heltal
@@ -318,8 +349,7 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
         
         catch(InfException ex){ //Catch InfExceptions?
             System.out.println(ex);
-            }
-        
+        }
     }//GEN-LAST:event_btnLaggTillActionPerformed
 
     private void btnSlumpaLosenordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSlumpaLosenordActionPerformed
@@ -397,6 +427,7 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
     private javax.swing.JLabel lblFelAvdelning;
     private javax.swing.JLabel lblFelEpost;
     private javax.swing.JLabel lblFelID;
+    private javax.swing.JLabel lblFelTelefon;
     private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblLosenord;
     private javax.swing.JLabel lblNamn;

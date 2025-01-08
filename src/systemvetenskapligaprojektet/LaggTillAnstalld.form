@@ -81,6 +81,7 @@
                                   <Component id="lblFelEpost" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblFelAnstDatum" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblFelAvdelning" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblFelTelefon" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -133,7 +134,9 @@
                   <Component id="lblTelefonnummer" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfAnstallningsTelefonnummer" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+              <Component id="lblFelTelefon" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblAnstallningsDatum" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfAnstallningsDatum" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -158,7 +161,7 @@
                   <Component id="btnLaggTill" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnTillbaka1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="18" max="32767" attributes="0"/>
+              <EmptySpace pref="12" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -301,6 +304,17 @@
           <Color blue="0" green="0" red="ff" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Avdelningen finns ej"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelTelefon">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="2"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="V&#xe4;nligen fyll i ett giltigt telefonnummer"/>
       </Properties>
     </Component>
   </SubComponents>
