@@ -19,75 +19,76 @@ import javax.swing.table.DefaultTableModel;
 public class MinaProjekt extends javax.swing.JFrame {
     private static InfDB idb;
     private String inloggadAnvandare;
-    private JTable tblMinaProjekt; 
     private JButton btnLaggTillProjekt, btnTaBortProjekt, btnRedigeraProjekt;
     private JComboBox<String> comboStatusFilter;
 
     public MinaProjekt(InfDB idb, String inloggadAnvandare) {
-        this.idb = idb;
-        this.inloggadAnvandare = inloggadAnvandare;
-        comboStatusFilter = new JComboBox<>();
-        initComponents();
-        skapaOchFyllTabell();
-        skapaFilter();
-        kontrolleraRollOchHanteraKnappar();
+    this.idb = idb;
+    this.inloggadAnvandare = inloggadAnvandare;
+    comboStatusFilter = ComboStatusFilter; // Anslut den definierade JComboBox
+    initComponents();
+    statusFilter();  // Lägg till detta anrop för att fylla comboboxen
+    initStatusFilterListener();
+    skapaOchFyllTabell(null); // Visa alla projekt från början
+    kontrolleraRollOchHanteraKnappar();
     }
 
     private void kontrolleraRollOchHanteraKnappar() {
-        try {
-            if (inloggadAnvandare == null || inloggadAnvandare.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "E-postadress saknas för den inloggade användaren.");
-                return;
-            }
+    try {
+        String aid = hamtaAnvandareID();
+        if (aid == null) return;
 
-            String query = "SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare + "'";
-            String aid = idb.fetchSingle(query);
-
-            if (aid == null) {
-                JOptionPane.showMessageDialog(this, "Användaren kunde inte identifieras via epost.");
-                return;
-            }
-
-            if (isProjektchef(aid)) {
-                skapaKnappar();  // Gör knappar synliga för projektchef
-                visaKostnadsKolumn(true);  // Visa kostnadskolumn för projektchef
-            } else {
-                visaKostnadsKolumn(false);  // Dölj kostnadskolumnen för handläggare
-            }
-        } catch (InfException ex) {
-            JOptionPane.showMessageDialog(this, "Ett fel uppstod vid hämtning av roll: " + ex.getMessage());
-        }
+        boolean projektchef = isProjektchef(aid);
+        hanteraProjektchefVy(projektchef);
+    } catch (InfException ex) {
+        JOptionPane.showMessageDialog(this, "Ett fel uppstod vid hämtning av roll: " + ex.getMessage());
+    }
     }
 
-    private boolean isProjektchef(String aid) {
-        try {
-            String query = "SELECT COUNT(*) FROM projekt WHERE projektchef = '" + aid + "'";
-            String resultat = idb.fetchSingle(query);
-            return resultat != null && Integer.parseInt(resultat) > 0;
-        } catch (InfException e) {
-            JOptionPane.showMessageDialog(this, "Ett fel uppstod vid kontroll av projektchef: " + e.getMessage());
-            return false;
-        }
+    private String hamtaAnvandareID() throws InfException {
+    if (inloggadAnvandare == null || inloggadAnvandare.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "E-postadress saknas för den inloggade användaren.");
+        return null;
+    }
+    String query = "SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare.trim() + "'";
+    String aid = idb.fetchSingle(query);
+    if (aid == null) {
+        JOptionPane.showMessageDialog(this, "Användaren kunde inte identifieras via e-post.");
+    }
+    return aid;
+    }
+
+    private boolean isProjektchef(String aid) throws InfException {
+    String query = "SELECT COUNT(*) FROM projekt WHERE projektchef = '" + aid + "'";  
+    String resultat = idb.fetchSingle(query);
+    // Kontrollera om resultatet är större än 0, vilket innebär att användaren är projektchef
+    return resultat != null && Integer.parseInt(resultat) > 0;
+    }
+    
+    private void hanteraProjektchefVy(boolean projektchef) {
+    if (projektchef) {
+        JOptionPane.showMessageDialog(this, "Välkommen, projektchef!");
+        skapaKnappar();
+        visaKostnadsKolumn(true);
+    } else {
+        JOptionPane.showMessageDialog(this, "Välkommen, handläggare!");
+        visaKostnadsKolumn(false);
+    }
     }
 
     private void visaKostnadsKolumn(boolean visa) {
-        if (tblMinaprojekt == null) {
-            System.out.println("tblMinaprojekt är null");
-            return;
-        }
-        if (tblMinaprojekt.getColumnModel().getColumnCount() > 0) {
-            int kolumnIndex = 5;  // Kostnad är den 6:e kolumnen (index 5)
-            if (visa) {
-                tblMinaprojekt.getColumnModel().getColumn(kolumnIndex).setMinWidth(75);
-                tblMinaprojekt.getColumnModel().getColumn(kolumnIndex).setMaxWidth(200);
-                tblMinaprojekt.getColumnModel().getColumn(kolumnIndex).setPreferredWidth(100);
-            } else {
-                tblMinaprojekt.getColumnModel().getColumn(kolumnIndex).setMinWidth(0);
-                tblMinaprojekt.getColumnModel().getColumn(kolumnIndex).setMaxWidth(0);
-                tblMinaprojekt.getColumnModel().getColumn(kolumnIndex).setPreferredWidth(0);
-            }
-        }
+    int kolumnIndex = 5; // Kostnadskolumn
+
+    if (tblMinaprojekt.getColumnModel().getColumnCount() > kolumnIndex) {
+        int minWidth = visa ? 75 : 0;
+        int maxWidth = visa ? 200 : 0;
+        int preferredWidth = visa ? 100 : 0;
+
+        tblMinaprojekt.getColumnModel().getColumn(kolumnIndex).setMinWidth(minWidth);
+        tblMinaprojekt.getColumnModel().getColumn(kolumnIndex).setMaxWidth(maxWidth);
+        tblMinaprojekt.getColumnModel().getColumn(kolumnIndex).setPreferredWidth(preferredWidth);
     }
+}
 
     private void skapaKnappar() {
         // Skapa panel för knappar och placera längst ner
@@ -125,161 +126,113 @@ public class MinaProjekt extends javax.swing.JFrame {
         // Placera panelen längst ner
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
     }
-
-private void skapaOchFyllTabell() {
+    
+private void skapaOchFyllTabell(String valdStatus) {
     try {
-        // Kolumnnamn för tabellen
-        String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "kostnad", "status", "prioritet", "projektchef", "land", "partner_namn"};
-
-        // Skapa en DefaultTableModel för tabellen
-        DefaultTableModel modell = new DefaultTableModel(kolumnNamn, 0);
-
-        // SQL-fråga som hämtar projektdat och partner_namn
-        String query = 
+        String baseQuery = 
             "SELECT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, p.projektchef, p.land, partner.namn " +
             "FROM projekt p " +
-            "LEFT JOIN projekt_partner pt ON p.pid = pt.pid " + 
+            "LEFT JOIN projekt_partner pt ON p.pid = pt.pid " +
             "LEFT JOIN partner ON pt.partner_pid = partner.pid";
 
-        // Hämta data från databasen
-        ArrayList<HashMap<String, String>> projektLista = idb.fetchRows(query);
+        // Lägg till WHERE-klausul baserat på valt status
+        if (valdStatus != null && !valdStatus.isEmpty()) {
+            baseQuery += " WHERE p.status = '" + valdStatus + "'";
+        }
+
+        ArrayList<HashMap<String, String>> projektLista = idb.fetchRows(baseQuery);
 
         if (projektLista == null || projektLista.isEmpty()) {
-            System.out.println("Ingen data hämtades från databasen.");
+            JOptionPane.showMessageDialog(this, "Inga projekt hittades.");
             return;
         }
 
-        // Fyll tabellen med data
-        for (HashMap<String, String> projekt : projektLista) {
-            Object[] rad = new Object[kolumnNamn.length];
-            for (int i = 0; i < kolumnNamn.length; i++) {
-                // Hämta kolumnvärde med korrekt nyckel
-                String kolumnVarde = projekt.get(kolumnNamn[i]);
-
-                // Om partnernamnet inte finns, använd rätt nyckel
-                if ("partner_namn".equals(kolumnNamn[i])) {
-                    kolumnVarde = projekt.get("namn"); // Hämta partnernamn direkt från "namn"
-                }
-
-                // Hantera null-värden
-                if (kolumnVarde != null) {
-                    rad[i] = kolumnVarde;
-                } else {
-                    rad[i] = "Ingen data";  // Hantera tomma värden
-                }
-            }
-            modell.addRow(rad);
-        }
-
-        // Uppdatera tabellen med den nya modellen
-        tblMinaprojekt.setModel(modell);  // Uppdatera den existerande tabellen
-
+        uppdateraTabell(projektLista);
     } catch (InfException e) {
         JOptionPane.showMessageDialog(this, "Kunde inte fylla tabellen: " + e.getMessage());
     }
 }
 
-    private void fyllTabellMedData(ArrayList<HashMap<String, String>> projektLista) {
-        try {
-            String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "kostnad", "status", "prioritet", "projektchef", "land", "partner_namn"};
-            DefaultTableModel modell = new DefaultTableModel(kolumnNamn, 0);
+private void uppdateraTabell(ArrayList<HashMap<String, String>> projektLista) {
+    String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "kostnad", "status", "prioritet", "projektchef", "land", "partner_namn"};
+    DefaultTableModel modell = new DefaultTableModel(kolumnNamn, 0);
 
-            if (projektLista == null || projektLista.isEmpty()) {
-                System.out.println("Ingen data hämtades från databasen.");
-                return;
+    for (HashMap<String, String> projekt : projektLista) {
+        Object[] rad = new Object[kolumnNamn.length];
+        for (int i = 0; i < kolumnNamn.length; i++) {
+            String kolumnVarde = projekt.getOrDefault(kolumnNamn[i], "Ingen data");
+            if ("partner_namn".equals(kolumnNamn[i])) {
+                kolumnVarde = projekt.getOrDefault("namn", "Ingen data");
             }
-
-            for (HashMap<String, String> projekt : projektLista) {
-                Object[] rad = new Object[kolumnNamn.length];
-                for (int i = 0; i < kolumnNamn.length; i++) {
-                    String kolumnVarde = projekt.get(kolumnNamn[i]);
-
-                    if ("partner_namn".equals(kolumnNamn[i])) {
-                        kolumnVarde = projekt.get("namn");
-                    }
-
-                    if (kolumnVarde != null) {
-                        rad[i] = kolumnVarde;
-                    } else {
-                        rad[i] = "Ingen data";
-                    }
-                }
-                modell.addRow(rad);
-            }
-
-            tblMinaprojekt.setModel(modell);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Kunde inte fylla tabellen: " + e.getMessage());
+            rad[i] = kolumnVarde;
         }
-    }
-    
-    private void skapaFilter() {
-     try {
-         // Hämta distinkta statusvärden från projekt-tabellen
-         String query = "SELECT DISTINCT status FROM projekt";
-         ArrayList<String> statusLista = idb.fetchColumn(query);
-
-         if (statusLista != null) {
-             // Lägg till "Alla" som ett alternativ
-             comboStatusFilter.addItem("Alla");
-
-             // Lägg till varje unikt status i ComboBox
-             for (String status : statusLista) {
-                 comboStatusFilter.addItem(status);  // Lägg till statusen som text
-             }
-         } else {
-             System.out.println("Ingen statusinformation hämtades.");
-         }
-     } catch (InfException e) {
-         JOptionPane.showMessageDialog(this, "Kunde inte hämta status: " + e.getMessage());
-     }
-
-     // Lägg till en ActionListener för att filtrera tabellen när ett nytt statusval görs
-     comboStatusFilter.addActionListener(new ActionListener() {
-         @Override
-         public void actionPerformed(ActionEvent e) {
-             filtreraStatus();  // Uppdatera tabellen med vald status
-         }
-     });
- }
-    
-    private void filtreraStatus() {
-    // Hämta den valda statusen från comboboxen
-    String valdStatus = (String) comboStatusFilter.getSelectedItem();
-    
-    // Om "Alla" är valt, visa alla projekt (utan filter)
-    if (valdStatus == null || valdStatus.equals("Alla")) {
-        skapaOchFyllTabell();  // Skapa och fyll tabellen med alla projekt
-        return;
+        modell.addRow(rad);
     }
 
-    // Skapa SQL-fråga för att hämta projekt med den valda statusen
-    String query = "SELECT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, p.projektchef, p.land, partner.namn " +
-                   "FROM projekt p " +
-                   "LEFT JOIN projekt_partner pt ON p.pid = pt.pid " + 
-                   "LEFT JOIN partner ON pt.partner_pid = partner.pid " +
-                   "WHERE p.status = '" + valdStatus + "'";  // Filtrera projekten efter status
-
-    // Hämta filtrerad data från databasen
+    tblMinaprojekt.setModel(modell);
+}
+    
+private void statusFilter() {
     try {
-        ArrayList<HashMap<String, String>> projektLista = idb.fetchRows(query);
-        fyllTabellMedData(projektLista);  // Fyll tabellen med den filtrerade datan
+        // Hämta statusar från databasen
+        String query = "SELECT DISTINCT status FROM projekt";
+        ArrayList<String> resultatLista = idb.fetchColumn(query);
+
+        // Kontrollera att resultatet inte är tomt
+        if (resultatLista != null && !resultatLista.isEmpty()) {
+            ComboStatusFilter.removeAllItems(); // Rensa comboboxen
+
+            // Lägg till "Välj status" som första objekt i comboboxen
+            ComboStatusFilter.addItem("Välj status");
+
+            // Lägg till varje status som finns i databasen
+            for (String status : resultatLista) {
+                ComboStatusFilter.addItem(status);
+            }
+
+            // Lämna det första neutrala alternativet valt
+            ComboStatusFilter.setSelectedIndex(0); // Sätt "Välj status" som valt
+        } else {
+            JOptionPane.showMessageDialog(this, "Inga statusvärden hittades i databasen.");
+        }
     } catch (InfException e) {
-        JOptionPane.showMessageDialog(this, "Kunde inte filtrera data: " + e.getMessage());
+        JOptionPane.showMessageDialog(this, "Ett fel uppstod vid hämtning av statusvärden: " + e.getMessage());
     }
 }
 
+    private void filtreraStatus() {
+    String valdStatus = (String) comboStatusFilter.getSelectedItem();
+
+    if (valdStatus == null || valdStatus.isEmpty()) {
+        skapaOchFyllTabell(null); // Visa alla projekt om inget filter är valt
+    } else {
+        skapaOchFyllTabell(valdStatus); // Filtrera efter vald status
+    }
+    }
+    
+private void initStatusFilterListener() {
+    ComboStatusFilter.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String valdStatus = (String) ComboStatusFilter.getSelectedItem();
+            skapaOchFyllTabell(valdStatus);  // Uppdatera tabellen baserat på det valda statusvärdet
+        }
+    });
+}
+
     private void laggTillProjekt() {
-        JOptionPane.showMessageDialog(this, "Funktion för att lägga till projekt kommer här.");
+    //new laggTillProjekt(idb,inloggadAnvandare).setVisible(true);
+       //this.setVisible(false);
     }
 
     private void andraProjekt() {
-        JOptionPane.showMessageDialog(this, "Funktion för att ändra projekt kommer här.");
+    //new andraProjekt(idb,inloggadAnvandare).setVisible(true);
+       //this.setVisible(false);
     }
 
     private void taBortProjekt() {
-        JOptionPane.showMessageDialog(this, "Funktion för att ta bort projekt kommer här.");
+        //new taBortProjekt(idb,inloggadAnvandare).setVisible(true);
+       //this.setVisible(false);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -296,7 +249,7 @@ private void skapaOchFyllTabell() {
         btnRedigera = new javax.swing.JButton();
         btnTaBort = new javax.swing.JButton();
         btnLaggTill = new javax.swing.JButton();
-        ComboBoxFiltrera = new javax.swing.JComboBox<>();
+        ComboStatusFilter = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -328,7 +281,7 @@ private void skapaOchFyllTabell() {
 
         btnLaggTill.setText("Lägg till");
 
-        ComboBoxFiltrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboStatusFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -340,7 +293,7 @@ private void skapaOchFyllTabell() {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ComboBoxFiltrera, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ComboStatusFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnTillbaka)
@@ -359,7 +312,7 @@ private void skapaOchFyllTabell() {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(ComboBoxFiltrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ComboStatusFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 227, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -391,7 +344,7 @@ private void skapaOchFyllTabell() {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> ComboBoxFiltrera;
+    private javax.swing.JComboBox<String> ComboStatusFilter;
     private javax.swing.JButton btnLaggTill;
     private javax.swing.JButton btnRedigera;
     private javax.swing.JButton btnTaBort;
