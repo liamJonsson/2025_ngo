@@ -160,7 +160,7 @@ public class AllaPartners extends javax.swing.JFrame {
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
         new MenyAdmin(idb,inloggadAnvandare).setVisible(true);
-        this.dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void btnLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillActionPerformed
@@ -173,7 +173,8 @@ public class AllaPartners extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRedigeraActionPerformed
 
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
-        
+        new TaBortPartner(idb,inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnTaBortActionPerformed
 
     /**
