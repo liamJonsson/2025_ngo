@@ -186,7 +186,6 @@ public class LaggTillLand extends javax.swing.JFrame {
 
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
         try{
-            System.out.println("Hej");
             lblIDFel.setVisible(false); 
             lblValutaFel.setVisible(false);
             lblLaggTillLandLyckat.setVisible(false);
