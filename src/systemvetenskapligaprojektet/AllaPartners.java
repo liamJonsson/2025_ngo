@@ -30,14 +30,14 @@ public class AllaPartners extends javax.swing.JFrame {
         String[] kolumnNamn = {"pid", "namn", "kontaktperson", "kontaktepost", "telefon", "adress", "branch", "stad"};
         DefaultTableModel allaPartners = new DefaultTableModel(kolumnNamn, 0);
         
-        String selectPID = "select pid from projekt order by(pid);";
+        String selectPID = "select pid from partner order by(pid);";
         ArrayList<String> pid = idb.fetchColumn(selectPID);
             if(pid != null){
                 for(String ettID:pid){
                     String selectInfo = "select * from partner where pid = " + ettID + ";";
                     HashMap<String,String> info = idb.fetchRow(selectInfo);
             
-                    Object[] enRad = new Object[kolumnNamn.length];
+                    String[] enRad = new String[kolumnNamn.length];
                     int index = 0;
             
                     for(String enKolumn:kolumnNamn){
@@ -65,6 +65,10 @@ public class AllaPartners extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPartners = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        btnLaggTill = new javax.swing.JButton();
+        btnRedigera = new javax.swing.JButton();
+        btnTaBort = new javax.swing.JButton();
+        btnTillbaka = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,6 +89,34 @@ public class AllaPartners extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Alla Partners");
 
+        btnLaggTill.setText("Lägg till");
+        btnLaggTill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLaggTillActionPerformed(evt);
+            }
+        });
+
+        btnRedigera.setText("Redigera");
+        btnRedigera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRedigeraActionPerformed(evt);
+            }
+        });
+
+        btnTaBort.setText("Ta bort");
+        btnTaBort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaBortActionPerformed(evt);
+            }
+        });
+
+        btnTillbaka.setText("Tillbaka");
+        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTillbakaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -96,7 +128,15 @@ public class AllaPartners extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(13, 13, 13)
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnLaggTill)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRedigera)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnTaBort)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTillbaka)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -106,11 +146,35 @@ public class AllaPartners extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLaggTill)
+                    .addComponent(btnRedigera)
+                    .addComponent(btnTaBort)
+                    .addComponent(btnTillbaka))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        new MenyAdmin(idb,inloggadAnvandare).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnTillbakaActionPerformed
+
+    private void btnLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillActionPerformed
+        new LaggTillPartner(idb,inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnLaggTillActionPerformed
+
+    private void btnRedigeraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedigeraActionPerformed
+        
+    }//GEN-LAST:event_btnRedigeraActionPerformed
+
+    private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
+        
+    }//GEN-LAST:event_btnTaBortActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,6 +212,10 @@ public class AllaPartners extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLaggTill;
+    private javax.swing.JButton btnRedigera;
+    private javax.swing.JButton btnTaBort;
+    private javax.swing.JButton btnTillbaka;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblPartners;

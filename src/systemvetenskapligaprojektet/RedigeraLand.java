@@ -26,14 +26,6 @@ public class RedigeraLand extends javax.swing.JFrame {
         lblFelID.setVisible(false);
         lblValutaFel.setVisible(false);
     }
-
-    
-    
-    
-    
-    
-    
-    
     
     /**
      * This method is called from within the constructor to initialize the form.

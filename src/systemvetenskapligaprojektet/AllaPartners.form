@@ -27,10 +27,19 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" pref="1644" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="btnLaggTill" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnRedigera" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnTaBort" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -44,7 +53,14 @@
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="275" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnLaggTill" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnRedigera" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnTaBort" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnTillbaka" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="34" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -81,6 +97,38 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Alla Partners"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnLaggTill">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="L&#xe4;gg till"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLaggTillActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnRedigera">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Redigera"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRedigeraActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnTaBort">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ta bort"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTaBortActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnTillbaka">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tillbaka"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTillbakaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -12,6 +12,8 @@ import oru.inf.InfException;
 public class LaggTillPartner extends javax.swing.JFrame {
     private static InfDB idb;
     private String inloggadAnvandare;
+    private int pid;
+    private int stadsID;
     /**
      * Creates new form LaggTillPartner
      */
@@ -19,6 +21,8 @@ public class LaggTillPartner extends javax.swing.JFrame {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         initComponents();
+        lblFelID.setVisible(false);
+        lblFelStadsID.setVisible(false);
     }
 
     /**
@@ -31,47 +35,48 @@ public class LaggTillPartner extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        tfID = new javax.swing.JTextField();
+        tfKontaktPerson = new javax.swing.JTextField();
+        tfAdress = new javax.swing.JTextField();
+        tfNamn = new javax.swing.JTextField();
+        tfKontaktEpost = new javax.swing.JTextField();
+        tfTelefon = new javax.swing.JTextField();
+        tfStad = new javax.swing.JTextField();
+        btnTillbaka = new javax.swing.JButton();
+        btnSpara = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        lblBranch = new javax.swing.JLabel();
+        lblFelID = new javax.swing.JLabel();
+        lblFelStadsID = new javax.swing.JLabel();
+        tfBranch = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Lägg till ny partner");
 
-        jTextField1.setText("jTextField1");
-
-        jTextField3.setText("jTextField1");
-
-        jTextField4.setText("jTextField1");
-
-        jTextField5.setText("jTextField1");
-
-        jTextField6.setText("jTextField1");
-
-        jTextField7.setText("jTextField1");
-
-        jTextField8.setText("jTextField1");
-
-        jButton1.setText("Tillbaka");
-
-        jButton2.setText("Lägg till");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        tfStad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                tfStadActionPerformed(evt);
+            }
+        });
+
+        btnTillbaka.setText("Tillbaka");
+        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTillbakaActionPerformed(evt);
+            }
+        });
+
+        btnSpara.setText("Spara");
+        btnSpara.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSparaActionPerformed(evt);
             }
         });
 
@@ -87,7 +92,23 @@ public class LaggTillPartner extends javax.swing.JFrame {
 
         jLabel7.setText("Adress");
 
-        jLabel8.setText("Stad");
+        lblBranch.setText("Branch");
+
+        lblFelID.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        lblFelID.setForeground(new java.awt.Color(255, 0, 0));
+        lblFelID.setText("ID:t existerar redan");
+
+        lblFelStadsID.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        lblFelStadsID.setForeground(new java.awt.Color(255, 0, 0));
+        lblFelStadsID.setText("ID:t finns ej");
+
+        tfBranch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfBranchActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Stad");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,34 +128,41 @@ public class LaggTillPartner extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField7))
+                                .addComponent(tfTelefon))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField4)
-                                    .addComponent(jTextField8)))
+                                    .addComponent(tfAdress)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblFelStadsID)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(tfStad, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(tfBranch, javax.swing.GroupLayout.Alignment.TRAILING)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField6)))
+                                    .addComponent(tfKontaktPerson, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(tfKontaktEpost)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(17, 17, 17)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField5)
+                                    .addComponent(tfNamn)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblFelID)
+                                            .addComponent(tfID, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 0, Short.MAX_VALUE)))))))
                 .addGap(48, 48, 48))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton2)
+                .addComponent(btnSpara)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnTillbaka)
                 .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
@@ -144,45 +172,117 @@ public class LaggTillPartner extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                .addGap(2, 2, 2)
+                .addComponent(lblFelID)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfKontaktPerson, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfKontaktEpost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                    .addComponent(tfBranch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblBranch))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(tfStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                .addComponent(lblFelStadsID)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTillbaka)
+                    .addComponent(btnSpara))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
+        try{
+            lblFelID.setVisible(false);
+            lblFelStadsID.setVisible(false);
+            
+            String textPID = tfID.getText();
+            String namn = tfNamn.getText();
+            String kontaktPerson = tfKontaktPerson.getText();
+            String kontaktEpost = tfKontaktEpost.getText();
+            String telefon = tfTelefon.getText();
+            String adress = tfAdress.getText();
+            String branch = tfBranch.getText();
+            String textStadsID = tfStad.getText();
+            
+            try{
+                pid = Integer.parseInt(textPID);
+            }
+            catch(NumberFormatException ex){
+                lblFelID.setVisible(true);
+            }
+            
+            try{
+                stadsID = Integer.parseInt(textStadsID);
+            }
+            catch(NumberFormatException ex){
+                lblFelStadsID.setVisible(true);
+            }
+            
+
+            String checkaPID = "select pid from partner where pid = " + pid + ";";
+            String idFinns = idb.fetchSingle(checkaPID);
+            
+            String checkaStadsID = "select stad from partner where stad = " + stadsID + ";";
+            String stadsIDFinns = idb.fetchSingle(checkaStadsID);
+            
+            if(idFinns != null){ 
+               lblFelID.setVisible(true);
+            }
+            
+            if(stadsIDFinns == null) {
+               lblFelStadsID.setVisible(true);
+            }
+            
+            String insertNyStad = "insert into partner (pid, namn, kontaktperson, kontaktepost, telefon, adress, branch, stad) values (" + pid + ", '" + namn + "', '" + kontaktPerson + "', '" + kontaktEpost + "', '" + telefon + "', '" + adress + "', '" + branch + "', " + stadsID +");";
+            idb.insert(insertNyStad);
+            
+            new AllaPartners(idb,inloggadAnvandare).setVisible(true);
+            this.setVisible(false);
+            }
+        
+        catch(InfException ex){ //Catch InfExceptions?
+            System.out.println(ex);
+        } 
+    }//GEN-LAST:event_btnSparaActionPerformed
+
+    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        new AllaPartners(idb,inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnTillbakaActionPerformed
+
+    private void tfStadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfStadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_tfStadActionPerformed
+
+    private void tfBranchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfBranchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfBranchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,8 +320,8 @@ public class LaggTillPartner extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnSpara;
+    private javax.swing.JButton btnTillbaka;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -229,13 +329,17 @@ public class LaggTillPartner extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lblBranch;
+    private javax.swing.JLabel lblFelID;
+    private javax.swing.JLabel lblFelStadsID;
+    private javax.swing.JTextField tfAdress;
+    private javax.swing.JTextField tfBranch;
+    private javax.swing.JTextField tfID;
+    private javax.swing.JTextField tfKontaktEpost;
+    private javax.swing.JTextField tfKontaktPerson;
+    private javax.swing.JTextField tfNamn;
+    private javax.swing.JTextField tfStad;
+    private javax.swing.JTextField tfTelefon;
     // End of variables declaration//GEN-END:variables
 }

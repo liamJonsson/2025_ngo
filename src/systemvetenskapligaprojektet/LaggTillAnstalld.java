@@ -271,6 +271,7 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
            String losenord = tfAnstallningsLosenord.getText();
            String avdelningsID = tfAnstallningsAvdelning.getText(); 
            
+           
            int aid = Integer.parseInt(textAID); //Gör om från String till int
            int avdelning = Integer.parseInt(avdelningsID); //Gör om från String till int
            
