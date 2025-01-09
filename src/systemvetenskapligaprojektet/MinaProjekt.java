@@ -208,7 +208,7 @@ private void initStatusFilterListener() {
     });
 }
     private void laggTillProjekt() {
-    //new laggTillProjekt(idb,inloggadAnvandare).setVisible(true);
+    //new LaggTillProjekt(idb,inloggadAnvandare).setVisible(true);
        //this.setVisible(false);
     }
 
@@ -253,6 +253,7 @@ private void initStatusFilterListener() {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9", "Title 10", "Title 11"
             }
         ));
+        tblMinaprojekt.setEnabled(false);
         jScrollPane1.setViewportView(tblMinaprojekt);
 
         btnTillbaka.setText("Tillbaka");
@@ -267,6 +268,11 @@ private void initStatusFilterListener() {
         btnTaBort.setText("Ta bort");
 
         btnLaggTill.setText("Lägg till");
+        btnLaggTill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLaggTillActionPerformed(evt);
+            }
+        });
 
         ComboStatusFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ComboStatusFilter.addActionListener(new java.awt.event.ActionListener() {
@@ -326,6 +332,11 @@ private void initStatusFilterListener() {
     private void ComboStatusFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboStatusFilterActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ComboStatusFilterActionPerformed
+
+    private void btnLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillActionPerformed
+    new LaggTillProjekt(idb,inloggadAnvandare).setVisible(true);
+    this.setVisible(false);
+    }//GEN-LAST:event_btnLaggTillActionPerformed
                     
     /**
      * @param args the command line arguments
