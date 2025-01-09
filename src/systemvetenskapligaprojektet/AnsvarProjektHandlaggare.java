@@ -5,6 +5,11 @@
 package systemvetenskapligaprojektet;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 /**
  *
@@ -21,7 +26,69 @@ public class AnsvarProjektHandlaggare extends javax.swing.JFrame {
         initComponents();
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;
+        fyllTabell();
     }
+    private void fyllTabell(){
+
+        try{
+            //Skapar en Array som håller tabellens kolumner
+        String[] kolumnNamn = {"aid", "pid"};
+        
+
+        DefaultTableModel allaHandlaggare = new DefaultTableModel(kolumnNamn, 0);
+
+       
+
+        String selectPid = "select pid from projekt where projektchef = (select aid from anstalld where epost = '" + inloggadAnvandare + "') order by (pid);";
+                
+                   
+        ArrayList<String> pid = idb.fetchColumn(selectPid);
+
+            if(pid != null){
+
+                for(String ettPid:pid){
+
+                    String selectInfo = "select aid from ans_proj where pid = '" + ettPid + "';";
+
+                    ArrayList<HashMap<String,String>> info = idb.fetchRows(selectInfo);
+                    System.out.println(info);
+
+           
+
+                    Object[] enRad = new Object[kolumnNamn.length];
+                    int index = 0;
+
+           
+
+                    for(String enKolumn:kolumnNamn){
+                        enRad[index++] = info.get(index).get(enKolumn);
+                    }
+
+                    allaHandlaggare.addRow(enRad);
+
+                }
+
+                tblHandlaggare.setModel(allaHandlaggare);
+
+            }
+
+            tblHandlaggare.setAutoResizeMode(tblHandlaggare.AUTO_RESIZE_OFF);
+
+        TableColumn col = tblHandlaggare.getColumnModel().getColumn(0);
+
+        col.setPreferredWidth(100);
+
+        col = tblHandlaggare.getColumnModel().getColumn(1);
+
+        }
+        catch(InfException ex){
+
+            System.out.println(ex);
+
+        }      
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,21 +99,97 @@ public class AnsvarProjektHandlaggare extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblHandlaggare = new javax.swing.JTable();
+        btnTillbaka = new javax.swing.JButton();
+        btnLaggTill = new javax.swing.JButton();
+        btnTaBort = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        tblHandlaggare.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ));
+        jScrollPane1.setViewportView(tblHandlaggare);
+
+        btnTillbaka.setText("Tillbaka");
+        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTillbakaActionPerformed(evt);
+            }
+        });
+
+        btnLaggTill.setText("Lägg till");
+
+        btnTaBort.setText("Ta bort");
+        btnTaBort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaBortActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setText("Handläggare");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnLaggTill)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnTaBort)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTillbaka))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(93, 93, 93)
+                                .addComponent(jLabel1)))
+                        .addGap(0, 59, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabel1)
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTillbaka)
+                    .addComponent(btnLaggTill)
+                    .addComponent(btnTaBort))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTaBortActionPerformed
+
+    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        new AnsvarProjekt(idb, inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnTillbakaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -84,5 +227,11 @@ public class AnsvarProjektHandlaggare extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLaggTill;
+    private javax.swing.JButton btnTaBort;
+    private javax.swing.JButton btnTillbaka;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblHandlaggare;
     // End of variables declaration//GEN-END:variables
 }

@@ -45,6 +45,7 @@ public class AvdelningensProjekt extends javax.swing.JFrame {
     private void fyllTabell(){
 
         try{
+            //Skapar en array som lagrar kolumnnamnen
 
         String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "status", "prioritet","projektchef", "land"};
 
