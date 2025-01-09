@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package systemvetenskapligaprojektet;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.table.DefaultTableModel;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -22,6 +25,35 @@ public class AnsvarProjektPartner extends javax.swing.JFrame {
         initComponents();
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;
+            fyllTabell();
+    }
+    
+    public void fyllTabell(){
+        try{
+        String[] kolumnNamn = {"pid", "namn", "kontaktperson", "kontaktepost", "telefon", "adress", "branch", "stad"};
+        DefaultTableModel allaPartners = new DefaultTableModel(kolumnNamn, 0);
+        
+        String selectPID = "select pid from partner order by(pid);";
+        ArrayList<String> pid = idb.fetchColumn(selectPID);
+            if(pid != null){
+                for(String ettID:pid){
+                    String selectInfo = "select * from partner where pid = " + ettID + ";";
+                    HashMap<String,String> info = idb.fetchRow(selectInfo);
+            
+                    String[] enRad = new String[kolumnNamn.length];
+                    int index = 0;
+            
+                    for(String enKolumn:kolumnNamn){
+                        enRad[index++] = info.get(enKolumn);
+                    }
+                    allaPartners.addRow(enRad);
+                }
+                tblAnsvarProjektPartner.setModel(allaPartners);
+            }
+        }
+        catch(InfException ex){
+            System.out.println(ex);
+        }       
     }
 
     /**
@@ -33,21 +65,106 @@ public class AnsvarProjektPartner extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblAnsvarProjektPartner = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        btnLaggTill = new javax.swing.JButton();
+        btnTaBort = new javax.swing.JButton();
+        btnTillbaka = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        tblAnsvarProjektPartner.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblAnsvarProjektPartner);
+
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        jLabel1.setText("Partner");
+
+        btnLaggTill.setText("Lägg till");
+        btnLaggTill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLaggTillActionPerformed(evt);
+            }
+        });
+
+        btnTaBort.setText("Ta bort");
+        btnTaBort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaBortActionPerformed(evt);
+            }
+        });
+
+        btnTillbaka.setText("Tillbaka");
+        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTillbakaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(btnLaggTill)
+                .addGap(198, 198, 198)
+                .addComponent(btnTaBort)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnTillbaka)
+                .addGap(39, 39, 39))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLaggTill)
+                    .addComponent(btnTaBort)
+                    .addComponent(btnTillbaka))
+                .addGap(28, 28, 28))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillActionPerformed
+    new AnsvarProjektPartnerLaggTill(idb, inloggadAnvandare).setVisible(true);
+    this.setVisible(false);
+    }//GEN-LAST:event_btnLaggTillActionPerformed
+
+    private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
+    new AnsvarProjektPartnerTaBort(idb, inloggadAnvandare).setVisible(true);
+    this.setVisible(false);
+    }//GEN-LAST:event_btnTaBortActionPerformed
+
+    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+    new AnsvarProjekt(idb, inloggadAnvandare).setVisible(true);
+    this.setVisible(false);
+    }//GEN-LAST:event_btnTillbakaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -85,5 +202,11 @@ public class AnsvarProjektPartner extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLaggTill;
+    private javax.swing.JButton btnTaBort;
+    private javax.swing.JButton btnTillbaka;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblAnsvarProjektPartner;
     // End of variables declaration//GEN-END:variables
 }

@@ -23,27 +23,32 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-              <Component id="btnLaggTill" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="198" max="-2" attributes="0"/>
-              <Component id="btnTaBort" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-          </Group>
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="684" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblFelIDTaBort" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblTaBortPartnerLyckad" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="btnTaBort" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="tfTaBortID" min="-2" pref="351" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="29" max="32767" attributes="0"/>
+              <EmptySpace pref="26" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -52,53 +57,42 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="209" max="-2" attributes="0"/>
-              <EmptySpace pref="22" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="tfTaBortID" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="lblTaBortPartnerLyckad" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="lblFelIDTaBort" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="92" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnLaggTill" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnTaBort" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnTillbaka" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-      <SubComponents>
-        <Component class="javax.swing.JTable" name="tblAnsvarProjektPartner">
-          <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="4">
-                <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                <Column editable="true" title="Title 4" type="java.lang.Object"/>
-              </Table>
-            </Property>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Helvetica Neue" size="18" style="1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Partner"/>
+        <Property name="text" type="java.lang.String" value="Ta bort partner fr&#xe5;n projekt"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btnLaggTill">
+    <Component class="javax.swing.JTextField" name="tfTaBortID">
       <Properties>
-        <Property name="text" type="java.lang.String" value="L&#xe4;gg till"/>
+        <Property name="text" type="java.lang.String" value="Fyll i ID:t p&#xe5; den partner du &#xf6;nskar ta bort fr&#xe5;n projekt..."/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLaggTillActionPerformed"/>
-      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblTaBortPartnerLyckad">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Partnern har tagits bort"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelIDTaBort">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ID:t finns inte i systemet"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnTaBort">
       <Properties>
