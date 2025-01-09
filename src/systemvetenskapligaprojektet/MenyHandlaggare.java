@@ -137,7 +137,7 @@ public class MenyHandlaggare extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMinAvdelningActionPerformed
 
     private void btnHallbarhetsmalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHallbarhetsmalActionPerformed
-        new Hallbarhetsmal(idb).setVisible(true);
+        new Hallbarhetsmal(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnHallbarhetsmalActionPerformed
 
