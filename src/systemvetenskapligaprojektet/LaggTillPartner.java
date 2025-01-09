@@ -14,6 +14,7 @@ public class LaggTillPartner extends javax.swing.JFrame {
     private String inloggadAnvandare;
     private int pid;
     private int stadsID;
+    private Validering validera;
     /**
      * Creates new form LaggTillPartner
      */
@@ -23,6 +24,8 @@ public class LaggTillPartner extends javax.swing.JFrame {
         initComponents();
         lblFelID.setVisible(false);
         lblFelStadsID.setVisible(false);
+        lblFelEmail.setVisible(false);
+        lblFelTelefon.setVisible(false);
     }
 
     /**
@@ -55,6 +58,8 @@ public class LaggTillPartner extends javax.swing.JFrame {
         lblFelStadsID = new javax.swing.JLabel();
         tfBranch = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        lblFelEmail = new javax.swing.JLabel();
+        lblFelTelefon = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,6 +115,10 @@ public class LaggTillPartner extends javax.swing.JFrame {
 
         jLabel9.setText("Stad");
 
+        lblFelEmail.setText("Email fel");
+
+        lblFelTelefon.setText("Telefon fel");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -135,20 +144,6 @@ public class LaggTillPartner extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(tfTelefon))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tfAdress)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblFelStadsID)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(tfStad, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(tfBranch, javax.swing.GroupLayout.Alignment.TRAILING)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tfKontaktPerson, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(tfKontaktEpost)))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(17, 17, 17)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(tfNamn)
@@ -156,6 +151,27 @@ public class LaggTillPartner extends javax.swing.JFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(lblFelID)
                                             .addComponent(tfID, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfKontaktPerson, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(tfKontaktEpost)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblFelEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfAdress)
+                                    .addComponent(tfStad, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(tfBranch, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(6, 6, 6)
+                                                .addComponent(lblFelStadsID))
+                                            .addComponent(lblFelTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 0, Short.MAX_VALUE)))))))
                 .addGap(48, 48, 48))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -188,11 +204,15 @@ public class LaggTillPartner extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfKontaktEpost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblFelEmail)
+                .addGap(3, 3, 3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblFelTelefon)
+                .addGap(3, 3, 3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
@@ -204,9 +224,9 @@ public class LaggTillPartner extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
-                .addComponent(lblFelStadsID)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblFelStadsID)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
                     .addComponent(btnSpara))
@@ -220,6 +240,8 @@ public class LaggTillPartner extends javax.swing.JFrame {
         try{
             lblFelID.setVisible(false);
             lblFelStadsID.setVisible(false);
+            lblFelEmail.setVisible(false);
+            lblFelTelefon.setVisible(false);
             
             String textPID = tfID.getText();
             String namn = tfNamn.getText();
@@ -230,42 +252,55 @@ public class LaggTillPartner extends javax.swing.JFrame {
             String branch = tfBranch.getText();
             String textStadsID = tfStad.getText();
             
-            try{
-                pid = Integer.parseInt(textPID);
-            }
-            catch(NumberFormatException ex){
-                lblFelID.setVisible(true);
-            }
-            
-            try{
-                stadsID = Integer.parseInt(textStadsID);
-            }
-            catch(NumberFormatException ex){
-                lblFelStadsID.setVisible(true);
-            }
-            
+            if(validera.valideringEmail(kontaktEpost) && validera.valideringTelefonPartner(telefon)){                       
+                try{
+                    pid = Integer.parseInt(textPID);
+                }
+                catch(NumberFormatException ex){
+                    lblFelID.setVisible(true);
+                }
 
-            String checkaPID = "select pid from partner where pid = " + pid + ";";
-            String idFinns = idb.fetchSingle(checkaPID);
-            
-            String checkaStadsID = "select stad from partner where stad = " + stadsID + ";";
-            String stadsIDFinns = idb.fetchSingle(checkaStadsID);
-            
-            if(idFinns != null){ 
-               lblFelID.setVisible(true);
+                try{
+                    stadsID = Integer.parseInt(textStadsID);
+                }
+                catch(NumberFormatException ex){
+                    lblFelStadsID.setVisible(true);
+                }
+
+
+                String checkaPID = "select pid from partner where pid = " + pid + ";";
+                String idFinns = idb.fetchSingle(checkaPID);
+
+                String checkaStadsID = "select stad from partner where stad = " + stadsID + ";";
+                String stadsIDFinns = idb.fetchSingle(checkaStadsID);
+
+                if(idFinns != null){ 
+                   lblFelID.setVisible(true);
+                }
+
+                if(stadsIDFinns == null) {
+                   lblFelStadsID.setVisible(true);
+                }
+
+                String insertNyStad = "insert into partner (pid, namn, kontaktperson, kontaktepost, telefon, adress, branch, stad) values (" + pid + ", '" + namn + "', '" + kontaktPerson + "', '" + kontaktEpost + "', '" + telefon + "', '" + adress + "', '" + branch + "', " + stadsID +");";
+                idb.insert(insertNyStad);
+
+                new AllaPartners(idb,inloggadAnvandare).setVisible(true);
+                this.setVisible(false);
             }
-            
-            if(stadsIDFinns == null) {
-               lblFelStadsID.setVisible(true);
+            else{
+                if(!validera.valideringEmail(kontaktEpost)){
+                    lblFelEmail.setVisible(true);
+                }
+                else if(!validera.valideringTelefonPartner(telefon)){
+                    lblFelTelefon.setVisible(true);
+                }
+                else{
+                    lblFelEmail.setVisible(true);
+                    lblFelTelefon.setVisible(true);
+                }
             }
-            
-            String insertNyStad = "insert into partner (pid, namn, kontaktperson, kontaktepost, telefon, adress, branch, stad) values (" + pid + ", '" + namn + "', '" + kontaktPerson + "', '" + kontaktEpost + "', '" + telefon + "', '" + adress + "', '" + branch + "', " + stadsID +");";
-            idb.insert(insertNyStad);
-            
-            new AllaPartners(idb,inloggadAnvandare).setVisible(true);
-            this.setVisible(false);
-            }
-        
+        }
         catch(InfException ex){ //Catch InfExceptions?
             System.out.println(ex);
         } 
@@ -331,8 +366,10 @@ public class LaggTillPartner extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lblBranch;
+    private javax.swing.JLabel lblFelEmail;
     private javax.swing.JLabel lblFelID;
     private javax.swing.JLabel lblFelStadsID;
+    private javax.swing.JLabel lblFelTelefon;
     private javax.swing.JTextField tfAdress;
     private javax.swing.JTextField tfBranch;
     private javax.swing.JTextField tfID;

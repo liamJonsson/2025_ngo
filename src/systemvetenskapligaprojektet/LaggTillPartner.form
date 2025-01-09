@@ -47,25 +47,6 @@
                               <Component id="tfTelefon" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="tfAdress" max="32767" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Component id="lblFelStadsID" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Component id="tfStad" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="tfBranch" alignment="1" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="tfKontaktPerson" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="tfKontaktEpost" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="tfNamn" max="32767" attributes="0"/>
@@ -73,6 +54,35 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lblFelID" min="-2" max="-2" attributes="0"/>
                                           <Component id="tfID" min="-2" pref="229" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="tfKontaktPerson" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="tfKontaktEpost" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="lblFelEmail" min="-2" pref="57" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="tfAdress" max="32767" attributes="0"/>
+                                  <Component id="tfStad" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="tfBranch" alignment="1" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                              <Component id="lblFelStadsID" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="lblFelTelefon" min="-2" pref="67" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
@@ -119,12 +129,16 @@
                   <Component id="tfKontaktEpost" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="lblFelEmail" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="tfTelefon" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="lblFelTelefon" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="tfAdress" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -139,9 +153,9 @@
                   <Component id="tfStad" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="87" max="32767" attributes="0"/>
-              <Component id="lblFelStadsID" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="lblFelStadsID" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnTillbaka" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSpara" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -255,6 +269,16 @@
     <Component class="javax.swing.JLabel" name="jLabel9">
       <Properties>
         <Property name="text" type="java.lang.String" value="Stad"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelEmail">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Email fel"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelTelefon">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Telefon fel"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -23,22 +23,14 @@ public class Validering {
     private static final String PHONE_REGEXAvdelning = "^[0-9]{9}$";
     private static final Pattern PHONE_PATTERNAvdelning = Pattern.compile(PHONE_REGEXAvdelning);
     
+    //Email
     public static boolean valideringEmail(String email) {
         if (email == null || email.isEmpty()) {
             return false;
         }
         return EMAIL_PATTERN.matcher(email).matches();
     }
-    /*public static boolean valideringEmailAvdelning(String email) {
-        if (email == null || email.isEmpty()) {
-            return false;
-        }
-        System.out.println("Validerar e-post: " + email);
-        email = email.trim().toLowerCase();
-        boolean result = NGO_EMAIL_PATTERN.matcher(email).matches();
-        System.out.println("Resultat: " + result);
-        return result;
-    }*/
+    //Telefon
     public static boolean valideringTelefon(String telefon) {
         if (telefon == null || telefon.isEmpty()) {
             return false;
@@ -51,6 +43,17 @@ public class Validering {
         }
         return PHONE_PATTERNAvdelning.matcher(telefon).matches();
     }
+    public static boolean valideringTelefonPartner(String telefon) {
+        if (telefon == null || telefon.isEmpty()) {
+            return false;
+        }
+        // Regex för att matcha ett telefonnummer med formatet +xxxxxxxxxx (minst 10 siffror)
+        String PHONE_REGEX_INTERNATIONAL = "^\\+\\d{10}$";
+        Pattern PHONE_PATTERN_INTERNATIONAL = Pattern.compile(PHONE_REGEX_INTERNATIONAL);
+
+        return PHONE_PATTERN_INTERNATIONAL.matcher(telefon).matches();
+    }
+    //Datum
     public static boolean valideringDatum(String date) {
         if (date == null || date.isEmpty()) {
             return false;
