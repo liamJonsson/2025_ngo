@@ -86,7 +86,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tfEPost">
       <Properties>
-        <Property name="text" type="java.lang.String" value="maria.g@example.com"/>
+        <Property name="text" type="java.lang.String" value="chen.wei@example.com"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfEPostActionPerformed"/>
@@ -94,7 +94,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tfLosenord">
       <Properties>
-        <Property name="text" type="java.lang.String" value="password123"/>
+        <Property name="text" type="java.lang.String" value="passwordabc"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfLosenordActionPerformed"/>
