@@ -179,7 +179,7 @@ public class AllaAnstallda extends javax.swing.JFrame {
             col = tblAllaAnstallda.getColumnModel().getColumn(7); //Losenord
             col.setPreferredWidth(100);
             col = tblAllaAnstallda.getColumnModel().getColumn(8); //Avdelning
-            col.setPreferredWidth(50);   
+            col.setPreferredWidth(75);   
         }
         catch(InfException ex){
             System.out.println(ex);
