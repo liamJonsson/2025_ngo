@@ -27,6 +27,7 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
         initComponents();
         fyllTabell();
         hamtaAvdelning();
+        hanteraSearchListener();
     }
     
     private void fyllTabell(){
@@ -114,19 +115,66 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
     }
     
     
- //   private void hanteraSearchListener(){
-  //      btnSok.addActionListener((ActionEvent e) -> {
-  //          String sokTerm = JOptionPane.showInputDialog("Ange namn eller epostadress för att söka efter en handläggare");
-  //          if(sokTerm == null || sokTerm.trim().isEmpty()){
-   //             JOptionPane.showMessageDialog(null, "Du måste ange en sökterm!");
-     //           return; 
-    //        }
-         //   String selectInfo = select
-     //   }
-        
-        
-     //   )
-  //  }
+    private void hanteraSearchListener() {
+        btnSok.addActionListener((ActionEvent e) -> {
+            // Be användaren om sökterm
+            String sokTerm = JOptionPane.showInputDialog("Ange både för- och efternamn, eller e-postadress, för att söka efter en anställd:");
+
+            if (sokTerm == null || sokTerm.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Du måste ange en sökterm!");
+                return;
+            }
+
+            try {
+                String query = "";
+                if (sokTerm.contains(" ")) {
+                    // Om sökterm innehåller ett mellanslag, anta att det är för- och efternamn
+                    String[] namnDelar = sokTerm.split(" ", 2);
+                    String fornamn = namnDelar[0].trim();
+                    String efternamn = namnDelar[1].trim();
+
+                    query = "SELECT aid, fornamn, efternamn, epost, telefon " +
+                            "FROM anstalld " +
+                            "WHERE LOWER(fornamn) = '" + fornamn.toLowerCase() + "' " +
+                            "  AND LOWER(efternamn) = '" + efternamn.toLowerCase() + "';";
+                } else {
+                    // Annars, anta att sökterm är en e-postadress
+                    query = "SELECT aid, fornamn, efternamn, epost, telefon " +
+                            "FROM anstalld " +
+                            "WHERE LOWER(epost) = '" + sokTerm.toLowerCase() + "';";
+                }
+
+                // Hämta resultat från databasen
+                ArrayList<HashMap<String, String>> resultat = idb.fetchRows(query);
+
+                if (resultat == null || resultat.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Inga anställda matchar din sökning.");
+                    return;
+                }
+
+                // Skapa en ny tabellmodell för att visa resultatet
+                String[] kolumnNamn = {"Anställnings-ID", "Förnamn", "Efternamn", "E-post", "Telefon"};
+                DefaultTableModel filtreradModell = new DefaultTableModel(kolumnNamn, 0);
+
+                // Lägg till rader i modellen baserat på resultatet
+                for (HashMap<String, String> rad : resultat) {
+                    filtreradModell.addRow(new Object[]{
+                            rad.get("aid"),
+                            rad.get("fornamn"),
+                            rad.get("efternamn"),
+                            rad.get("epost"),
+                            rad.get("telefon")
+                    });
+                }
+
+                // Uppdatera tabellen med den filtrerade modellen
+                tblAnstallda.setModel(filtreradModell);
+
+            } catch (InfException ex) {
+                JOptionPane.showMessageDialog(null, "Ett fel inträffade vid sökningen: " + ex.getMessage());
+            }
+        });
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -140,7 +188,7 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAnstallda = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnTillbaka = new javax.swing.JButton();
         lblAvdelning = new javax.swing.JLabel();
         btnSok = new javax.swing.JButton();
 
@@ -162,10 +210,10 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Anställda på");
 
-        jButton1.setText("Tillbaka");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnTillbaka.setText("Tillbaka");
+        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnTillbakaActionPerformed(evt);
             }
         });
 
@@ -173,11 +221,6 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
         lblAvdelning.setText("jLabel2");
 
         btnSok.setText("Sök");
-        btnSok.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSokActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -198,7 +241,7 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnSok)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(btnTillbaka)
                         .addGap(24, 24, 24))))
         );
         layout.setVerticalGroup(
@@ -212,7 +255,7 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnTillbaka)
                     .addComponent(btnSok))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
@@ -220,14 +263,10 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
         new MinAvdelning(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void btnSokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSokActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSokActionPerformed
+    }//GEN-LAST:event_btnTillbakaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -266,7 +305,7 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSok;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnTillbaka;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAvdelning;
