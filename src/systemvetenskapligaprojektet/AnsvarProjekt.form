@@ -29,9 +29,9 @@
                   <Group type="102" attributes="0">
                       <Component id="btnRedigera" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="btnLaggTill" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnPartner" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                      <Component id="btnTaBort" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnHandlaggare" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       <Component id="btnStatistik" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -52,8 +52,8 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnTillbaka" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnRedigera" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnLaggTill" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnTaBort" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnPartner" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnHandlaggare" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnStatistik" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
@@ -159,20 +159,20 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRedigeraActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnLaggTill">
+    <Component class="javax.swing.JButton" name="btnPartner">
       <Properties>
-        <Property name="text" type="java.lang.String" value="L&#xe4;gg till"/>
+        <Property name="text" type="java.lang.String" value="Partner"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLaggTillActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPartnerActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnTaBort">
+    <Component class="javax.swing.JButton" name="btnHandlaggare">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ta bort"/>
+        <Property name="text" type="java.lang.String" value="Handl&#xe4;ggare"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTaBortActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHandlaggareActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnStatistik">

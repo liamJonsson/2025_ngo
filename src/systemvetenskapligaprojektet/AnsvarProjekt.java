@@ -119,8 +119,8 @@ public class AnsvarProjekt extends javax.swing.JFrame {
         tblAnsvarProjekt = new javax.swing.JTable();
         btnTillbaka = new javax.swing.JButton();
         btnRedigera = new javax.swing.JButton();
-        btnLaggTill = new javax.swing.JButton();
-        btnTaBort = new javax.swing.JButton();
+        btnPartner = new javax.swing.JButton();
+        btnHandlaggare = new javax.swing.JButton();
         btnStatistik = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -152,17 +152,17 @@ public class AnsvarProjekt extends javax.swing.JFrame {
             }
         });
 
-        btnLaggTill.setText("Lägg till");
-        btnLaggTill.addActionListener(new java.awt.event.ActionListener() {
+        btnPartner.setText("Partner");
+        btnPartner.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLaggTillActionPerformed(evt);
+                btnPartnerActionPerformed(evt);
             }
         });
 
-        btnTaBort.setText("Ta bort");
-        btnTaBort.addActionListener(new java.awt.event.ActionListener() {
+        btnHandlaggare.setText("Handläggare");
+        btnHandlaggare.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTaBortActionPerformed(evt);
+                btnHandlaggareActionPerformed(evt);
             }
         });
 
@@ -183,9 +183,9 @@ public class AnsvarProjekt extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnRedigera)
                         .addGap(35, 35, 35)
-                        .addComponent(btnLaggTill)
+                        .addComponent(btnPartner)
                         .addGap(38, 38, 38)
-                        .addComponent(btnTaBort)
+                        .addComponent(btnHandlaggare)
                         .addGap(29, 29, 29)
                         .addComponent(btnStatistik)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -202,8 +202,8 @@ public class AnsvarProjekt extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
                     .addComponent(btnRedigera)
-                    .addComponent(btnLaggTill)
-                    .addComponent(btnTaBort)
+                    .addComponent(btnPartner)
+                    .addComponent(btnHandlaggare)
                     .addComponent(btnStatistik))
                 .addGap(47, 47, 47))
         );
@@ -220,13 +220,15 @@ public class AnsvarProjekt extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnStatistikActionPerformed
 
-    private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
-        
-    }//GEN-LAST:event_btnTaBortActionPerformed
+    private void btnHandlaggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHandlaggareActionPerformed
+        new AnsvarProjektHandlaggare(idb, inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnHandlaggareActionPerformed
 
-    private void btnLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillActionPerformed
-        
-    }//GEN-LAST:event_btnLaggTillActionPerformed
+    private void btnPartnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPartnerActionPerformed
+        new AnsvarProjektPartner(idb, inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnPartnerActionPerformed
 
     private void btnRedigeraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedigeraActionPerformed
         new RedigeraAnsvarProjekt(idb, inloggadAnvandare).setVisible(true);
@@ -269,10 +271,10 @@ public class AnsvarProjekt extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLaggTill;
+    private javax.swing.JButton btnHandlaggare;
+    private javax.swing.JButton btnPartner;
     private javax.swing.JButton btnRedigera;
     private javax.swing.JButton btnStatistik;
-    private javax.swing.JButton btnTaBort;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblAnsvarProjekt;

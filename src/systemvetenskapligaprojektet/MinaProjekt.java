@@ -31,6 +31,29 @@ public class MinaProjekt extends javax.swing.JFrame {
     initStatusFilterListener();
     skapaOchFyllTabell(null); // Visa alla projekt från början
     kontrolleraRollOchHanteraKnappar();
+    btnAnsvarProjekt.setVisible(false);
+    kontrollIfProjektchef();
+    }
+    
+    private void kontrollIfProjektchef(){
+        try{
+        ArrayList<String> projektchef = new ArrayList<>();
+        
+        String selectProjektchef = "select projektchef from projekt;";
+        projektchef = idb.fetchColumn(selectProjektchef);
+        
+        String selectAid = "select aid from anstalld where epost = '" + inloggadAnvandare + "';";
+        String anstalldsID = idb.fetchSingle(selectAid);
+        
+        for(String ettProjektchefsID:projektchef){
+            if(ettProjektchefsID.equals(anstalldsID)){
+                btnAnsvarProjekt.setVisible(true);
+            }
+        }
+        }
+        catch (InfException ex) {
+            System.out.println(ex);
+        }
     }
 
     private void kontrolleraRollOchHanteraKnappar() {
@@ -187,8 +210,7 @@ private void initStatusFilterListener() {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMinaprojekt = new javax.swing.JTable();
         btnTillbaka = new javax.swing.JButton();
-        btnRedigera = new javax.swing.JButton();
-        btnTaBort = new javax.swing.JButton();
+        btnAnsvarProjekt = new javax.swing.JButton();
         ComboStatusFilter = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -216,14 +238,12 @@ private void initStatusFilterListener() {
             }
         });
 
-        btnRedigera.setText("Redigera");
-        btnRedigera.addActionListener(new java.awt.event.ActionListener() {
+        btnAnsvarProjekt.setText("Ansvar projekt");
+        btnAnsvarProjekt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRedigeraActionPerformed(evt);
+                btnAnsvarProjektActionPerformed(evt);
             }
         });
-
-        btnTaBort.setText("Ta bort");
 
         ComboStatusFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ComboStatusFilter.addActionListener(new java.awt.event.ActionListener() {
@@ -246,10 +266,8 @@ private void initStatusFilterListener() {
                         .addGap(31, 31, 31))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnTillbaka)
-                        .addGap(56, 56, 56)
-                        .addComponent(btnRedigera)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnTaBort)
+                        .addComponent(btnAnsvarProjekt)
                         .addGap(246, 246, 246))))
         );
         layout.setVerticalGroup(
@@ -264,8 +282,7 @@ private void initStatusFilterListener() {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
-                    .addComponent(btnRedigera)
-                    .addComponent(btnTaBort))
+                    .addComponent(btnAnsvarProjekt))
                 .addGap(15, 15, 15))
         );
 
@@ -281,10 +298,10 @@ private void initStatusFilterListener() {
         // TODO add your handling code here:
     }//GEN-LAST:event_ComboStatusFilterActionPerformed
 
-    private void btnRedigeraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedigeraActionPerformed
-    new RedigeraProjekt(idb,inloggadAnvandare).setVisible(true);
-    this.setVisible(false);
-    }//GEN-LAST:event_btnRedigeraActionPerformed
+    private void btnAnsvarProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnsvarProjektActionPerformed
+        new AnsvarProjekt(idb,inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnAnsvarProjektActionPerformed
                     
     /**
      * @param args the command line arguments
@@ -300,8 +317,7 @@ private void initStatusFilterListener() {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboStatusFilter;
-    private javax.swing.JButton btnRedigera;
-    private javax.swing.JButton btnTaBort;
+    private javax.swing.JButton btnAnsvarProjekt;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblMinaprojekt;
