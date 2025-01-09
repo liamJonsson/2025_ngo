@@ -264,6 +264,11 @@ private void initStatusFilterListener() {
         });
 
         btnRedigera.setText("Redigera");
+        btnRedigera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRedigeraActionPerformed(evt);
+            }
+        });
 
         btnTaBort.setText("Ta bort");
 
@@ -337,6 +342,11 @@ private void initStatusFilterListener() {
     new LaggTillProjekt(idb,inloggadAnvandare).setVisible(true);
     this.setVisible(false);
     }//GEN-LAST:event_btnLaggTillActionPerformed
+
+    private void btnRedigeraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedigeraActionPerformed
+    new RedigeraProjekt(idb,inloggadAnvandare).setVisible(true);
+    this.setVisible(false);
+    }//GEN-LAST:event_btnRedigeraActionPerformed
                     
     /**
      * @param args the command line arguments

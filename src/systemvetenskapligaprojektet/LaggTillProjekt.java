@@ -335,7 +335,7 @@ public class LaggTillProjekt extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LaggTillProjekt(idb, "admin").setVisible(true);
+                new LaggTillProjekt(idb, "projektchef").setVisible(true);
             }
         });
     }
