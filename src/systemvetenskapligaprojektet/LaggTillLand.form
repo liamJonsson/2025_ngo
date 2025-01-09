@@ -79,9 +79,9 @@
               <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
               <Component id="lblLaggTillEttLand" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblID" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="tfID" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblID" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
               <Component id="lblIDFel" min="-2" max="-2" attributes="0"/>

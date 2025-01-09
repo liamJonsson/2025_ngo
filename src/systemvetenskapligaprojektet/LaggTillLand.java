@@ -151,9 +151,9 @@ public class LaggTillLand extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addComponent(lblLaggTillEttLand)
                 .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblID)
-                    .addComponent(tfID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tfID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblID))
                 .addGap(2, 2, 2)
                 .addComponent(lblIDFel)
                 .addGap(18, 18, 18)
@@ -220,7 +220,7 @@ public class LaggTillLand extends javax.swing.JFrame {
                 
                 //Kontrollera (13, 4)
                 if(valuta.precision() > 13 || valuta.scale() > 4){
-                    throw new NumberFormatException("Ange en valuta med rätt format");
+                    throw new NumberFormatException();
                 }
             }
             catch(NumberFormatException ex){
