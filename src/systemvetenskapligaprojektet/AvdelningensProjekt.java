@@ -3,23 +3,243 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package systemvetenskapligaprojektet;
-import oru.inf.InfDB; //importeras i alla klasser som vi ska använda
-import oru.inf.InfException; //importeras i alla klasser som vi ska använda
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import oru.inf.InfDB;
+import oru.inf.InfException;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
+
 /**
  *
  * @author mejaa
  */
 public class AvdelningensProjekt extends javax.swing.JFrame {
-    private static InfDB idb;
+    private InfDB idb;
     private String inloggadAnvandare;
+    private JComboBox<String> comboStatusFilter;
     /**
      * Creates new form AvdelningensProjekt
      */
     public AvdelningensProjekt(InfDB idb, String inloggadAnvandare) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
+        comboStatusFilter = comboBoxAvdelning;
         initComponents();
+        fyllTabell();
+        hamtaAvdelning();
+        statusFilter(); 
+        initStatusFilterListener();
+        skapaOchFyllTabell(null);
+        
+        
     }
+    
+    private void fyllTabell(){
+
+        try{
+
+        String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "status", "prioritet","projektchef", "land"};
+
+        DefaultTableModel allaProjekt = new DefaultTableModel(kolumnNamn, 0);
+
+       
+
+        String selectId = "select pid from projekt where pid in(select pid from ans_proj where aid in(select aid from anstalld where avdelning = (select avdelning from anstalld where epost = '" + inloggadAnvandare + "'))) order by (pid)";
+
+
+
+        ArrayList<String> pid = idb.fetchColumn(selectId);
+            System.out.println(pid);
+            if(pid != null){
+            
+                for(String ettID:pid){
+                    //int ettPid = Integer.parseInt(ettID);
+                    String selectInfo = "select pid,projektnamn,beskrivning,startdatum,slutdatum,status, prioritet,projektchef,land from projekt where pid = '" + ettID + "';";
+
+
+
+                    ArrayList<HashMap<String,String>> info = idb.fetchRows(selectInfo);
+
+                    Object[] enRad = new Object[kolumnNamn.length];
+                    int index = 0;
+                    
+
+                    for(String enKolumn:kolumnNamn){      
+                        if(enKolumn.equals("projektchef")){
+                            String selectFornamn = "select fornamn from anstalld where aid = (select projektchef from projekt where pid = '" + ettID + "');";
+                            String fornamn = idb.fetchSingle(selectFornamn);
+                            String selectEfternamn = "select efternamn from anstalld where aid = (select projektchef from projekt where pid = '" + ettID + "');";
+                            String efternamn = idb.fetchSingle(selectEfternamn);
+                            String namn = fornamn + " " + efternamn;
+                            enRad[index++] = namn;                          
+                        }                        
+                        else{
+                            enRad[index++] = info.get(0).get(enKolumn);
+                                    
+                        }
+                    }
+                    allaProjekt.addRow(enRad);
+                }
+
+                tblProjekt.setModel(allaProjekt);
+
+            }
+
+            tblProjekt.setAutoResizeMode(tblProjekt.AUTO_RESIZE_OFF);
+
+        TableColumn col = tblProjekt.getColumnModel().getColumn(0);
+
+        col.setPreferredWidth(50);
+
+        col = tblProjekt.getColumnModel().getColumn(1);
+
+        col.setPreferredWidth(100);
+
+        col = tblProjekt.getColumnModel().getColumn(2);
+
+        col.setPreferredWidth(250);
+
+        col = tblProjekt.getColumnModel().getColumn(3);
+
+        col.setPreferredWidth(100);
+
+        col = tblProjekt.getColumnModel().getColumn(4);
+
+        col.setPreferredWidth(100);
+        
+        
+        col = tblProjekt.getColumnModel().getColumn(5);
+
+        col.setPreferredWidth(100);
+        
+        col = tblProjekt.getColumnModel().getColumn(6);
+
+        col.setPreferredWidth(100);
+        
+        col = tblProjekt.getColumnModel().getColumn(7);
+
+        col.setPreferredWidth(150);
+        
+        col = tblProjekt.getColumnModel().getColumn(8);
+
+        col.setPreferredWidth(50);
+        }
+
+        catch(InfException ex){
+            System.out.println(ex);
+        }      
+
+    }
+    
+    private void hamtaAvdelning(){
+        try{
+        String selectAvdelning = "select namn from avdelning where avdid =(select avdelning from anstalld where epost ='" + inloggadAnvandare + "');";
+        String Avdelning = idb.fetchSingle(selectAvdelning);
+        lblAvdelning.setText(Avdelning);
+        }
+        
+        catch(InfException ex){
+
+            System.out.println(ex);
+        }
+    }
+    
+    private void skapaOchFyllTabell(String valdStatus) {
+    try {
+        String selectInfoProjekt = "select distinct p.pid, p.projektnamn, p.beskrivning,p.startdatum,p.slutdatum,p.status,p.prioritet,p.projektchef,p.land from projekt p inner join ans_proj ap on p.pid = ap.pid inner join anstalld a on ap.aid = a.aid where a.avdelning = (select avdelning from anstalld where epost = '" + inloggadAnvandare + "');";
+
+                
+                //"select pid,projektnamn,beskrivning,startdatum,slutdatum,status,prioritet,projektchef,land from projekt where pid in(select pid from ans_proj where aid in(select aid from anstalld where avdelning =(select avdelning from anstalld where epost = '" 
+        //+ inloggadAnvandare + "')));";
+        
+      
+        // Lägg endast till WHERE-klausul om valdStatus inte är null eller tomt
+        if (valdStatus != null && !valdStatus.isEmpty() && !"Välj status".equals(valdStatus)) {
+            selectInfoProjekt = "select distinct p.pid, p.projektnamn, p.beskrivning,p.startdatum,p.slutdatum,p.status,p.prioritet,p.projektchef,p.land from projekt p inner join ans_proj ap on p.pid = ap.pid inner join anstalld a on ap.aid = a.aid where p.status = '" + valdStatus + "' and a.avdelning = (select avdelning from anstalld where epost = '" + inloggadAnvandare + "');";
+        }
+
+        // Kör SQL-frågan
+        ArrayList<HashMap<String, String>> projektLista = idb.fetchRows(selectInfoProjekt);
+
+        if (projektLista == null || projektLista.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Inga projekt hittades.");
+            return;
+        }
+
+        // Uppdatera tabellen med projektdata
+        uppdateraTabell(projektLista);
+    } catch (InfException ex) {
+        JOptionPane.showMessageDialog(this, "Kunde inte fylla tabellen: " + ex.getMessage());
+    }
+}
+    private void uppdateraTabell(ArrayList<HashMap<String, String>> projektLista) {
+    String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "status", "prioritet", "projektchef", "land"};
+    DefaultTableModel modell = new DefaultTableModel(kolumnNamn, 0);
+
+    for (HashMap<String, String> projekt : projektLista) {
+        Object[] rad = new Object[kolumnNamn.length];
+        for (int i = 0; i < kolumnNamn.length; i++) {
+            String kolumnVarde = projekt.getOrDefault(kolumnNamn[i], "Ingen data");  
+             
+            rad[i] = kolumnVarde;
+        }
+        modell.addRow(rad);
+    }
+
+    tblProjekt.setModel(modell);
+    }
+
+    
+    private void statusFilter(){
+        try{
+            String selectStatus = "select distinct status from projekt;";
+            ArrayList<String> statusLista = idb.fetchColumn(selectStatus);
+            
+            if(statusLista != null && !statusLista.isEmpty()){
+                comboBoxAvdelning.removeAllItems(); //Rensar comoboxen.
+                comboBoxAvdelning.addItem("Välj status"); //Lägger till "Välj status som första objektet i comboboxen.
+                
+                for(String status : statusLista){
+                    comboBoxAvdelning.addItem(status);  //Lägger till varje status som finns i databsen.
+                }
+                comboBoxAvdelning.setSelectedIndex(0);
+            }
+            else{ 
+                JOptionPane.showMessageDialog(this, "Inga statusvärden hittades i databasen.");
+            }
+            }
+        catch (InfException ex) {
+            JOptionPane.showMessageDialog(this, "Ett fel uppstod vid hämtning av statusvärden: " + ex.getMessage());
+        }            
+    }
+    private void filtreraStatus() {
+    String valdStatus = (String) comboStatusFilter.getSelectedItem();
+
+    // Kontrollera om valdStatus är "Välj status" eller null
+    if (valdStatus == null || "Välj status".equals(valdStatus)) {
+        // Visa alla projekt
+        skapaOchFyllTabell(null); 
+    } else {
+        // Filtrera projekten efter vald status
+        skapaOchFyllTabell(valdStatus); 
+    }
+}
+    
+private void initStatusFilterListener() {
+    comboBoxAvdelning.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String valdStatus = (String) comboBoxAvdelning.getSelectedItem();
+            skapaOchFyllTabell(valdStatus);  // Uppdatera tabellen baserat på det valda statusvärdet
+        }
+    });
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,21 +250,86 @@ public class AvdelningensProjekt extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        scrollPane = new javax.swing.JScrollPane();
+        tblProjekt = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        lblAvdelning = new javax.swing.JLabel();
+        btnTillbaka = new javax.swing.JButton();
+        comboBoxAvdelning = new javax.swing.JComboBox<>();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        tblProjekt.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        scrollPane.setViewportView(tblProjekt);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setText("Projekt på");
+
+        lblAvdelning.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblAvdelning.setText("jLabel2");
+
+        btnTillbaka.setText("Tillbaka");
+        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTillbakaActionPerformed(evt);
+            }
+        });
+
+        comboBoxAvdelning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnTillbaka)
+                            .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboBoxAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(34, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblAvdelning))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnTillbaka)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        new MinAvdelning(idb, inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnTillbakaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -82,5 +367,11 @@ public class AvdelningensProjekt extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnTillbaka;
+    private javax.swing.JComboBox<String> comboBoxAvdelning;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblAvdelning;
+    private javax.swing.JScrollPane scrollPane;
+    private javax.swing.JTable tblProjekt;
     // End of variables declaration//GEN-END:variables
 }
