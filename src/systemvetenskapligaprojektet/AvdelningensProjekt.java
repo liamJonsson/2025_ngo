@@ -23,6 +23,7 @@ public class AvdelningensProjekt extends javax.swing.JFrame {
     private InfDB idb;
     private String inloggadAnvandare;
     private JComboBox<String> comboStatusFilter;
+
     /**
      * Creates new form AvdelningensProjekt
      */
@@ -36,6 +37,7 @@ public class AvdelningensProjekt extends javax.swing.JFrame {
         statusFilter(); 
         initStatusFilterListener();
         skapaOchFyllTabell(null);
+        hanteraSearchListener();
         
         
     }
@@ -55,7 +57,6 @@ public class AvdelningensProjekt extends javax.swing.JFrame {
 
 
         ArrayList<String> pid = idb.fetchColumn(selectId);
-            System.out.println(pid);
             if(pid != null){
             
                 for(String ettID:pid){
@@ -241,6 +242,76 @@ private void initStatusFilterListener() {
     });
 }
 
+// Lyssnare för sökknappen
+private void hanteraSearchListener() {
+    btnSok.addActionListener((ActionEvent e) -> {
+        String sokTerm = JOptionPane.showInputDialog("Ange datumspann (yyyy-MM-dd till yyyy-MM-dd):");
+        if (sokTerm == null || sokTerm.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Du måste ange ett datumspann.");
+            return;
+        }
+
+        // Försök att hitta om termen är ett giltigt datumspann
+        if (sokTerm.contains("till") && sokTerm.matches("^\\d{4}-\\d{2}-\\d{2} till \\d{4}-\\d{2}-\\d{2}$")) {
+            // Om datumformatet är korrekt, hantera datumspannet
+            hanteraDatumSpannSok(sokTerm);
+        } else {
+            // Om termen inte är ett giltigt datumspann
+            JOptionPane.showMessageDialog(null, "Ogiltig sökterm. Ange ett datumspann i formatet 'yyyy-MM-dd till yyyy-MM-dd'.");
+        }
+    });
+}
+
+// Hantera filtrering av projekt baserat på datumspann
+private void hanteraDatumSpannSok(String sokTerm) {
+    if (sokTerm.contains("till")) {
+        String[] datum = sokTerm.split("till");
+        if (datum.length == 2) {
+            String startDatum = datum[0].trim();
+            String slutDatum = datum[1].trim();
+
+            // Hämta den nuvarande tabellens modell
+            DefaultTableModel modell = (DefaultTableModel) tblProjekt.getModel();
+
+            // Skapa en ny modell baserat på kolumnnamnen från den nuvarande modellen
+            int columnCount = modell.getColumnCount();
+            String[] kolumnNamn = new String[columnCount];
+            for (int i = 0; i < columnCount; i++) {
+                kolumnNamn[i] = modell.getColumnName(i);
+            }
+
+            // Skapa en ny tabellmodell med samma kolumnnamn
+            DefaultTableModel filtreradModell = new DefaultTableModel(kolumnNamn, 0);
+
+            // Loopa genom alla rader och filtrera baserat på datumspannet
+            for (int i = 0; i < modell.getRowCount(); i++) {
+                String projektStart = modell.getValueAt(i, 3).toString(); // Förutsätter att startdatum är i kolumn 3
+                String projektSlut = modell.getValueAt(i, 4).toString();  // Förutsätter att slutdatum är i kolumn 4
+
+                // Kontrollera om projektet är inom det angivna datumspannet
+                if (projektStart.compareTo(startDatum) >= 0 && projektSlut.compareTo(slutDatum) <= 0) {
+                    filtreradModell.addRow(new Object[]{
+                            modell.getValueAt(i, 0),
+                            modell.getValueAt(i, 1),
+                            modell.getValueAt(i, 2),
+                            projektStart,
+                            projektSlut,
+                            modell.getValueAt(i, 5),
+                            modell.getValueAt(i, 6),
+                            modell.getValueAt(i, 7),
+                            modell.getValueAt(i, 8)
+                    });
+                }
+            }
+
+            // Sätt den filtrerade modellen som ny modell för tabellen
+            tblProjekt.setModel(filtreradModell);
+        } else {
+            JOptionPane.showMessageDialog(null, "Felaktigt format för datumspann. Använd 'yyyy-MM-dd till yyyy-MM-dd'.");
+        }
+    }
+}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -256,6 +327,7 @@ private void initStatusFilterListener() {
         lblAvdelning = new javax.swing.JLabel();
         btnTillbaka = new javax.swing.JButton();
         comboBoxAvdelning = new javax.swing.JComboBox<>();
+        btnSok = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -287,25 +359,30 @@ private void initStatusFilterListener() {
 
         comboBoxAvdelning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        btnSok.setText("Sök");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnTillbaka)
-                            .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnSok)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 574, Short.MAX_VALUE)
+                                .addComponent(btnTillbaka)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBoxAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(34, Short.MAX_VALUE))
+                        .addComponent(comboBoxAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(lblAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,7 +396,9 @@ private void initStatusFilterListener() {
                     .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboBoxAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnTillbaka)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnTillbaka)
+                    .addComponent(btnSok))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
@@ -367,6 +446,7 @@ private void initStatusFilterListener() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSok;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JComboBox<String> comboBoxAvdelning;
     private javax.swing.JLabel jLabel1;

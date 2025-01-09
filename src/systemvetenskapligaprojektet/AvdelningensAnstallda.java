@@ -128,7 +128,7 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
             try {
                 String query = "";
                 if (sokTerm.contains(" ")) {
-                    // Om sökterm innehåller ett mellanslag, anta att det är för- och efternamn
+                    // Om sökterm innehåller ett mellanslag så kommer den anta att det är för- och efternamn
                     String[] namnDelar = sokTerm.split(" ", 2);
                     String fornamn = namnDelar[0].trim();
                     String efternamn = namnDelar[1].trim();
@@ -138,7 +138,7 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
                             "WHERE LOWER(fornamn) = '" + fornamn.toLowerCase() + "' " +
                             "  AND LOWER(efternamn) = '" + efternamn.toLowerCase() + "';";
                 } else {
-                    // Annars, anta att sökterm är en e-postadress
+                    // Annars så kommer den anta att söktermen är en e-postadress
                     query = "SELECT aid, fornamn, efternamn, epost, telefon " +
                             "FROM anstalld " +
                             "WHERE LOWER(epost) = '" + sokTerm.toLowerCase() + "';";

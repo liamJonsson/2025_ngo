@@ -225,6 +225,7 @@ private void hanteraStatusSok(String sokTerm) {
         tblProjekt = new javax.swing.JTable();
         btnLaggTill = new javax.swing.JButton();
         btnTaBort = new javax.swing.JButton();
+        btnRedigera = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -264,6 +265,13 @@ private void hanteraStatusSok(String sokTerm) {
             }
         });
 
+        btnRedigera.setText("jButton1");
+        btnRedigera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRedigeraActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -275,6 +283,8 @@ private void hanteraStatusSok(String sokTerm) {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnTillbaka)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRedigera)
+                        .addGap(36, 36, 36)
                         .addComponent(btnTaBort)
                         .addGap(33, 33, 33)
                         .addComponent(btnLaggTill)
@@ -291,7 +301,8 @@ private void hanteraStatusSok(String sokTerm) {
                     .addComponent(btnTillbaka)
                     .addComponent(btnSok)
                     .addComponent(btnLaggTill)
-                    .addComponent(btnTaBort))
+                    .addComponent(btnTaBort)
+                    .addComponent(btnRedigera))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -312,6 +323,11 @@ private void hanteraStatusSok(String sokTerm) {
     new TaBortProjekt(idb, inloggadAnvandare).setVisible(true);
     this.setVisible(false);
     }//GEN-LAST:event_btnTaBortActionPerformed
+
+    private void btnRedigeraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedigeraActionPerformed
+    new RedigeraProjekt(idb, inloggadAnvandare).setVisible(true);
+    this.setVisible(false);
+    }//GEN-LAST:event_btnRedigeraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -350,6 +366,7 @@ private void hanteraStatusSok(String sokTerm) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLaggTill;
+    private javax.swing.JButton btnRedigera;
     private javax.swing.JButton btnSok;
     private javax.swing.JButton btnTaBort;
     private javax.swing.JButton btnTillbaka;
