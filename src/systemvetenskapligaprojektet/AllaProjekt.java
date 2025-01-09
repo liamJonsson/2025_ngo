@@ -30,31 +30,50 @@ public class AllaProjekt extends javax.swing.JFrame {
         fyllTabell();
     }        
 /**
-     * Fyller JTable med data från databasen.
      */
-    public void fyllTabell() {
-        try {
-            String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "status", "prioritet", "projektchef", "land"};
-            DefaultTableModel projektTabellModel = new DefaultTableModel(kolumnNamn, 0);
+public void fyllTabell() {
+    try {
+        String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "status", "prioritet", "projektchef", "land"};
+        DefaultTableModel projektTabellModel = new DefaultTableModel(kolumnNamn, 0);
 
-            // Hämta alla projekt-ID
-            String selectPid = "SELECT pid FROM projekt ORDER BY pid;";
-            ArrayList<String> pidLista = idb.fetchColumn(selectPid);
+        // Hämta alla projekt-ID
+        String selectPid = "SELECT pid FROM projekt ORDER BY pid;";
+        ArrayList<String> pidLista = idb.fetchColumn(selectPid);
 
-            if (pidLista != null) {
-                for (String ettPID : pidLista) {
-                    String selectInfo = "SELECT * FROM projekt WHERE pid = " + ettPID + ";";
-                    HashMap<String, String> info = idb.fetchRow(selectInfo);
+        if (pidLista != null) {
+            for (String ettPID : pidLista) {
+                String selectInfo = "SELECT * FROM projekt WHERE pid = " + ettPID + ";";
+                HashMap<String, String> info = idb.fetchRow(selectInfo);
 
-                    Object[] enRad = new Object[kolumnNamn.length];
-                    int index = 0;
+                Object[] enRad = new Object[kolumnNamn.length];
+                int index = 0;
 
-                    for (String enKolumn : kolumnNamn) {
+                for (String enKolumn : kolumnNamn) {
+                    if (enKolumn.equals("land")) {
+                        // Hämta landets namn
+                        String selectLand = 
+                            "SELECT namn FROM land WHERE lid = (SELECT land FROM projekt WHERE pid = " + ettPID + ");";
+                        String land = idb.fetchSingle(selectLand);
+                        enRad[index++] = land;
+                    } else if (enKolumn.equals("projektchef")) {
+                        // Hämta projektchefens för- och efternamn
+                        String selectChefFornamn = 
+                            "SELECT fornamn FROM anstalld WHERE aid = (SELECT projektchef FROM projekt WHERE pid = " + ettPID + ");";
+                        String chefFornamn = idb.fetchSingle(selectChefFornamn);
+
+                        String selectChefEfternamn = 
+                            "SELECT efternamn FROM anstalld WHERE aid = (SELECT projektchef FROM projekt WHERE pid = " + ettPID + ");";
+                        String chefEfternamn = idb.fetchSingle(selectChefEfternamn);
+
+                        String chefFulltNamn = chefFornamn + " " + chefEfternamn;
+                        enRad[index++] = chefFulltNamn;
+                    } else {
+                        // Annars hämta data direkt från `info` HashMap
                         enRad[index++] = info.get(enKolumn);
                     }
-                    projektTabellModel.addRow(enRad);
                 }
-
+                projektTabellModel.addRow(enRad);
+            }
                 tblProjekt.setModel(projektTabellModel);
             }
 
