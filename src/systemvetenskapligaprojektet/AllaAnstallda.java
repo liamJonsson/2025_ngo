@@ -5,8 +5,10 @@
 package systemvetenskapligaprojektet;
 import oru.inf.InfDB; //importeras i alla klasser som vi ska använda
 import oru.inf.InfException; //importeras i alla klasser som vi ska använda
-import javax.swing.DefaultListModel;
 import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.table.TableColumn;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author lisas
@@ -15,67 +17,13 @@ public class AllaAnstallda extends javax.swing.JFrame {
     private static InfDB idb;
     private String inloggadAnvandare;
     
-    private DefaultListModel<String> listModelAllData = new DefaultListModel<>();
-
     public AllaAnstallda(InfDB idb, String inloggadAnvandare) {
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;
         initComponents();
-        populateListFromDatabase();
+        fyllTabell();
     }
-    
-    public void populateListFromDatabase() {
-        // Skapa en ArrayList för att hålla data från databasen
-        ArrayList<String> anstallningsID = new ArrayList<>();
-        ArrayList<String> anstallningsFornamn = new ArrayList<>();
-        ArrayList<String> anstallningsEfternamn = new ArrayList<>();
-        ArrayList<String> anstallningsAdress = new ArrayList<>();
-        ArrayList<String> anstallningsEpost = new ArrayList<>();
-        ArrayList<String> anstallningsTelefon = new ArrayList<>();
-        ArrayList<String> anstallningsDatum = new ArrayList<>();
-        ArrayList<String> anstallningsLosenord = new ArrayList<>();
-        ArrayList<String> anstallningsAvdelning = new ArrayList<>();
-        
-
-    try{
-        
-        anstallningsID = idb.fetchColumn("select aid from anstalld order by (aid) asc;");
-        anstallningsFornamn = idb.fetchColumn("select fornamn from anstalld;");
-        anstallningsEfternamn = idb.fetchColumn("select efternamn from anstalld;");
-        anstallningsAdress = idb.fetchColumn("select adress from anstalld;");
-        anstallningsEpost = idb.fetchColumn("select epost from anstalld;");
-        anstallningsTelefon = idb.fetchColumn("select telefon from anstalld;");
-        anstallningsDatum = idb.fetchColumn("select anstallningsdatum from anstalld;");
-        anstallningsLosenord = idb.fetchColumn("select losenord from anstalld;");
-        anstallningsAvdelning = idb.fetchColumn("select avdelning from anstalld;");
-        
-            } 
-        
-        catch (InfException ex) {
-            ex.printStackTrace();
-            
-        }
-     
-    int antalAnstallda = anstallningsID.size();
-    for (int i = 0; i < antalAnstallda; i++){
-        String rad = String.format("ID: %s,  %s %s,  %s,  %s,  %s,  %s,  %s,  Avdelning: %s",
-            anstallningsID.get(i),
-            anstallningsFornamn.get(i),
-            anstallningsEfternamn.get(i),
-            anstallningsAdress.get(i),
-            anstallningsEpost.get(i),
-            anstallningsTelefon.get(i),
-            anstallningsDatum.get(i),
-            anstallningsLosenord.get(i),
-            anstallningsAvdelning.get(i));
-        
-        listModelAllData.addElement(rad);
-    }
-    
-    listAllt.setModel(listModelAllData);
-    
-    }
-        
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -86,10 +34,9 @@ public class AllaAnstallda extends javax.swing.JFrame {
         btnSok = new javax.swing.JButton();
         btnTillbaka = new javax.swing.JButton();
         lblAllaAnstallda = new javax.swing.JLabel();
-        jScrollPane10 = new javax.swing.JScrollPane();
-        listAllt = new javax.swing.JList<>();
-        jLabel1 = new javax.swing.JLabel();
         btnTaBortAnstalld = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblAllaAnstallda = new javax.swing.JTable();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -116,17 +63,6 @@ public class AllaAnstallda extends javax.swing.JFrame {
         lblAllaAnstallda.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblAllaAnstallda.setText("Alla anställda");
 
-        listAllt.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        listAllt.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane10.setViewportView(listAllt);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        jLabel1.setText("ID / Namn / Adress / Epost / Telefon / Anställningsdatum / Lösenord / Avdelning");
-
         btnTaBortAnstalld.setText("Ta bort anställd");
         btnTaBortAnstalld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,38 +70,46 @@ public class AllaAnstallda extends javax.swing.JFrame {
             }
         });
 
+        tblAllaAnstallda.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9"
+            }
+        ));
+        jScrollPane1.setViewportView(tblAllaAnstallda);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblAllaAnstallda)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnSok)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnLaggTill, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnTaBortAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnTillbaka))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 951, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnSok)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLaggTill, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnTaBortAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 478, Short.MAX_VALUE)
+                        .addComponent(btnTillbaka))
+                    .addComponent(jScrollPane1))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
+                .addGap(42, 42, 42)
                 .addComponent(lblAllaAnstallda)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
-                .addGap(52, 52, 52)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLaggTill)
                     .addComponent(btnSok)
@@ -194,13 +138,54 @@ public class AllaAnstallda extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnTaBortAnstalldActionPerformed
 
-    
-    
-    
-    
-    
-    
-    
+    public void fyllTabell(){
+        try{
+            String kolumnNamn[] = {"aid", "fornamn", "efternamn", "adress", "epost", "telefon", "anstallningsdatum", "losenord", "avdelning"};
+            DefaultTableModel allaAnstallda = new DefaultTableModel(kolumnNamn, 0);
+            
+            String selectAID = "select aid from anstalld order by(aid);";
+            ArrayList<String> aid = idb.fetchColumn(selectAID);
+            if(aid != null){
+                for(String ettID:aid){
+                    String selectInfo = "select * from anstalld where aid = " + ettID + ";";
+                    HashMap<String, String> info = idb.fetchRow(selectInfo);
+                    
+                    Object[] enRad = new Object[kolumnNamn.length];
+                    int index = 0;
+                    
+                    for(String enKolumn:kolumnNamn){
+                        enRad[index++] = info.get(enKolumn);
+                        
+                    }
+                    allaAnstallda.addRow(enRad);
+                }
+                tblAllaAnstallda.setModel(allaAnstallda);
+            }
+            tblAllaAnstallda.setAutoResizeMode(tblAllaAnstallda.AUTO_RESIZE_OFF);
+            TableColumn col = tblAllaAnstallda.getColumnModel().getColumn(0); //ID
+            col.setPreferredWidth(50);
+            col = tblAllaAnstallda.getColumnModel().getColumn(1); //Fornamn
+            col.setPreferredWidth(100);
+            col = tblAllaAnstallda.getColumnModel().getColumn(2); //Efternamn
+            col.setPreferredWidth(100);
+            col = tblAllaAnstallda.getColumnModel().getColumn(3); //Adress
+            col.setPreferredWidth(250);
+            col = tblAllaAnstallda.getColumnModel().getColumn(4); //Epost
+            col.setPreferredWidth(200);
+            col = tblAllaAnstallda.getColumnModel().getColumn(5); //Telefon
+            col.setPreferredWidth(100);
+            col = tblAllaAnstallda.getColumnModel().getColumn(6); //Anstallningsdatum
+            col.setPreferredWidth(100);
+            col = tblAllaAnstallda.getColumnModel().getColumn(7); //Losenord
+            col.setPreferredWidth(100);
+            col = tblAllaAnstallda.getColumnModel().getColumn(8); //Avdelning
+            col.setPreferredWidth(50);   
+        }
+        catch(InfException ex){
+            System.out.println(ex);
+    }
+}    
+
     /**
      * @param args the command line arguments
      */
@@ -241,11 +226,10 @@ public class AllaAnstallda extends javax.swing.JFrame {
     private javax.swing.JButton btnSok;
     private javax.swing.JButton btnTaBortAnstalld;
     private javax.swing.JButton btnTillbaka;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblAllaAnstallda;
-    private javax.swing.JList<String> listAllt;
+    private javax.swing.JTable tblAllaAnstallda;
     // End of variables declaration//GEN-END:variables
 }
