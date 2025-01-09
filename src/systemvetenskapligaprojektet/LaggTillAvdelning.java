@@ -13,12 +13,12 @@ import java.lang.ClassNotFoundException;
  * @author limme
  */
 public class LaggTillAvdelning extends javax.swing.JFrame {
-
     private InfDB idb;
     private String inloggadAnvandare;
     private int avdid;
     private int stadsID;
     private int chefsID;
+    private Validering validera;
     /**
      * Creates new form LaggTillAvdelning
      */
@@ -88,7 +88,6 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
 
         lblAvdelningschefID.setText("Avdelningschef");
 
-        tfNamn.setEditable(false);
         tfNamn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tfNamnMouseClicked(evt);
@@ -100,7 +99,6 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
             }
         });
 
-        tfAdress.setEditable(false);
         tfAdress.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tfAdressMouseClicked(evt);
@@ -112,42 +110,36 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
             }
         });
 
-        tfBeskrivning.setEditable(false);
         tfBeskrivning.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tfBeskrivningMouseClicked(evt);
             }
         });
 
-        tfEpost.setEditable(false);
         tfEpost.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tfEpostMouseClicked(evt);
             }
         });
 
-        tfTelefonnummer.setEditable(false);
         tfTelefonnummer.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tfTelefonnummerMouseClicked(evt);
             }
         });
 
-        tfStad.setEditable(false);
         tfStad.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tfStadMouseClicked(evt);
             }
         });
 
-        tfAvdelningschefID.setEditable(false);
         tfAvdelningschefID.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tfAvdelningschefIDMouseClicked(evt);
             }
         });
 
-        tfID.setEditable(false);
         tfID.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tfIDMouseClicked(evt);
@@ -295,6 +287,11 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
     private void btnLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillActionPerformed
         boolean hasError = false;
         boolean hittad = false;
+        lblFelmeddelandeID.setVisible(false);
+        lblFelmeddelandeEpost.setVisible(false);
+        lblFelmeddelandeTel.setVisible(false);
+        lblFelmeddelandeStadsID.setVisible(false);
+        lblFelmeddelandeAvdelningschef.setVisible(false);
         try{
             try{
                 String ID = tfID.getText();
@@ -364,18 +361,31 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
                 String namn = tfNamn.getText();
                 String beskrivning = tfBeskrivning.getText();
                 String adress = tfAdress.getText();
-                String epost = tfEpost.getText(); //Kolla så att det verkligen är en epost-adress!
+                String epost = tfEpost.getText(); 
                 String telefon = tfTelefonnummer.getText();
-
-                String insertNyAvdelning = "insert into avdelning (avdid,namn,beskrivning,adress,epost,telefon,stad,chef) values "
-                        + "(" + avdid + ",'" + namn + "','" + beskrivning + "','" + adress + "','" + epost + "','" + telefon + "',"
-                        + stadsID + "," + chefsID + ");";
-                idb.insert(insertNyAvdelning);
-                new TestTable(idb,inloggadAnvandare).setVisible(true);
-                this.setVisible(false);
+                if(validera.valideringEmail(epost) && validera.valideringTelefonAvdelning(telefon)){
+                    String insertNyAvdelning = "insert into avdelning (avdid,namn,beskrivning,adress,epost,telefon,stad,chef) values "
+                            + "(" + avdid + ",'" + namn + "','" + beskrivning + "','" + adress + "','" + epost + "','" + telefon + "',"
+                            + stadsID + "," + chefsID + ");";
+                    idb.insert(insertNyAvdelning);
+                    new TestTable(idb,inloggadAnvandare).setVisible(true);
+                    this.setVisible(false);
+                }
+                else{
+                    if(!validera.valideringEmail(epost)){
+                        lblFelmeddelandeEpost.setVisible(true);
+                    }
+                    else if(!validera.valideringTelefonAvdelning(telefon)){
+                        lblFelmeddelandeTel.setVisible(true);
+                    }
+                    else{
+                        lblFelmeddelandeEpost.setVisible(true);
+                        lblFelmeddelandeTel.setVisible(true);
+                    }
+                }
             }
         }
-        catch(InfException ex){ //Catch InfExceptions?
+        catch(InfException ex){
                 System.out.println(ex);
         }
     }//GEN-LAST:event_btnLaggTillActionPerformed
