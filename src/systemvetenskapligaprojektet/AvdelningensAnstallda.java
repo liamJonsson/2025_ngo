@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import javax.swing.JOptionPane;
 /**
  *
  * @author mejaa
@@ -110,6 +112,21 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
             System.out.println(ex);
         }
     }
+    
+    
+ //   private void hanteraSearchListener(){
+  //      btnSok.addActionListener((ActionEvent e) -> {
+  //          String sokTerm = JOptionPane.showInputDialog("Ange namn eller epostadress för att söka efter en handläggare");
+  //          if(sokTerm == null || sokTerm.trim().isEmpty()){
+   //             JOptionPane.showMessageDialog(null, "Du måste ange en sökterm!");
+     //           return; 
+    //        }
+         //   String selectInfo = select
+     //   }
+        
+        
+     //   )
+  //  }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -125,6 +142,7 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         lblAvdelning = new javax.swing.JLabel();
+        btnSok = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -154,6 +172,13 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
         lblAvdelning.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblAvdelning.setText("jLabel2");
 
+        btnSok.setText("Sök");
+        btnSok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSokActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -161,17 +186,20 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(24, 24, 24))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnSok)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(24, 24, 24))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,7 +211,9 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(btnSok))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
@@ -194,6 +224,10 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
         new MinAvdelning(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnSokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSokActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSokActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,6 +265,7 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSok;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
