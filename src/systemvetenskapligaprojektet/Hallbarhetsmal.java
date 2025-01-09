@@ -5,19 +5,24 @@
 package systemvetenskapligaprojektet;
 import oru.inf.InfDB; //importeras i alla klasser som vi ska använda
 import oru.inf.InfException; //importeras i alla klasser som vi ska använda
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn; //importeras i alla klasser som vi ska använda
 /**
  *
- * @author limme
+ * @author lisas
  */
 public class Hallbarhetsmal extends javax.swing.JFrame {
-
     private InfDB idb;
-    /**
-     * Creates new form Hallbarhetsmal
-     */
-    public Hallbarhetsmal(InfDB idb) {
+    private String inloggadAnvandare;
+    
+    
+    public Hallbarhetsmal(InfDB idb, String inloggadAnvandare) {
         this.idb = idb;
+        this.inloggadAnvandare = inloggadAnvandare;
         initComponents();
+        fyllTabell();
     }
 
     /**
@@ -29,22 +34,105 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblHallbarhetsmal = new javax.swing.JTable();
+        btnTillbaka = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Hållbarhetsmål");
+
+        tblHallbarhetsmal.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
+            }
+        ));
+        jScrollPane1.setViewportView(tblHallbarhetsmal);
+
+        btnTillbaka.setText("Tillbaka");
+        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTillbakaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnTillbaka)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(btnTillbaka)
+                .addGap(15, 15, 15))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+        new MenyHandlaggare(idb,inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnTillbakaActionPerformed
+
+    public void fyllTabell(){
+        try{
+            String kolumnNamn[] = {"hid", "namn", "malnummer", "beskrivning", "prioritet"};
+            DefaultTableModel allaHallbarhetsmal = new DefaultTableModel(kolumnNamn, 0);
+            
+            String selectHID = "select hid from hallbarhetsmal order by(hid);";
+            ArrayList<String> hid = idb.fetchColumn(selectHID);
+            if(hid != null){
+                for(String ettID:hid){
+                    String selectInfo = "select * from hallbarhetsmal where hid = " + ettID + ";";
+                    HashMap<String, String> info = idb.fetchRow(selectInfo);
+                    
+                    Object[] enRad = new Object[kolumnNamn.length];
+                    int index = 0;
+                    
+                    for(String enKolumn:kolumnNamn){
+                        enRad[index++] = info.get(enKolumn);
+                    }
+                    allaHallbarhetsmal.addRow(enRad);
+                }
+                tblHallbarhetsmal.setModel(allaHallbarhetsmal);
+            }
+        }
+        catch(InfException ex){
+            System.out.println(ex);
+    }
+}    
+    
+    
+    
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -81,5 +169,9 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnTillbaka;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblHallbarhetsmal;
     // End of variables declaration//GEN-END:variables
 }
