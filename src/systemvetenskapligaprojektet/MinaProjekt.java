@@ -63,7 +63,7 @@ public class MinaProjekt extends javax.swing.JFrame {
     // Kontrollera om resultatet är större än 0, vilket innebär att användaren är projektchef
     return resultat != null && Integer.parseInt(resultat) > 0;
     }
-
+    
     private void visaKostnadsKolumn(boolean visa) {
     int kolumnIndex = 5; // Kostnadskolumn
 
@@ -123,12 +123,11 @@ private void skapaOchFyllTabell(String valdStatus) {
             "LEFT JOIN projekt_partner pt ON p.pid = pt.pid " +
             "LEFT JOIN partner ON pt.partner_pid = partner.pid";
 
-        // Lägg endast till WHERE-klausul om valdStatus inte är null eller tomt
-        if (valdStatus != null && !valdStatus.isEmpty() && !"Välj status".equals(valdStatus)) {
-        baseQuery += " WHERE p.status = '" + valdStatus + "'";
+        // Lägg till WHERE-klausul baserat på valt status
+        if (valdStatus != null && !valdStatus.isEmpty()) {
+            baseQuery += " WHERE p.status = '" + valdStatus + "'";
         }
 
-        // Kör SQL-frågan
         ArrayList<HashMap<String, String>> projektLista = idb.fetchRows(baseQuery);
 
         if (projektLista == null || projektLista.isEmpty()) {
@@ -136,7 +135,6 @@ private void skapaOchFyllTabell(String valdStatus) {
             return;
         }
 
-        // Uppdatera tabellen med projektdata
         uppdateraTabell(projektLista);
     } catch (InfException e) {
         JOptionPane.showMessageDialog(this, "Kunde inte fylla tabellen: " + e.getMessage());
@@ -190,18 +188,15 @@ private void statusFilter() {
     }
 }
 
-private void filtreraStatus() {
+    private void filtreraStatus() {
     String valdStatus = (String) comboStatusFilter.getSelectedItem();
 
-    // Kontrollera om valdStatus är "Välj status" eller null
-    if (valdStatus == null || "Välj status".equals(valdStatus)) {
-        // Visa alla projekt
-        skapaOchFyllTabell(null); 
+    if (valdStatus == null || valdStatus.isEmpty()) {
+        skapaOchFyllTabell(null); // Visa alla projekt om inget filter är valt
     } else {
-        // Filtrera projekten efter vald status
-        skapaOchFyllTabell(valdStatus); 
+        skapaOchFyllTabell(valdStatus); // Filtrera efter vald status
     }
-}
+    }
     
 private void initStatusFilterListener() {
     ComboStatusFilter.addActionListener(new ActionListener() {
@@ -212,7 +207,6 @@ private void initStatusFilterListener() {
         }
     });
 }
-
     private void laggTillProjekt() {
     //new laggTillProjekt(idb,inloggadAnvandare).setVisible(true);
        //this.setVisible(false);
@@ -275,7 +269,11 @@ private void initStatusFilterListener() {
         btnLaggTill.setText("Lägg till");
 
         ComboStatusFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        ComboStatusFilter.setEnabled(false);
+        ComboStatusFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboStatusFilterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -286,9 +284,9 @@ private void initStatusFilterListener() {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ComboStatusFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addGap(18, 18, 18)
+                        .addComponent(ComboStatusFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnTillbaka)
                         .addGap(56, 56, 56)
@@ -304,10 +302,10 @@ private void initStatusFilterListener() {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(ComboStatusFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 227, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
@@ -324,6 +322,10 @@ private void initStatusFilterListener() {
     new MenyHandlaggare(idb, inloggadAnvandare).setVisible(true);
     this.dispose();                                            
     }//GEN-LAST:event_btnTillbakaActionPerformed
+
+    private void ComboStatusFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboStatusFilterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboStatusFilterActionPerformed
                     
     /**
      * @param args the command line arguments
