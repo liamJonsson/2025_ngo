@@ -134,10 +134,6 @@ public class TaBortPartner extends javax.swing.JFrame {
         
     }//GEN-LAST:event_tfTaBortIDActionPerformed
 
-    
-    
-    
-    
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
         try{
             String taBortPid = tfTaBortID.getText();
@@ -165,8 +161,6 @@ public class TaBortPartner extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnTaBortActionPerformed
 
-    
-    
     private void btnTillbakaTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaTaBortActionPerformed
         new AllaPartners(idb,inloggadAnvandare).setVisible(true);
         this.setVisible(false);

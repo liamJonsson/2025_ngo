@@ -169,7 +169,8 @@ public class AllaPartners extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLaggTillActionPerformed
 
     private void btnRedigeraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedigeraActionPerformed
-        
+        new RedigeraPartner(idb,inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnRedigeraActionPerformed
 
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
