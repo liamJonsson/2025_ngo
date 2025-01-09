@@ -24,6 +24,7 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
         this.inloggadAnvandare = inloggadAnvandare;
         initComponents();
         fyllTabell();
+        hamtaAvdelning();
     }
     
     private void fyllTabell(){
@@ -36,8 +37,8 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
 
        
 
-        String selectAid = "select aid from anstalld order by(aid);";
-
+        String selectAid = "select aid from anstalld where avdelning = (select avdelning from anstalld where epost = '" + inloggadAnvandare + "')order by(aid);";
+                   
         ArrayList<String> aid = idb.fetchColumn(selectAid);
 
             if(aid != null){
@@ -97,6 +98,18 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
         }      
 
     }
+    
+    private void hamtaAvdelning(){
+        try{
+        String selectAvdelning = "select namn from avdelning where avdid =(select avdelning from anstalld where epost ='" + inloggadAnvandare + "');";
+        String Avdelning = idb.fetchSingle(selectAvdelning);
+        lblAvdelning.setText(Avdelning);
+        }
+        catch(InfException ex){
+
+            System.out.println(ex);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -111,6 +124,7 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
         tblAnstallda = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        lblAvdelning = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,7 +142,7 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblAnstallda);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Anställda på avdelning");
+        jLabel1.setText("Anställda på");
 
         jButton1.setText("Tillbaka");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -136,6 +150,9 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        lblAvdelning.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblAvdelning.setText("jLabel2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -147,6 +164,8 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -158,7 +177,9 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(lblAvdelning))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -213,6 +234,7 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblAvdelning;
     private javax.swing.JTable tblAnstallda;
     // End of variables declaration//GEN-END:variables
 }
