@@ -205,6 +205,7 @@ private void hanteraStatusSok(String sokTerm) {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblProjekt = new javax.swing.JTable();
         btnLaggTill = new javax.swing.JButton();
+        btnTaBort = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -237,6 +238,13 @@ private void hanteraStatusSok(String sokTerm) {
             }
         });
 
+        btnTaBort.setText("Ta bort");
+        btnTaBort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaBortActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -248,6 +256,8 @@ private void hanteraStatusSok(String sokTerm) {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnTillbaka)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTaBort)
+                        .addGap(33, 33, 33)
                         .addComponent(btnLaggTill)
                         .addGap(71, 71, 71)
                         .addComponent(btnSok)))
@@ -261,7 +271,8 @@ private void hanteraStatusSok(String sokTerm) {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
                     .addComponent(btnSok)
-                    .addComponent(btnLaggTill))
+                    .addComponent(btnLaggTill)
+                    .addComponent(btnTaBort))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -277,6 +288,11 @@ private void hanteraStatusSok(String sokTerm) {
     new LaggTillProjekt(idb, inloggadAnvandare).setVisible(true);
     this.setVisible(false);
     }//GEN-LAST:event_btnLaggTillActionPerformed
+
+    private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
+    new TaBortProjekt(idb, inloggadAnvandare).setVisible(true);
+    this.setVisible(false);
+    }//GEN-LAST:event_btnTaBortActionPerformed
 
     /**
      * @param args the command line arguments
@@ -316,6 +332,7 @@ private void hanteraStatusSok(String sokTerm) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLaggTill;
     private javax.swing.JButton btnSok;
+    private javax.swing.JButton btnTaBort;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblProjekt;
