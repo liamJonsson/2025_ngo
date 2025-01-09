@@ -278,7 +278,7 @@ public class LaggTillProjekt extends javax.swing.JFrame {
     }//GEN-LAST:event_tfProjektIDActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-            new MinaProjekt(idb, inloggadAnvandare).setVisible(true);
+            new AllaProjekt(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);    // TODO add your handling code here:
     }//GEN-LAST:event_btnTillbakaActionPerformed
 

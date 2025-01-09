@@ -77,43 +77,6 @@ public class MinaProjekt extends javax.swing.JFrame {
         tblMinaprojekt.getColumnModel().getColumn(kolumnIndex).setPreferredWidth(preferredWidth);
     }
 }
-
-    private void skapaKnappar() {
-        // Skapa panel för knappar och placera längst ner
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        // Lägg till knappar i panelen
-        btnLaggTillProjekt = new JButton("Lägg till projekt");
-        btnLaggTillProjekt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                laggTillProjekt();
-            }
-        });
-        buttonPanel.add(btnLaggTillProjekt);
-
-        btnTaBortProjekt = new JButton("Ta bort projekt");
-        btnTaBortProjekt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                taBortProjekt();
-            }
-        });
-        buttonPanel.add(btnTaBortProjekt);
-
-        btnRedigeraProjekt = new JButton("Ändra projekt");
-        btnRedigeraProjekt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                andraProjekt();
-            }
-        });
-        buttonPanel.add(btnRedigeraProjekt);
-
-        // Placera panelen längst ner
-        getContentPane().add(buttonPanel, BorderLayout.SOUTH);
-    }
     
 private void skapaOchFyllTabell(String valdStatus) {
     try {
@@ -207,18 +170,9 @@ private void initStatusFilterListener() {
         }
     });
 }
-    private void laggTillProjekt() {
-    //new LaggTillProjekt(idb,inloggadAnvandare).setVisible(true);
-       //this.setVisible(false);
-    }
 
     private void andraProjekt() {
     //new andraProjekt(idb,inloggadAnvandare).setVisible(true);
-       //this.setVisible(false);
-    }
-
-    private void taBortProjekt() {
-        //new taBortProjekt(idb,inloggadAnvandare).setVisible(true);
        //this.setVisible(false);
     }
     /**
@@ -235,7 +189,6 @@ private void initStatusFilterListener() {
         btnTillbaka = new javax.swing.JButton();
         btnRedigera = new javax.swing.JButton();
         btnTaBort = new javax.swing.JButton();
-        btnLaggTill = new javax.swing.JButton();
         ComboStatusFilter = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -272,13 +225,6 @@ private void initStatusFilterListener() {
 
         btnTaBort.setText("Ta bort");
 
-        btnLaggTill.setText("Lägg till");
-        btnLaggTill.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLaggTillActionPerformed(evt);
-            }
-        });
-
         ComboStatusFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ComboStatusFilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -304,9 +250,7 @@ private void initStatusFilterListener() {
                         .addComponent(btnRedigera)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnTaBort)
-                        .addGap(28, 28, 28)
-                        .addComponent(btnLaggTill)
-                        .addGap(143, 143, 143))))
+                        .addGap(246, 246, 246))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -321,8 +265,7 @@ private void initStatusFilterListener() {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
                     .addComponent(btnRedigera)
-                    .addComponent(btnTaBort)
-                    .addComponent(btnLaggTill))
+                    .addComponent(btnTaBort))
                 .addGap(15, 15, 15))
         );
 
@@ -337,11 +280,6 @@ private void initStatusFilterListener() {
     private void ComboStatusFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboStatusFilterActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ComboStatusFilterActionPerformed
-
-    private void btnLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillActionPerformed
-    new LaggTillProjekt(idb,inloggadAnvandare).setVisible(true);
-    this.setVisible(false);
-    }//GEN-LAST:event_btnLaggTillActionPerformed
 
     private void btnRedigeraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedigeraActionPerformed
     new RedigeraProjekt(idb,inloggadAnvandare).setVisible(true);
@@ -362,7 +300,6 @@ private void initStatusFilterListener() {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboStatusFilter;
-    private javax.swing.JButton btnLaggTill;
     private javax.swing.JButton btnRedigera;
     private javax.swing.JButton btnTaBort;
     private javax.swing.JButton btnTillbaka;

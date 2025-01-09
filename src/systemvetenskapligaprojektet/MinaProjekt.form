@@ -38,9 +38,7 @@
                       <Component id="btnRedigera" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnTaBort" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Component id="btnLaggTill" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="143" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="246" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -62,7 +60,6 @@
                   <Component id="btnTillbaka" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnRedigera" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnTaBort" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnLaggTill" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
           </Group>
@@ -181,14 +178,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ta bort"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnLaggTill">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="L&#xe4;gg till"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLaggTillActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="ComboStatusFilter">
       <Properties>
