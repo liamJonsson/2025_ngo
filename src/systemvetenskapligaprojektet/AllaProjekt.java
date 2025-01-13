@@ -129,13 +129,13 @@ public void fyllTabell() {
       });
     }
 
-     //Sökfunktion för datumspann
+// Hantera filtrering av projekt baserat på datumspann
 private void hanteraDatumSpannSok(String sokTerm) {
     if (sokTerm.contains("till")) {
         String[] datum = sokTerm.split("till");
         if (datum.length == 2) {
-            String startDatum = datum[0].trim();
-            String slutDatum = datum[1].trim();
+            String startDatumFilter = datum[0].trim();
+            String slutDatumFilter = datum[1].trim();
 
             // Hämta den nuvarande tabellens modell
             DefaultTableModel modell = (DefaultTableModel) tblProjekt.getModel();
@@ -146,27 +146,26 @@ private void hanteraDatumSpannSok(String sokTerm) {
             for (int i = 0; i < columnCount; i++) {
                 kolumnNamn[i] = modell.getColumnName(i);
             }
-            
+
             // Skapa en ny tabellmodell med samma kolumnnamn
             DefaultTableModel filtreradModell = new DefaultTableModel(kolumnNamn, 0);
 
             // Loopa genom alla rader och filtrera baserat på datumspannet
             for (int i = 0; i < modell.getRowCount(); i++) {
-                String projektStart = modell.getValueAt(i, 3).toString();
-                String projektSlut = modell.getValueAt(i, 4).toString();
+                String projektStart = modell.getValueAt(i, 3).toString(); // Förutsätter att startdatum är i kolumn 3
 
-                // Kontrollera om projektet är inom det angivna datumspannet
-                if (projektStart.compareTo(startDatum) >= 0 && projektSlut.compareTo(slutDatum) <= 0) {
+                // Kontrollera om projektets startdatum är inom det angivna datumspannet
+                if (projektStart.compareTo(startDatumFilter) >= 0 && projektStart.compareTo(slutDatumFilter) <= 0) {
                     filtreradModell.addRow(new Object[]{
                             modell.getValueAt(i, 0),
                             modell.getValueAt(i, 1),
                             modell.getValueAt(i, 2),
                             projektStart,
-                            projektSlut,
-                            modell.getValueAt(i, 5),
-                            modell.getValueAt(i, 6),
-                            modell.getValueAt(i, 7),
-                            modell.getValueAt(i, 8)
+                            modell.getValueAt(i, 4), // Slutdatum
+                            modell.getValueAt(i, 5), // Kostnad
+                            modell.getValueAt(i, 6), // Status
+                            modell.getValueAt(i, 7), // Prioritet
+                            modell.getValueAt(i, 8)  // Projektchef
                     });
                 }
             }
@@ -177,7 +176,7 @@ private void hanteraDatumSpannSok(String sokTerm) {
             JOptionPane.showMessageDialog(null, "Felaktigt format för datumspann. Använd 'yyyy-MM-dd till yyyy-MM-dd'.");
         }
     }
-}    
+}
             
 
 private void hanteraStatusSok(String sokTerm) {

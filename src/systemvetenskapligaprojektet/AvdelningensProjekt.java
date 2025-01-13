@@ -161,7 +161,7 @@ public class AvdelningensProjekt extends javax.swing.JFrame {
         //+ inloggadAnvandare + "')));";
         
       
-        // Lägg endast till WHERE-klausul om valdStatus inte är null eller tomt
+        //WHERE-klausul om valdStatus inte är null eller tomt
         if (valdStatus != null && !valdStatus.isEmpty() && !"Välj status".equals(valdStatus)) {
             selectInfoProjekt = "select distinct p.pid, p.projektnamn, p.beskrivning,p.startdatum,p.slutdatum,p.status,p.prioritet,p.projektchef,p.land from projekt p inner join ans_proj ap on p.pid = ap.pid inner join anstalld a on ap.aid = a.aid where p.status = '" + valdStatus + "' and a.avdelning = (select avdelning from anstalld where epost = '" + inloggadAnvandare + "');";
         }
@@ -268,8 +268,8 @@ private void hanteraDatumSpannSok(String sokTerm) {
     if (sokTerm.contains("till")) {
         String[] datum = sokTerm.split("till");
         if (datum.length == 2) {
-            String startDatum = datum[0].trim();
-            String slutDatum = datum[1].trim();
+            String startDatumFilter = datum[0].trim();
+            String slutDatumFilter = datum[1].trim();
 
             // Hämta den nuvarande tabellens modell
             DefaultTableModel modell = (DefaultTableModel) tblProjekt.getModel();
@@ -287,20 +287,19 @@ private void hanteraDatumSpannSok(String sokTerm) {
             // Loopa genom alla rader och filtrera baserat på datumspannet
             for (int i = 0; i < modell.getRowCount(); i++) {
                 String projektStart = modell.getValueAt(i, 3).toString(); // Förutsätter att startdatum är i kolumn 3
-                String projektSlut = modell.getValueAt(i, 4).toString();  // Förutsätter att slutdatum är i kolumn 4
 
-                // Kontrollera om projektet är inom det angivna datumspannet
-                if (projektStart.compareTo(startDatum) >= 0 && projektSlut.compareTo(slutDatum) <= 0) {
+                // Kontrollera om projektets startdatum är inom det angivna datumspannet
+                if (projektStart.compareTo(startDatumFilter) >= 0 && projektStart.compareTo(slutDatumFilter) <= 0) {
                     filtreradModell.addRow(new Object[]{
                             modell.getValueAt(i, 0),
                             modell.getValueAt(i, 1),
                             modell.getValueAt(i, 2),
                             projektStart,
-                            projektSlut,
-                            modell.getValueAt(i, 5),
-                            modell.getValueAt(i, 6),
-                            modell.getValueAt(i, 7),
-                            modell.getValueAt(i, 8)
+                            modell.getValueAt(i, 4), // Slutdatum
+                            modell.getValueAt(i, 5), // Kostnad
+                            modell.getValueAt(i, 6), // Status
+                            modell.getValueAt(i, 7), // Prioritet
+                            modell.getValueAt(i, 8)  // Projektchef
                     });
                 }
             }
@@ -312,6 +311,7 @@ private void hanteraDatumSpannSok(String sokTerm) {
         }
     }
 }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
