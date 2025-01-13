@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 /**
  *
- * @author lisas
+ * @author mejaa
  */
 public class AnsvarProjektHandlaggare extends javax.swing.JFrame {
     private static InfDB idb;
@@ -33,54 +33,57 @@ public class AnsvarProjektHandlaggare extends javax.swing.JFrame {
         try{
             //Skapar en Array som håller tabellens kolumner
         String[] kolumnNamn = {"aid", "pid"};
-        
-
+            //Skapar en DefaultTableModel som håller kolumnnamnen samt att antalet rader sätts til noll.
         DefaultTableModel allaHandlaggare = new DefaultTableModel(kolumnNamn, 0);
-
-       
 
         String selectPid = "select pid from projekt where projektchef = (select aid from anstalld where epost = '" + inloggadAnvandare + "') order by (pid);";
                 
-                   
+            //Skapar en lista med alla pid där projektchefen är den inloggade personen.
         ArrayList<String> pid = idb.fetchColumn(selectPid);
 
             if(pid != null){
-
+                
+            //Går igenom varje pid i listan och tar fram alla aid för varje pid.
                 for(String ettPid:pid){
 
                     String selectInfo = "select aid from ans_proj where pid = '" + ettPid + "';";
 
+                    //Skapar en ArrayList av HashMaps som håller alla aid för ett specifikt projekt.
                     ArrayList<HashMap<String,String>> info = idb.fetchRows(selectInfo);
-                    System.out.println(info);
-
-           
-
-                    Object[] enRad = new Object[kolumnNamn.length];
-                    int index = 0;
-
-           
-
-                    for(String enKolumn:kolumnNamn){
-                        enRad[index++] = info.get(index).get(enKolumn);
+                    
+                    
+                    if(info != null && !info.isEmpty()){
+                        //Går igenom listan som håller alla aid för alla projekten.
+                        for(HashMap<String, String> rad : info){
+                            /*Skapar en array som är så stor som listan "kolumnNamn" och sedan skapas en rad för varje HashMap som finns i ArrayListan "info", 
+                            *raden läggs sedan till i DedfaultTableModel "allaHandlagare".
+                            */
+                            Object[] enRad = new Object[kolumnNamn.length];
+                            enRad[0] = rad.get(kolumnNamn[0]);
+                            enRad[1] = ettPid;
+                            allaHandlaggare.addRow(enRad);
+                            
+                            
+                            
+                        }
+         
                     }
-
-                    allaHandlaggare.addRow(enRad);
-
-                }
-
+                }   
+                
+            }
+                //"allaHandlaggare" läggs sedan in i jTable.
                 tblHandlaggare.setModel(allaHandlaggare);
 
-            }
-
+            
+                //Sätter storleken på tabellen
             tblHandlaggare.setAutoResizeMode(tblHandlaggare.AUTO_RESIZE_OFF);
 
         TableColumn col = tblHandlaggare.getColumnModel().getColumn(0);
-
-        col.setPreferredWidth(100);
-
+        col.setPreferredWidth(150);
         col = tblHandlaggare.getColumnModel().getColumn(1);
-
+        col.setPreferredWidth(150);
         }
+ 
         catch(InfException ex){
 
             System.out.println(ex);
@@ -129,6 +132,11 @@ public class AnsvarProjektHandlaggare extends javax.swing.JFrame {
         });
 
         btnLaggTill.setText("Lägg till");
+        btnLaggTill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLaggTillActionPerformed(evt);
+            }
+        });
 
         btnTaBort.setText("Ta bort");
         btnTaBort.addActionListener(new java.awt.event.ActionListener() {
@@ -156,20 +164,20 @@ public class AnsvarProjektHandlaggare extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(134, 134, 134)
+                                .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(93, 93, 93)
-                                .addComponent(jLabel1)))
-                        .addGap(0, 59, Short.MAX_VALUE)))
+                                .addGap(42, 42, 42)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 35, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(37, 37, 37)
                 .addComponent(jLabel1)
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -190,6 +198,11 @@ public class AnsvarProjektHandlaggare extends javax.swing.JFrame {
         new AnsvarProjekt(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
+
+    private void btnLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillActionPerformed
+        new laggTillHandlaggare(idb, inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnLaggTillActionPerformed
 
     /**
      * @param args the command line arguments
