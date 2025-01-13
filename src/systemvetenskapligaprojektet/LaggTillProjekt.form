@@ -93,23 +93,22 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lblStatus" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="tfStatus" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
                                       <Component id="lblPrioritet" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="tfPrioritet" max="32767" attributes="0"/>
+                                      <Component id="comboPrioritet" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="lblStatus" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="comboStatus" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="lblKostnad" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="tfKostnad" min="-2" pref="204" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="lblFelmeddelandePrioritet" min="-2" max="-2" attributes="0"/>
                                   <Component id="lblFelmeddelandeStatus" min="-2" max="-2" attributes="0"/>
@@ -165,14 +164,16 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblStatus" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblFelmeddelandeStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="comboStatus" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblFelmeddelandePrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lblPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblFelmeddelandePrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="comboPrioritet" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -288,10 +289,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tfKostnad">
     </Component>
-    <Component class="javax.swing.JTextField" name="tfStatus">
-    </Component>
-    <Component class="javax.swing.JTextField" name="tfPrioritet">
-    </Component>
     <Component class="javax.swing.JTextField" name="tfProjektchef">
     </Component>
     <Component class="javax.swing.JTextField" name="tfLand">
@@ -330,6 +327,34 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Felaktigt format p&#xe5; prioritet"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="comboStatus">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="3">
+            <StringItem index="0" value="P&#xe5;g&#xe5;ende"/>
+            <StringItem index="1" value="Planerad"/>
+            <StringItem index="2" value="Avslutad"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="comboPrioritet">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="3">
+            <StringItem index="0" value="H&#xf6;g"/>
+            <StringItem index="1" value="Medel"/>
+            <StringItem index="2" value="L&#xe5;g"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

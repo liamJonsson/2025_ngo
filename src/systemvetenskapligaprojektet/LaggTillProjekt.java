@@ -16,6 +16,7 @@ public class LaggTillProjekt extends javax.swing.JFrame {
     private String inloggadAnvandare;
     private int pid;
     private int projektchef;
+    private int land;
     private Validering validera;
 
     /**
@@ -29,8 +30,6 @@ public class LaggTillProjekt extends javax.swing.JFrame {
         lblFelmeddelandeStartdatum.setVisible(false);
         lblFelmeddelandeSlutdatum.setVisible(false);
         lblFelmeddelandeKostnad.setVisible(false);
-        lblFelmeddelandeStatus.setVisible(false);
-        lblFelmeddelandePrioritet.setVisible(false);
         lblFelmeddelandeProjektchef.setVisible(false);
         lblFelmeddelandeLand.setVisible(false);
     }
@@ -64,8 +63,6 @@ public class LaggTillProjekt extends javax.swing.JFrame {
         tfStartdatum = new javax.swing.JTextField();
         tfSlutdatum = new javax.swing.JTextField();
         tfKostnad = new javax.swing.JTextField();
-        tfStatus = new javax.swing.JTextField();
-        tfPrioritet = new javax.swing.JTextField();
         tfProjektchef = new javax.swing.JTextField();
         tfLand = new javax.swing.JTextField();
         lblFelmeddelandeStartdatum = new javax.swing.JLabel();
@@ -75,6 +72,8 @@ public class LaggTillProjekt extends javax.swing.JFrame {
         lblFelmeddelandeKostnad = new javax.swing.JLabel();
         lblFelmeddelandeStatus = new javax.swing.JLabel();
         lblFelmeddelandePrioritet = new javax.swing.JLabel();
+        comboStatus = new javax.swing.JComboBox<>();
+        comboPrioritet = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,6 +134,10 @@ public class LaggTillProjekt extends javax.swing.JFrame {
         lblFelmeddelandeStatus.setText("Felaktigt format på status");
 
         lblFelmeddelandePrioritet.setText("Felaktigt format på prioritet");
+
+        comboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pågående", "Planerad", "Avslutad" }));
+
+        comboPrioritet.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hög", "Medel", "Låg" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -197,19 +200,18 @@ public class LaggTillProjekt extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblStatus)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(tfStatus))
-                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(lblPrioritet)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(tfPrioritet))
+                                        .addComponent(comboPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblStatus)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(lblKostnad)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(tfKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(tfKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblFelmeddelandePrioritet)
                                     .addComponent(lblFelmeddelandeStatus)
@@ -252,13 +254,14 @@ public class LaggTillProjekt extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblStatus)
-                    .addComponent(tfStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandeStatus))
+                    .addComponent(lblFelmeddelandeStatus)
+                    .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPrioritet)
-                    .addComponent(tfPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandePrioritet))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblPrioritet)
+                        .addComponent(lblFelmeddelandePrioritet))
+                    .addComponent(comboPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblProjektchef)
@@ -284,7 +287,7 @@ public class LaggTillProjekt extends javax.swing.JFrame {
     }//GEN-LAST:event_tfProjektIDActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-            new AllaProjekt(idb, inloggadAnvandare).setVisible(true);
+        new AllaProjekt(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);    // TODO add your handling code here:
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
@@ -294,24 +297,21 @@ public class LaggTillProjekt extends javax.swing.JFrame {
             lblFelmeddelandeStartdatum.setVisible(false);
             lblFelmeddelandeSlutdatum.setVisible(false);
             lblFelmeddelandeKostnad.setVisible(false);
-            lblFelmeddelandeStatus.setVisible(false);
-            lblFelmeddelandePrioritet.setVisible(false);
             lblFelmeddelandeProjektchef.setVisible(false);
             lblFelmeddelandeLand.setVisible(false);
             
             String textProjektID = tfProjektID.getText();
             String projektNamn = tfProjektNamn.getText();
             String beskrivning = tfBeskrivning.getText();
-            String status = tfStatus.getText();
+            String status = (String) comboStatus.getSelectedItem();
             String startDatum = tfStartdatum.getText();
             String slutDatum = tfSlutdatum.getText();
             String textKostnad = tfKostnad.getText();
-            String prioritet = tfPrioritet.getText();
+            String prioritet = (String) comboPrioritet.getSelectedItem();
             String textProjektchef = tfProjektchef.getText();
-            String land = tfLand.getText();
+            String textLand = tfLand.getText();
             
-            if(validera.valideringDatum(startDatum) && validera.valideringDatum(slutDatum) 
-               && validera.valideringStatus(status) && validera.valideringPrioritet(prioritet)){
+            if(validera.valideringDatum(startDatum) && validera.valideringDatum(slutDatum)){
                 try {
                     pid = Integer.parseInt(textProjektID);
                 } 
@@ -323,6 +323,12 @@ public class LaggTillProjekt extends javax.swing.JFrame {
                 } 
                 catch (NumberFormatException ex) {
                     lblFelmeddelandeProjektchef.setVisible(true);
+                }
+                try {
+                    land = Integer.parseInt(textLand);
+                } 
+                catch (NumberFormatException ex) {
+                    lblFelmeddelandeLand.setVisible(true);
                 }
                 
                 BigDecimal kostnad;
@@ -340,33 +346,37 @@ public class LaggTillProjekt extends javax.swing.JFrame {
                 }
 
                 // Kontrollera om Projekt ID redan finns
-                String checkaPID = "select pid from projekt where pid = " + pid + ";";
-                String idFinns = idb.fetchSingle(checkaPID);
-                
-                String checkaEnProjektchef = "select aid from handlaggare where aid = " + projektchef + ";";
-                String enProjektChef = idb.fetchSingle(checkaEnProjektchef);
-                
-                String checkaEttLand = "select lid from handlaggare where aid = " + projektchef + ";";
-                String ettLand = idb.fetchSingle(checkaEttLand);
-                          
-                if (idFinns != null) { 
-                    lblFelmeddelandeProjektID.setVisible(true);
-                }
-                if (enProjektChef == null) { 
-                    lblFelmeddelandeProjektchef.setVisible(true);
-                }
-                else {
-                    // Om Projekt ID inte finns, lägg till det nya projektet
-                    String insertNyProjekt = "insert into projekt (pid, projektnamn, beskrivning, startdatum, slutdatum, kostnad, status, prioritet, projektchef, land) values (" 
-                        + pid + ", '" + projektNamn + "', '" + beskrivning + "', '" + startDatum + "', '" 
-                        + slutDatum + "', " + kostnad + ", '" + status + "', '" + prioritet + "', " + projektchef + ", " 
-                        + land + ");";
-                    idb.insert(insertNyProjekt);
+                    String checkaPID = "select pid from projekt where pid = " + pid + ";";
+                    String ettPID = idb.fetchSingle(checkaPID);
+                // Kontrollera om AID är en handläggare
+                    String checkaEnProjektchef = "select aid from handlaggare where aid = " + projektchef + ";";
+                    String enProjektChef = idb.fetchSingle(checkaEnProjektchef);
+                // Kontrollera om landet finns
+                    String checkaEttLand = "select lid from land where lid = " + land + ";";
+                    String ettLand = idb.fetchSingle(checkaEttLand);
+                    
+                    if (ettPID != null) { 
+                        lblFelmeddelandeProjektID.setVisible(true);
+                    }                   
+                    if (enProjektChef == null) { 
+                        lblFelmeddelandeProjektchef.setVisible(true);
+                    }
+                    if (ettLand == null) { 
+                        lblFelmeddelandeLand.setVisible(true);
+                    }
+                    else {
+                        // Om Projekt ID inte finns, lägg till det nya projektet
+                        String insertNyProjekt = "insert into projekt (pid, projektnamn, beskrivning, startdatum, slutdatum, kostnad, status, prioritet, projektchef, land) values (" 
+                            + pid + ", '" + projektNamn + "', '" + beskrivning + "', '" + startDatum + "', '" 
+                            + slutDatum + "', " + kostnad + ", '" + status + "', '" + prioritet + "', " + projektchef + ", " 
+                            + land + ");";
+                        idb.insert(insertNyProjekt);
 
-                    // Navigera tillbaka till alla projekt
-                    new AllaProjekt(idb, inloggadAnvandare).setVisible(true);
-                    this.setVisible(false);
-                }
+                        // Navigera tillbaka till alla projekt
+                        new AllaProjekt(idb, inloggadAnvandare).setVisible(true);
+                        this.setVisible(false);
+                    }
+                
             }
             else{
                 if(!validera.valideringDatum(startDatum)){
@@ -375,17 +385,9 @@ public class LaggTillProjekt extends javax.swing.JFrame {
                 else if(!validera.valideringDatum(slutDatum)){
                     lblFelmeddelandeSlutdatum.setVisible(true);
                 }
-                else if(!validera.valideringStatus(status)){
-                    lblFelmeddelandeStatus.setVisible(true);
-                }
-                else if(!validera.valideringPrioritet(prioritet)){
-                    lblFelmeddelandePrioritet.setVisible(true);
-                }
                 else{
                     lblFelmeddelandeStartdatum.setVisible(true);
                     lblFelmeddelandeSlutdatum.setVisible(true);
-                    lblFelmeddelandeStatus.setVisible(true);
-                    lblFelmeddelandePrioritet.setVisible(true);
                 }
             }
         } 
@@ -405,6 +407,8 @@ public class LaggTillProjekt extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSpara;
     private javax.swing.JButton btnTillbaka;
+    private javax.swing.JComboBox<String> comboPrioritet;
+    private javax.swing.JComboBox<String> comboStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblBeskrivning;
     private javax.swing.JLabel lblFelmeddelandeKostnad;
@@ -427,12 +431,10 @@ public class LaggTillProjekt extends javax.swing.JFrame {
     private javax.swing.JTextField tfBeskrivning;
     private javax.swing.JTextField tfKostnad;
     private javax.swing.JTextField tfLand;
-    private javax.swing.JTextField tfPrioritet;
     private javax.swing.JTextField tfProjektID;
     private javax.swing.JTextField tfProjektNamn;
     private javax.swing.JTextField tfProjektchef;
     private javax.swing.JTextField tfSlutdatum;
     private javax.swing.JTextField tfStartdatum;
-    private javax.swing.JTextField tfStatus;
     // End of variables declaration//GEN-END:variables
 }
