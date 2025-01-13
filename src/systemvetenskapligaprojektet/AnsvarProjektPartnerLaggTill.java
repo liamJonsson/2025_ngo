@@ -3,6 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package systemvetenskapligaprojektet;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import oru.inf.InfDB; //importeras i alla klasser som vi ska använda
 import oru.inf.InfException; //importeras i alla klasser som vi ska använda
 /**
@@ -20,7 +24,46 @@ public class AnsvarProjektPartnerLaggTill extends javax.swing.JFrame {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         initComponents();
+        fyllDropdownPartners();
     }
+    
+private void fyllDropdownPartners() {
+    try {
+        // Hämta den inloggade användarens aid (anställd ID)
+        String aidQuery = "SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare + "';";
+        String aid = idb.fetchSingle(aidQuery);
+
+        if (aid != null) {
+            // Hämta alla partners som kan läggas till i projektet
+            String selectPartners = "SELECT partner.pid, partner.namn, partner.kontaktperson, partner.kontaktepost, partner.telefon, partner.adress, partner.branch, partner.stad " +
+                                     "FROM partner;";
+            ArrayList<HashMap<String, String>> partners = idb.fetchRows(selectPartners);
+
+            // Lägg till partners i dropdown-listan
+            if (partners != null && !partners.isEmpty()) {
+                ComboValjPartner.removeAllItems(); // Rensa tidigare items
+
+                // Lägg till "Välj partner" som första objekt i comboboxen
+                ComboValjPartner.addItem("Välj partner");
+
+                // Lägg till varje partner i comboboxen
+                for (HashMap<String, String> partner : partners) {
+                    String partnerInfo = partner.get("pid") + " - " + partner.get("namn") + ", " + partner.get("kontaktperson");
+                    ComboValjPartner.addItem(partnerInfo); // Lägg till partner i dropdown
+                }
+
+                // Lämna det första neutrala alternativet valt
+                ComboValjPartner.setSelectedIndex(0); // Sätt "Välj partner" som valt
+            } else {
+                JOptionPane.showMessageDialog(this, "Inga partners hittades.");
+            }
+        }
+    } catch (InfException ex) {
+        JOptionPane.showMessageDialog(this, "Ett fel inträffade vid hämtning av partners.");
+    }
+}
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,21 +74,114 @@ public class AnsvarProjektPartnerLaggTill extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        lblValjPartner = new javax.swing.JLabel();
+        btnSpara = new javax.swing.JButton();
+        btnTillbaka = new javax.swing.JButton();
+        ComboValjPartner = new javax.swing.JComboBox<>();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Lägg till ny partner för projekt");
+
+        lblValjPartner.setText("Välj Partner");
+
+        btnSpara.setText("Spara");
+        btnSpara.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSparaActionPerformed(evt);
+            }
+        });
+
+        btnTillbaka.setText("Tillbaka");
+        btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTillbakaActionPerformed(evt);
+            }
+        });
+
+        ComboValjPartner.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblValjPartner)
+                        .addGap(18, 18, 18)
+                        .addComponent(ComboValjPartner, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(170, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(btnSpara)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnTillbaka)
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel1)
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblValjPartner)
+                    .addComponent(ComboValjPartner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(51, 51, 51)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnTillbaka)
+                    .addComponent(btnSpara))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
+    new AnsvarProjektPartner(idb, inloggadAnvandare).setVisible(true);
+    this.setVisible(false);
+    }//GEN-LAST:event_btnTillbakaActionPerformed
+
+    private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
+    try {
+        String selectedPartner = (String) ComboValjPartner.getSelectedItem();
+        if (selectedPartner == null || selectedPartner.equals("Välj partner")) {
+            JOptionPane.showMessageDialog(this, "Välj en partner.");
+            return;
+        }
+
+        // Extrahera partnerID från den valda dropdown-texten (format: "pid - namn, kontaktperson")
+        String partnerID = selectedPartner.split(" - ")[0];
+
+        // Kontrollera om den inloggade användaren är projektchef för något projekt
+        String selectProjekt = "SELECT pid FROM projekt WHERE projektchef = (SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare + "');";
+        ArrayList<String> projektIDs = idb.fetchColumn(selectProjekt);
+
+        if (!projektIDs.isEmpty()) {
+            // Använd första projektet från listan
+            String pid = projektIDs.get(0);
+
+            // Lägg till partner i projektet
+            String insertPartnerInProject = "INSERT INTO projekt_partner (pid, partner_pid) VALUES (" + pid + ", " + partnerID + ");";
+            idb.insert(insertPartnerInProject);
+
+            JOptionPane.showMessageDialog(this, "Partner har lagts till i projektet.");
+
+            // Återgå till föregående vy
+            new AnsvarProjektPartner(idb, inloggadAnvandare).setVisible(true);
+            this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "Det finns inga projekt där du är projektchef.");
+        }
+    } catch (InfException ex) {
+        JOptionPane.showMessageDialog(this, "Ett fel inträffade vid spara av partner.");
+    }
+    }//GEN-LAST:event_btnSparaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -83,5 +219,10 @@ public class AnsvarProjektPartnerLaggTill extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboValjPartner;
+    private javax.swing.JButton btnSpara;
+    private javax.swing.JButton btnTillbaka;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblValjPartner;
     // End of variables declaration//GEN-END:variables
 }

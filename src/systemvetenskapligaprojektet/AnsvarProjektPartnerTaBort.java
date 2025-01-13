@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package systemvetenskapligaprojektet;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.JOptionPane;
 import oru.inf.InfDB; //importeras i alla klasser som vi ska använda
 import oru.inf.InfException; //importeras i alla klasser som vi ska använda
 
@@ -14,16 +17,69 @@ public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
 
     private static InfDB idb;
     private String inloggadAnvandare;
+    private String projektID;
     /**
      * Creates new form AnsvarProjektPartnerTaBort
      */
-    public AnsvarProjektPartnerTaBort(InfDB idb, String inloggadAnvandare) {
+    public AnsvarProjektPartnerTaBort(InfDB idb, String inloggadAnvandare, String projektID) {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
+        this.projektID = projektID;
         initComponents();
-        lblFelIDTaBort.setVisible(false);
-        lblTaBortPartnerLyckad.setVisible(false);
+        fyllDropdownKoppladePartners(projektID);
     }
+    
+    private void fyllDropdownKoppladePartners(String projektID) {
+        try {
+            // SQL-fråga som hämtar partners kopplade till projektet
+            String query = "SELECT partner.pid, partner.namn " +
+                           "FROM projekt_partner " +
+                           "JOIN partner ON projekt_partner.partner_pid = partner.pid " +
+                           "WHERE projekt_partner.pid = " + projektID;  // Direkt inlagd projektID som heltal
+
+            ArrayList<HashMap<String, String>> koppladePartners = idb.fetchRows(query);
+
+            // Rensa och fyll ComboBox
+            ComboTaBortPartner.removeAllItems();
+            ComboTaBortPartner.addItem("Välj partner");
+
+            // Lägg till varje partner i comboboxen
+            for (HashMap<String, String> partner : koppladePartners) {
+                String partnerInfo = partner.get("pid") + " - " + partner.get("namn");
+                ComboTaBortPartner.addItem(partnerInfo);
+            }
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(this, "Kunde inte fylla kopplade partners: " + e.getMessage());
+        }
+    }
+
+    private void taBortPartnerFrånProjekt(String projektID) {
+        try {
+            // Hämta den valda partnern från ComboBoxen
+            String valdPartner = (String) ComboTaBortPartner.getSelectedItem();
+            if (valdPartner == null || valdPartner.equals("Välj partner")) {
+                JOptionPane.showMessageDialog(this, "Välj en partner att ta bort.");
+                return;
+            }
+
+            // Extrahera partnerID från den valda partnern
+            String partnerID = valdPartner.split(" - ")[0]; // Hämta partnerID
+
+            // SQL-fråga för att ta bort den valda partnern från projektet
+            String deleteQuery = "DELETE FROM projekt_partner " +
+                                 "WHERE pid = " + projektID + " AND partner_pid = " + partnerID;
+
+            // Exekvera delete-frågan
+            idb.delete(deleteQuery);
+
+            JOptionPane.showMessageDialog(this, "Partner har tagits bort från projektet.");
+            fyllDropdownKoppladePartners(projektID); // Uppdatera ComboBoxen efter borttagning
+
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(this, "Kunde inte ta bort partner: " + e.getMessage());
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,21 +91,14 @@ public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        tfTaBortID = new javax.swing.JTextField();
-        lblTaBortPartnerLyckad = new javax.swing.JLabel();
-        lblFelIDTaBort = new javax.swing.JLabel();
         btnTaBort = new javax.swing.JButton();
         btnTillbaka = new javax.swing.JButton();
+        ComboTaBortPartner = new javax.swing.JComboBox<>();
+        lblValjPartner = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Ta bort partner från projekt");
-
-        tfTaBortID.setText("Fyll i ID:t på den partner du önskar ta bort från projekt...");
-
-        lblTaBortPartnerLyckad.setText("Partnern har tagits bort");
-
-        lblFelIDTaBort.setText("ID:t finns inte i systemet");
 
         btnTaBort.setText("Ta bort");
         btnTaBort.addActionListener(new java.awt.event.ActionListener() {
@@ -65,6 +114,10 @@ public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
             }
         });
 
+        ComboTaBortPartner.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        lblValjPartner.setText("Välj partner");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -75,18 +128,15 @@ public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
                         .addGap(99, 99, 99)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblFelIDTaBort)
-                            .addComponent(lblTaBortPartnerLyckad)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnTaBort)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnTillbaka))
-                            .addComponent(tfTaBortID, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(btnTaBort)
+                        .addGap(204, 204, 204)
+                        .addComponent(btnTillbaka))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblValjPartner)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ComboTaBortPartner, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -94,13 +144,11 @@ public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(tfTaBortID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblTaBortPartnerLyckad)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblFelIDTaBort)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ComboTaBortPartner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblValjPartner))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTaBort)
                     .addComponent(btnTillbaka))
@@ -111,29 +159,7 @@ public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
-    try {
-        // Hämta partner-ID från textfältet
-        String taBortPartnerId = tfTaBortID.getText();
-        int partnerId = Integer.parseInt(taBortPartnerId);  // Konvertera till heltal (int)
-
-        // Kontrollera om partnern finns i tabellen projekt_partner
-        String kontrolleraPartnerId = "select partner_id from projekt_partner where partner_id = " + partnerId + ";";
-        String partnerFinns = idb.fetchSingle(kontrolleraPartnerId);
-
-        if (partnerFinns != null) {
-            // Ta bort partnern från tabellen projekt_partner
-            String taBortPartner = "delete from projekt_partner where partner_id = " + partnerId + ";";
-            idb.delete(taBortPartner);  // Kör DELETE-frågan för att ta bort partnern
-            lblTaBortPartnerLyckad.setVisible(true);  // Visa meddelande om borttagningen lyckades
-            lblFelIDTaBort.setVisible(false);  // Dölj felmeddelande om partnern fanns
-        } else {
-            lblFelIDTaBort.setVisible(true);  // Visa felmeddelande om partnern inte fanns
-        }
-    } catch (InfException ex) {
-        System.out.println(ex);  // Felhantering om det finns problem med databasen
-    } catch (NumberFormatException ex) {
-        lblFelIDTaBort.setVisible(true);  // Felmeddelande om partner-ID inte är ett giltigt tal
-    }
+    taBortPartnerFrånProjekt(projektID);
     }//GEN-LAST:event_btnTaBortActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
@@ -177,11 +203,10 @@ public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboTaBortPartner;
     private javax.swing.JButton btnTaBort;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel lblFelIDTaBort;
-    private javax.swing.JLabel lblTaBortPartnerLyckad;
-    private javax.swing.JTextField tfTaBortID;
+    private javax.swing.JLabel lblValjPartner;
     // End of variables declaration//GEN-END:variables
 }
