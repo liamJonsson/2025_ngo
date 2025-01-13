@@ -265,7 +265,7 @@ private void hanteraStatusSok(String sokTerm) {
             }
         });
 
-        btnRedigera.setText("jButton1");
+        btnRedigera.setText("Redigera");
         btnRedigera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRedigeraActionPerformed(evt);
