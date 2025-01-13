@@ -28,33 +28,66 @@ public class AnsvarProjektPartner extends javax.swing.JFrame {
             fyllTabell();
     }
     
-    public void fyllTabell(){
-        try{
-        String[] kolumnNamn = {"pid", "namn", "kontaktperson", "kontaktepost", "telefon", "adress", "branch", "stad"};
-        DefaultTableModel allaPartners = new DefaultTableModel(kolumnNamn, 0);
-        
-        String selectPID = "select pid from partner order by(pid);";
-        ArrayList<String> pid = idb.fetchColumn(selectPID);
-            if(pid != null){
-                for(String ettID:pid){
-                    String selectInfo = "select * from partner where pid = " + ettID + ";";
-                    HashMap<String,String> info = idb.fetchRow(selectInfo);
-            
-                    String[] enRad = new String[kolumnNamn.length];
-                    int index = 0;
-            
-                    for(String enKolumn:kolumnNamn){
-                        enRad[index++] = info.get(enKolumn);
+    public void fyllTabell() {
+        try {
+            // Hämta den inloggade användarens aid (anställd ID)
+            String aidQuery = "SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare + "';";
+            String aid = idb.fetchSingle(aidQuery);
+
+            // Kontrollera om aid hittades
+            if (aid != null) {
+
+                // Kolumnnamn för tabellen
+                String[] kolumnNamn = {"pid", "namn", "kontaktperson", "kontaktepost", "telefon", "adress", "branch", "stad"};
+                DefaultTableModel allaPartners = new DefaultTableModel(kolumnNamn, 0);
+
+                // Hämta alla projekt där den inloggade användaren är projektchef
+                String selectProjekt = "SELECT pid FROM projekt WHERE projektchef = '" + aid + "';";
+                ArrayList<String> projektIDs = idb.fetchColumn(selectProjekt);
+
+                // Kontrollera om några projekt hittades
+                if (projektIDs != null && !projektIDs.isEmpty()) {
+
+                    // Hämta partners för varje projekt som den inloggade användaren är projektchef för
+                    for (String pid : projektIDs) {
+
+                        // SQL-fråga för att hämta partners kopplade till det aktuella projektet
+                        String selectPartners = "SELECT partner.pid, partner.namn, partner.kontaktperson, partner.kontaktepost, partner.telefon, partner.adress, partner.branch, partner.stad " +
+                                                 "FROM projekt_partner pp " +
+                                                 "JOIN partner ON pp.partner_pid = partner.pid " +
+                                                 "WHERE pp.pid = " + pid + ";";
+
+                        // Hämta partners kopplade till det aktuella projektet
+                        ArrayList<HashMap<String, String>> partners = idb.fetchRows(selectPartners);
+
+                        // Kontrollera om partners hittades
+                        if (partners != null && !partners.isEmpty()) {
+
+                            // Lägg till partnerinformation i tabellen
+                            for (HashMap<String, String> partner : partners) {
+                                String[] enRad = new String[kolumnNamn.length];
+                                int index = 0;
+
+                                for (String kolumn : kolumnNamn) {
+                                    enRad[index++] = partner.getOrDefault(kolumn, "Ingen data");
+                                }
+
+                                allaPartners.addRow(enRad);
+                            }
+                        }
                     }
-                    allaPartners.addRow(enRad);
                 }
+
+                // Uppdatera tabellen med de filtrerade partners
                 tblAnsvarProjektPartner.setModel(allaPartners);
+
             }
-        }
-        catch(InfException ex){
+
+        } catch (InfException ex) {
             System.out.println(ex);
-        }       
+        }
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
