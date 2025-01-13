@@ -43,7 +43,7 @@ public class AllaAnstallda extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnLaggTill.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
+        btnLaggTill.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnLaggTill.setText("Lägg till ny anställd");
         btnLaggTill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -51,7 +51,7 @@ public class AllaAnstallda extends javax.swing.JFrame {
             }
         });
 
-        btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
+        btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,7 +62,7 @@ public class AllaAnstallda extends javax.swing.JFrame {
         lblAllaAnstallda.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
         lblAllaAnstallda.setText("ALLA ANSTÄLLDA");
 
-        btnTaBortAnstalld.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
+        btnTaBortAnstalld.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnTaBortAnstalld.setText("Ta bort en anställd");
         btnTaBortAnstalld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

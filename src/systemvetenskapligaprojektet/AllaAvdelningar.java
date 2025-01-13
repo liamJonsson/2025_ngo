@@ -141,7 +141,7 @@ public class AllaAvdelningar extends javax.swing.JFrame {
         });
 
         btnLäggTill.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
-        btnLäggTill.setText("Lägg till ny anställd");
+        btnLäggTill.setText("Lägg till ny avdelning");
         btnLäggTill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLäggTillActionPerformed(evt);
@@ -163,14 +163,15 @@ public class AllaAvdelningar extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 953, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnLäggTill)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnRedigera)
-                        .addGap(566, 566, 566)
-                        .addComponent(btnTillbaka)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnLäggTill)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnRedigera)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnTillbaka))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 953, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
