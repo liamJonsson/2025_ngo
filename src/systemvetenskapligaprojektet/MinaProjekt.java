@@ -103,15 +103,32 @@ public class MinaProjekt extends javax.swing.JFrame {
     
 private void skapaOchFyllTabell(String valdStatus) {
     try {
-        String baseQuery = 
+        String aid = hamtaAnvandareID();
+        if (aid == null) return;
+        
+        //Query för att ta fram projekt som en användare är kopplad till via tabellen ans_proj
+        String handlaggareQuery = 
             "SELECT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, p.projektchef, p.land, partner.namn " +
             "FROM projekt p " +
             "LEFT JOIN projekt_partner pt ON p.pid = pt.pid " +
-            "LEFT JOIN partner ON pt.partner_pid = partner.pid";
+            "LEFT JOIN partner ON pt.partner_pid = partner.pid " +
+            "JOIN ans_proj ON p.pid = ans_proj.pid " +
+            "WHERE ans_proj.aid = '" + aid + "'";
 
-        // Lägg till WHERE-klausul baserat på valt status
+        //Query för att ta fram projekt där användaren är projektchef
+        String projektchefQuery = 
+            "SELECT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, p.projektchef, p.land, partner.namn " +
+            "FROM projekt p " +
+            "LEFT JOIN projekt_partner pt ON p.pid = pt.pid " +
+            "LEFT JOIN partner ON pt.partner_pid = partner.pid " +
+            "WHERE p.projektchef = '" + aid + "'";
+        
+        //slår samman båda resultaten till en enda tabell och tar automatiskt bort dubbletter
+        String baseQuery = handlaggareQuery + " UNION " + projektchefQuery;
+
+        // Om en status är vald, filtrera resultaten
         if (valdStatus != null && !valdStatus.isEmpty()) {
-            baseQuery += " WHERE p.status = '" + valdStatus + "'";
+            baseQuery = "SELECT * FROM (" + baseQuery + ") AS filtrerad WHERE status = '" + valdStatus + "'";
         }
 
         ArrayList<HashMap<String, String>> projektLista = idb.fetchRows(baseQuery);
@@ -126,6 +143,8 @@ private void skapaOchFyllTabell(String valdStatus) {
         JOptionPane.showMessageDialog(this, "Kunde inte fylla tabellen: " + e.getMessage());
     }
 }
+
+
 
 private void uppdateraTabell(ArrayList<HashMap<String, String>> projektLista) {
     String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "kostnad", "status", "prioritet", "projektchef", "land", "partner_namn"};
