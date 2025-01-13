@@ -138,12 +138,25 @@ public class TaBortAnstalld extends javax.swing.JFrame {
             String kontrolleraAid = "select aid from anstalld where aid = " + aid + ";";
             String aidFinns = idb.fetchSingle(kontrolleraAid);
             
-            //Om aid finns i databasen tar vi bort den 
+            String kontrollHandlaggare = "select aid from handlaggare where aid = " + aid + ";";
+            String anstalldArHandlaggare = idb.fetchSingle(kontrollHandlaggare);
+            
+            //Om aid finns i databasen tar vi bort den, först från Handläggare/Admin
             if(aidFinns != null){
-               String taBort = "delete from anstalld where aid = " + aid + ";";
-               idb.delete(taBort); 
-               lblTaBortAnstalldLyckad.setVisible(true);
-                
+                if(anstalldArHandlaggare == null){
+                    String taBortAdministrator = "delete from admin where aid = " + aid + ";";
+                    idb.delete(taBortAdministrator);
+                }
+                else{
+                    String taBortHandlaggare = "delete from handlaggare where aid = " + aid + ";";
+                    idb.delete(taBortHandlaggare);
+                }
+            }
+            //och sen från Anstalld
+            if(aidFinns != null){
+               String taBortAnstalld = "delete from anstalld where aid = " + aid + ";";
+               idb.delete(taBortAnstalld);               
+               lblTaBortAnstalldLyckad.setVisible(true);               
             }
             else{
                 lblFelIDTaBort.setVisible(true);
