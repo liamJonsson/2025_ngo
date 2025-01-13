@@ -71,22 +71,6 @@ public class Validering {
             return false;
         }
     }
-    //Status
-    public static boolean valideringStatus(String status){
-        boolean korrektStatus = false;
-        if(status.equals("Pågående") || status.equals("Planerat") || status.equals("Avslutat")){
-            korrektStatus = true;
-        }
-        return korrektStatus;
-    }
-    //Prioritet
-    public static boolean valideringPrioritet(String prioritet){
-        boolean korrektPrioritet = false;
-        if(prioritet.equals("Hög") || prioritet.equals("Medel") || prioritet.equals("Låg")){
-            korrektPrioritet = true;
-        }
-        return korrektPrioritet;
-    }
 }
 
     

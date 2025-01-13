@@ -75,6 +75,8 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
         lblFelAvdelning = new javax.swing.JLabel();
         lblFelTelefon = new javax.swing.JLabel();
         lblLyckat = new javax.swing.JLabel();
+        comboboxRoll = new javax.swing.JComboBox<>();
+        lblRoll = new javax.swing.JLabel();
 
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
@@ -165,6 +167,12 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
         lblLyckat.setForeground(new java.awt.Color(0, 153, 0));
         lblLyckat.setText("Den anställda har lagts till!");
 
+        comboboxRoll.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
+        comboboxRoll.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Handläggare", "Administratör" }));
+
+        lblRoll.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
+        lblRoll.setText("Roll");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -173,6 +181,15 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblAllaAnstallda)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnSlumpaLosenord)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnLaggTill)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnTillbaka1))
+                            .addComponent(lblLyckat, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblTelefonnummer)
@@ -183,32 +200,26 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
                             .addComponent(lblNamn1)
                             .addComponent(lblNamn)
                             .addComponent(lblID)
-                            .addComponent(lblAvdelning))
+                            .addComponent(lblAvdelning)
+                            .addComponent(lblRoll))
                         .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(tfAnstallningsID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
-                            .addComponent(tfAnstallningsFornamn, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfAnstallningsEfternamn, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfAnstallningsAdress, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfAnstallningsEpost, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfAnstallningsTelefonnummer, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfAnstallningsDatum, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfAnstallningsLosenord, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblFelID, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfAnstallningsAvdelning, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblFelEpost, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblFelTelefon, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblFelAnstDatum, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblFelAvdelning, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnSlumpaLosenord)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnLaggTill)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnTillbaka1))
-                            .addComponent(lblLyckat, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(comboboxRoll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(tfAnstallningsID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+                                .addComponent(tfAnstallningsFornamn, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tfAnstallningsEfternamn, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tfAnstallningsAdress, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tfAnstallningsEpost, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tfAnstallningsTelefonnummer, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tfAnstallningsDatum, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tfAnstallningsLosenord, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblFelID, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tfAnstallningsAvdelning, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblFelEpost, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblFelTelefon, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblFelAnstDatum, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblFelAvdelning, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(0, 28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -262,6 +273,10 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
                     .addComponent(tfAnstallningsAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(2, 2, 2)
                 .addComponent(lblFelAvdelning)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboboxRoll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblRoll))
                 .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSlumpaLosenord)
@@ -269,7 +284,7 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
                     .addComponent(btnLaggTill))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblLyckat)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addGap(35, 35, 35))
         );
 
         pack();
@@ -303,6 +318,7 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
            String anstallningsDatum = tfAnstallningsDatum.getText();
            String losenord = tfAnstallningsLosenord.getText();
            String avdelningsID = tfAnstallningsAvdelning.getText(); 
+           String roll = (String) comboboxRoll.getSelectedItem();
            
            if(validera.valideringEmail(epost) && validera.valideringTelefon(telefon) && validera.valideringDatum(anstallningsDatum)){
                int aid = Integer.parseInt(textAID); //Gör om från String till int
@@ -336,6 +352,14 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
 
                String insertNyAnstalld = "insert into anstalld (aid, fornamn, efternamn, adress, epost, telefon, anstallningsdatum, losenord, avdelning) values (" + aid + ", '" + fornamn + "', '" + efternamn + "', '" + adress + "', '" + epost + "', '" + telefon + "', '" + anstallningsDatum + "', '" + losenord + "', " + avdelning +");";
                idb.insert(insertNyAnstalld);
+               if(roll.equals("Handläggare")){
+                   String insertNyHandlaggare = "insert into handlaggare (aid) values (" + aid + ");";
+                   idb.insert(insertNyHandlaggare);
+               }
+               if(roll.equals("Administratör")){
+                   String insertNyAdministrator = "insert into admin (aid) values (" + aid + ");";
+                   idb.insert(insertNyAdministrator);
+               }
                lblLyckat.setVisible(true);
            }
            else{
@@ -434,6 +458,7 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
     private javax.swing.JButton btnSlumpaLosenord;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JButton btnTillbaka1;
+    private javax.swing.JComboBox<String> comboboxRoll;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblAdress;
     private javax.swing.JLabel lblAllaAnstallda;
@@ -450,6 +475,7 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
     private javax.swing.JLabel lblLyckat;
     private javax.swing.JLabel lblNamn;
     private javax.swing.JLabel lblNamn1;
+    private javax.swing.JLabel lblRoll;
     private javax.swing.JLabel lblTelefonnummer;
     private javax.swing.JTextField tfAnstallningsAdress;
     private javax.swing.JTextField tfAnstallningsAvdelning;
