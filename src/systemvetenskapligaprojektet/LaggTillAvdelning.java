@@ -31,6 +31,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
         lblFelmeddelandeTel.setVisible(false);
         lblFelmeddelandeStadsID.setVisible(false);
         lblFelmeddelandeAvdelningschef.setVisible(false);
+        lblLyckat.setVisible(false);
     }
 
     /**
@@ -66,26 +67,35 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
         lblFelmeddelandeEpost = new javax.swing.JLabel();
         lblFelmeddelandeTel = new javax.swing.JLabel();
         lblFelmeddelandeStadsID = new javax.swing.JLabel();
+        lblLyckat = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Lägg till ny avdelning");
+        jLabel1.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
+        jLabel1.setText("LÄGG TILL AVDELNING");
 
+        lblID.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblID.setText("ID");
 
+        lblNamn.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblNamn.setText("Namn");
 
+        lblBeskrivning.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblBeskrivning.setText("Beskrivning");
 
+        lblAdress.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblAdress.setText("Adress");
 
+        lblEpost.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblEpost.setText("Epost");
 
+        lblTel.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblTel.setText("Telefonnummer");
 
+        lblStad.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblStad.setText("Stad");
 
+        lblAvdelningschefID.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblAvdelningschefID.setText("Avdelningschef");
 
         tfNamn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -151,13 +161,15 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
             }
         });
 
-        btnLaggTill.setText("Lägg till");
+        btnLaggTill.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
+        btnLaggTill.setText("Spara");
         btnLaggTill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLaggTillActionPerformed(evt);
             }
         });
 
+        btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,111 +177,132 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
             }
         });
 
+        lblFelmeddelandeID.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblFelmeddelandeID.setForeground(new java.awt.Color(255, 0, 0));
-        lblFelmeddelandeID.setText("Ogiltigt ID");
+        lblFelmeddelandeID.setText("ID:t existerar redan");
 
+        lblFelmeddelandeAvdelningschef.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblFelmeddelandeAvdelningschef.setForeground(new java.awt.Color(255, 0, 0));
-        lblFelmeddelandeAvdelningschef.setText("Vänligen fyll i giltigt ID för avdelningschef");
+        lblFelmeddelandeAvdelningschef.setText("Välj ett existerande anställningsID");
 
+        lblFelmeddelandeEpost.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblFelmeddelandeEpost.setForeground(new java.awt.Color(255, 0, 0));
-        lblFelmeddelandeEpost.setText("Felaktigt format på epostadressen");
+        lblFelmeddelandeEpost.setText("Fyll i en giltig epostadress: XXX@XXX.XXX");
 
+        lblFelmeddelandeTel.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblFelmeddelandeTel.setForeground(new java.awt.Color(255, 0, 0));
-        lblFelmeddelandeTel.setText("Felaktigt format på telefonnumret");
+        lblFelmeddelandeTel.setText("Fyll i ett giltigt telefonnummer: XXXXXXXXXX");
 
+        lblFelmeddelandeStadsID.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblFelmeddelandeStadsID.setForeground(new java.awt.Color(255, 0, 0));
-        lblFelmeddelandeStadsID.setText("Vänligen fyll i giltigt stadsID");
+        lblFelmeddelandeStadsID.setText("Välj ett existerande stadsID");
+
+        lblLyckat.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
+        lblLyckat.setForeground(new java.awt.Color(0, 153, 0));
+        lblLyckat.setText("Avdelningen har lagts till! ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(btnLaggTill)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnTillbaka))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblAvdelningschefID)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblID)
+                                .addComponent(lblNamn)
+                                .addComponent(lblBeskrivning)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(lblAvdelningschefID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblStad, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(lblEpost, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblAdress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblBeskrivning, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblNamn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblTel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tfNamn)
-                                    .addComponent(tfBeskrivning)
-                                    .addComponent(tfAdress)
-                                    .addComponent(tfEpost)
-                                    .addComponent(tfTelefonnummer)
-                                    .addComponent(tfStad)
-                                    .addComponent(tfAvdelningschefID)
-                                    .addComponent(tfID, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(lblAdress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(lblTel, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lblStad)))
+                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblFelmeddelandeEpost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblFelmeddelandeTel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblFelmeddelandeStadsID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblFelmeddelandeAvdelningschef, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                            .addComponent(lblFelmeddelandeID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                            .addComponent(lblFelmeddelandeID, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfStad, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                            .addComponent(tfTelefonnummer)
+                            .addComponent(tfEpost)
+                            .addComponent(tfAdress)
+                            .addComponent(tfBeskrivning)
+                            .addComponent(tfNamn)
+                            .addComponent(tfID)
+                            .addComponent(tfAvdelningschefID)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblLyckat)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btnLaggTill)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnTillbaka)))
+                            .addComponent(lblFelmeddelandeEpost, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFelmeddelandeTel, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFelmeddelandeAvdelningschef, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFelmeddelandeStadsID, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblID)
-                    .addComponent(tfID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandeID))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(tfID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addComponent(lblFelmeddelandeID)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNamn)
-                    .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBeskrivning)
                     .addComponent(tfBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAdress)
                     .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEpost)
-                    .addComponent(tfEpost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandeEpost))
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTel)
-                    .addComponent(tfTelefonnummer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandeTel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblStad)
-                    .addComponent(tfStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandeStadsID))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAvdelningschefID)
-                    .addComponent(tfAvdelningschefID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandeAvdelningschef))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLaggTill)
-                    .addComponent(btnTillbaka))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblEpost)
+                    .addComponent(tfEpost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addComponent(lblFelmeddelandeEpost)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfTelefonnummer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTel))
+                .addGap(2, 2, 2)
+                .addComponent(lblFelmeddelandeTel)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStad)
+                    .addComponent(tfStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addComponent(lblFelmeddelandeStadsID)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfAvdelningschefID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAvdelningschefID))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(btnTillbaka))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(lblFelmeddelandeAvdelningschef)
+                        .addGap(43, 43, 43)
+                        .addComponent(btnLaggTill)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblLyckat)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -368,8 +401,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
                             + "(" + avdid + ",'" + namn + "','" + beskrivning + "','" + adress + "','" + epost + "','" + telefon + "',"
                             + stadsID + "," + chefsID + ");";
                     idb.insert(insertNyAvdelning);
-                    new TestTable(idb,inloggadAnvandare).setVisible(true);
-                    this.setVisible(false);
+                    lblLyckat.setVisible(true);
                 }
                 else{
                     if(!validera.valideringEmail(epost)){
@@ -487,6 +519,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
     private javax.swing.JLabel lblFelmeddelandeStadsID;
     private javax.swing.JLabel lblFelmeddelandeTel;
     private javax.swing.JLabel lblID;
+    private javax.swing.JLabel lblLyckat;
     private javax.swing.JLabel lblNamn;
     private javax.swing.JLabel lblStad;
     private javax.swing.JLabel lblTel;

@@ -37,30 +37,35 @@ public class Inloggning extends javax.swing.JFrame {
         tfLosenord = new javax.swing.JTextField();
         lblFelmeddelande = new javax.swing.JLabel();
         btnLoggaIn = new javax.swing.JButton();
+        lblLaggTillEttLand = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        lblEPost.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblEPost.setText("E-post");
 
+        lblLosenord.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblLosenord.setText("Lösenord");
 
-        tfEPost.setText("chen.wei@example.com");
+        tfEPost.setText("maria.g@example.com");
         tfEPost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfEPostActionPerformed(evt);
             }
         });
 
-        tfLosenord.setText("passwordabc");
+        tfLosenord.setText("password123");
         tfLosenord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfLosenordActionPerformed(evt);
             }
         });
 
+        lblFelmeddelande.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblFelmeddelande.setForeground(new java.awt.Color(255, 0, 0));
         lblFelmeddelande.setText("Felaktig epost eller lösenord");
 
+        btnLoggaIn.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnLoggaIn.setText("Logga in");
         btnLoggaIn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -68,46 +73,48 @@ public class Inloggning extends javax.swing.JFrame {
             }
         });
 
+        lblLaggTillEttLand.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
+        lblLaggTillEttLand.setText("LOGGA IN");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLoggaIn)
-                .addGap(53, 53, 53))
             .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblEPost, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfEPost, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(tfLosenord)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblFelmeddelande, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(169, Short.MAX_VALUE))
+                    .addComponent(lblFelmeddelande, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblLaggTillEttLand)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnLoggaIn)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblLosenord)
+                                .addComponent(lblEPost))
+                            .addGap(35, 35, 35)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(tfEPost, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                .addComponent(tfLosenord)))))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addGap(35, 35, 35)
+                .addComponent(lblLaggTillEttLand)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfEPost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblEPost))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfLosenord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblLosenord))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(lblFelmeddelande)
-                .addGap(63, 63, 63)
+                .addGap(30, 30, 30)
                 .addComponent(btnLoggaIn)
-                .addGap(37, 37, 37))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
@@ -201,6 +208,7 @@ public class Inloggning extends javax.swing.JFrame {
     private javax.swing.JButton btnLoggaIn;
     private javax.swing.JLabel lblEPost;
     private javax.swing.JLabel lblFelmeddelande;
+    private javax.swing.JLabel lblLaggTillEttLand;
     private javax.swing.JLabel lblLosenord;
     private javax.swing.JTextField tfEPost;
     private javax.swing.JTextField tfLosenord;
