@@ -217,7 +217,8 @@ public class AnsvarProjekt extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void btnStatistikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatistikActionPerformed
-        
+        new AnsvarProjektStatistik(idb, inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnStatistikActionPerformed
 
     private void btnHandlaggareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHandlaggareActionPerformed
