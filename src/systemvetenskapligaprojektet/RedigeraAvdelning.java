@@ -206,7 +206,7 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-        new TestTable(idb,inloggadAnvandare).setVisible(true);
+        new AllaAvdelningar(idb,inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
@@ -346,7 +346,7 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
                 String updateAvdelning = "update avdelning set namn = '" + namn + "', beskrivning = '" + beskrivning + "', adress = '" + adress + "', epost = '" 
                         + epost + "', telefon = '" + telefon + "', stad = " + stadsID + ", chef = " + chefsID + " where avdid = " + avdid + ";";
                 idb.update(updateAvdelning);
-                new TestTable(idb,inloggadAnvandare).setVisible(true);
+                new AllaAvdelningar(idb,inloggadAnvandare).setVisible(true);
                 this.setVisible(false);
             }
         }

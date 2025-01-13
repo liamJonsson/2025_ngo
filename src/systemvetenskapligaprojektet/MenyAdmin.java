@@ -150,7 +150,7 @@ public class MenyAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAllaAvdelningarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAllaAvdelningarActionPerformed
-        new TestTable(idb,inloggadAnvandare).setVisible(true);
+        new AllaAvdelningar(idb,inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnAllaAvdelningarActionPerformed
 

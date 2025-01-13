@@ -205,7 +205,7 @@ public class LaggTillLand extends javax.swing.JFrame {
                     .addComponent(btnTillbaka))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblLaggTillLandLyckat)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();

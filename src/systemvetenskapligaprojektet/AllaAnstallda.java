@@ -44,6 +44,7 @@ public class AllaAnstallda extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        btnLaggTill.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         btnLaggTill.setText("Lägg till ny anställd");
         btnLaggTill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -51,8 +52,10 @@ public class AllaAnstallda extends javax.swing.JFrame {
             }
         });
 
+        btnSok.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         btnSok.setText("Sök");
 
+        btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -60,9 +63,10 @@ public class AllaAnstallda extends javax.swing.JFrame {
             }
         });
 
-        lblAllaAnstallda.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblAllaAnstallda.setText("Alla anställda");
+        lblAllaAnstallda.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
+        lblAllaAnstallda.setText("ALLA ANSTÄLLDA");
 
+        btnTaBortAnstalld.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         btnTaBortAnstalld.setText("Ta bort anställd");
         btnTaBortAnstalld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,6 +74,7 @@ public class AllaAnstallda extends javax.swing.JFrame {
             }
         });
 
+        tblAllaAnstallda.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         tblAllaAnstallda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
@@ -100,16 +105,16 @@ public class AllaAnstallda extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 478, Short.MAX_VALUE)
                         .addComponent(btnTillbaka))
                     .addComponent(jScrollPane1))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(42, 42, 42)
+                .addGap(35, 35, 35)
                 .addComponent(lblAllaAnstallda)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLaggTill)
                     .addComponent(btnSok)
