@@ -51,7 +51,7 @@ public class AllaLander extends javax.swing.JFrame {
                 }
                 tblAllaLander.setAutoResizeMode(tblAllaLander.AUTO_RESIZE_OFF);
                 TableColumn col = tblAllaLander.getColumnModel().getColumn(0);
-                col.setPreferredWidth(100);
+                col.setPreferredWidth(50);
                 col = tblAllaLander.getColumnModel().getColumn(1);
                 col.setPreferredWidth(100);
                 col = tblAllaLander.getColumnModel().getColumn(2);
@@ -61,7 +61,7 @@ public class AllaLander extends javax.swing.JFrame {
                 col = tblAllaLander.getColumnModel().getColumn(4);
                 col.setPreferredWidth(100);
                 col = tblAllaLander.getColumnModel().getColumn(5);
-                col.setPreferredWidth(100);
+                col.setPreferredWidth(150);
                 col = tblAllaLander.getColumnModel().getColumn(6);
                 col.setPreferredWidth(100);
             }
@@ -79,35 +79,31 @@ public class AllaLander extends javax.swing.JFrame {
     private void initComponents() {
 
         btnLaggTIll = new javax.swing.JButton();
-        btnSok = new javax.swing.JButton();
         btnRedigera = new javax.swing.JButton();
         btnTillbaka = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
         tblAllaLander = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnLaggTIll.setText("Lägg till");
+        btnLaggTIll.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
+        btnLaggTIll.setText("Lägg till nytt land");
         btnLaggTIll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLaggTIllActionPerformed(evt);
             }
         });
 
-        btnSok.setText("OBS SOK!!");
-        btnSok.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSokActionPerformed(evt);
-            }
-        });
-
-        btnRedigera.setText("Redigera");
+        btnRedigera.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
+        btnRedigera.setText("Redigera ett land");
         btnRedigera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRedigeraActionPerformed(evt);
             }
         });
 
+        btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,6 +111,7 @@ public class AllaLander extends javax.swing.JFrame {
             }
         });
 
+        tblAllaLander.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         tblAllaLander.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -128,38 +125,40 @@ public class AllaLander extends javax.swing.JFrame {
         ));
         jScrollPane8.setViewportView(tblAllaLander);
 
+        jLabel1.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
+        jLabel1.setText("ALLA LÄNDER");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnLaggTIll)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSok)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnRedigera)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnTillbaka))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 859, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(117, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(btnLaggTIll)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnRedigera)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnTillbaka))
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLaggTIll)
-                    .addComponent(btnSok)
                     .addComponent(btnRedigera)
                     .addComponent(btnTillbaka))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(35, 35, 35))
         );
 
         pack();
@@ -169,10 +168,6 @@ public class AllaLander extends javax.swing.JFrame {
         new LaggTillLand(idb,inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnLaggTIllActionPerformed
-
-    private void btnSokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSokActionPerformed
-        
-    }//GEN-LAST:event_btnSokActionPerformed
 
     private void btnRedigeraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedigeraActionPerformed
         new RedigeraLand(idb,inloggadAnvandare).setVisible(true);
@@ -222,8 +217,8 @@ public class AllaLander extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLaggTIll;
     private javax.swing.JButton btnRedigera;
-    private javax.swing.JButton btnSok;
     private javax.swing.JButton btnTillbaka;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTable tblAllaLander;
     // End of variables declaration//GEN-END:variables

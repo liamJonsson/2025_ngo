@@ -225,9 +225,11 @@ private void hanteraStatusSok(String sokTerm) {
         btnLaggTill = new javax.swing.JButton();
         btnTaBort = new javax.swing.JButton();
         btnRedigera = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -235,8 +237,10 @@ private void hanteraStatusSok(String sokTerm) {
             }
         });
 
-        btnSok.setText("Sök");
+        btnSok.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
+        btnSok.setText("Sök efter ett projekt");
 
+        tblProjekt.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         tblProjekt.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -250,59 +254,71 @@ private void hanteraStatusSok(String sokTerm) {
         ));
         jScrollPane2.setViewportView(tblProjekt);
 
-        btnLaggTill.setText("Lägg till");
+        btnLaggTill.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
+        btnLaggTill.setText("Lägg till ett projekt");
         btnLaggTill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLaggTillActionPerformed(evt);
             }
         });
 
-        btnTaBort.setText("Ta bort");
+        btnTaBort.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
+        btnTaBort.setText("Ta bort ett projekt");
         btnTaBort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTaBortActionPerformed(evt);
             }
         });
 
-        btnRedigera.setText("Redigera");
+        btnRedigera.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
+        btnRedigera.setText("Redigera ett projekt");
         btnRedigera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRedigeraActionPerformed(evt);
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
+        jLabel1.setText("ALLA PROJEKT");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1003, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 945, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnTillbaka)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRedigera)
-                        .addGap(36, 36, 36)
-                        .addComponent(btnTaBort)
-                        .addGap(33, 33, 33)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btnLaggTill)
-                        .addGap(71, 71, 71)
-                        .addComponent(btnSok)))
-                .addContainerGap())
+                        .addGap(18, 18, 18)
+                        .addComponent(btnTaBort)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRedigera)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSok)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTillbaka)))
+                .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90)
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTillbaka)
                     .addComponent(btnSok)
                     .addComponent(btnLaggTill)
+                    .addComponent(btnRedigera)
                     .addComponent(btnTaBort)
-                    .addComponent(btnRedigera))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(btnTillbaka))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
@@ -369,6 +385,7 @@ private void hanteraStatusSok(String sokTerm) {
     private javax.swing.JButton btnSok;
     private javax.swing.JButton btnTaBort;
     private javax.swing.JButton btnTillbaka;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblProjekt;
     // End of variables declaration//GEN-END:variables

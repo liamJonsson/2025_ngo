@@ -31,7 +31,6 @@ public class AllaAnstallda extends javax.swing.JFrame {
         jScrollPane8 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         btnLaggTill = new javax.swing.JButton();
-        btnSok = new javax.swing.JButton();
         btnTillbaka = new javax.swing.JButton();
         lblAllaAnstallda = new javax.swing.JLabel();
         btnTaBortAnstalld = new javax.swing.JButton();
@@ -52,9 +51,6 @@ public class AllaAnstallda extends javax.swing.JFrame {
             }
         });
 
-        btnSok.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
-        btnSok.setText("Sök");
-
         btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
@@ -67,7 +63,7 @@ public class AllaAnstallda extends javax.swing.JFrame {
         lblAllaAnstallda.setText("ALLA ANSTÄLLDA");
 
         btnTaBortAnstalld.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
-        btnTaBortAnstalld.setText("Ta bort anställd");
+        btnTaBortAnstalld.setText("Ta bort en anställd");
         btnTaBortAnstalld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTaBortAnstalldActionPerformed(evt);
@@ -97,14 +93,12 @@ public class AllaAnstallda extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblAllaAnstallda)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnSok)
-                        .addGap(18, 18, 18)
                         .addComponent(btnLaggTill, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnTaBortAnstalld, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 478, Short.MAX_VALUE)
+                        .addComponent(btnTaBortAnstalld)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnTillbaka))
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 953, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -117,7 +111,6 @@ public class AllaAnstallda extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLaggTill)
-                    .addComponent(btnSok)
                     .addComponent(btnTillbaka)
                     .addComponent(btnTaBortAnstalld))
                 .addGap(35, 35, 35))
@@ -228,7 +221,6 @@ public class AllaAnstallda extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLaggTill;
-    private javax.swing.JButton btnSok;
     private javax.swing.JButton btnTaBortAnstalld;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JScrollPane jScrollPane1;
