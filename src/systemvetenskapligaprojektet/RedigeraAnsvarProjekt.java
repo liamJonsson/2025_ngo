@@ -6,6 +6,8 @@ package systemvetenskapligaprojektet;
 import java.util.ArrayList;
 import oru.inf.InfDB; //Ska importeras till alla klasser
 import oru.inf.InfException;
+import java.math.BigDecimal;
+import java.util.HashMap;
 /**
  *
  * @author lisas
@@ -14,6 +16,9 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
     private static InfDB idb;
     private String inloggadAnvandare;
     private int pid;
+    private double enKostnad;
+    private int projektchef;
+    private int land;
     /**
      * Creates new form RedigeraAnsvarProjekt
      */
@@ -253,7 +258,7 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
-  /*      boolean hasError = false;
+        boolean hasError = false;
         boolean hittad = false;
         try{
             try{
@@ -264,10 +269,137 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
                 ArrayList<String> allaPid = idb.fetchColumn(selectPid);
                     for(String ettPid:allaPid){
                         int ettID = Integer.parseInt(ettPid);
+                        
+                        if(ettID == pid){
+                        hittad = true;
+                        lblFelID.setVisible(false);
+                        break;
                     }
-            } */
+                }
+                if(!hittad){ 
+                    lblFelID.setVisible(true);
+                    hasError = true;
+                }
+            } 
+            catch(NumberFormatException ex){
+                lblFelID.setVisible(true);
+                hasError = true;
+            }
+                try{
+                    String textProjektchef = tfProjektchef.getText();
+                    projektchef = Integer.parseInt(textProjektchef);
+                }
+                
+                catch(NumberFormatException ex){
+                    lblFelProjektchef.setVisible(true);
+                    hasError = true;
+                }
+                
+                try{
+                    String textLand = tfLand.getText();
+                    land = Integer.parseInt(textLand);
+                }
+                
+                catch(NumberFormatException ex){
+                    lblFelLand.setVisible(true);
+                    hasError = true;
+                }
+            
+            if(!hasError){
+                try{
+                    String projektnamn = tfProjektnamn.getText();
+                    String beskrivning = tfBeskrivning.getText();
+                    String startdatum = tfStartdatum.getText();
+                    String slutdatum = tfSlutdatum.getText();
+                    String textKostnad = tfKostnad.getText();
+                    String status = tfStatus.getText();
+                    String prioritet = tfPrioritet.getText();
+                    String textProjektchef = tfProjektchef.getText();
+                    String textLand = tfLand.getText();
+                    
+                    
+                    BigDecimal kostnad;
+                        try{
+                            kostnad = new BigDecimal(textKostnad);
+                
+                            //Kontrollera (13, 4)
+                            if(kostnad.precision() > 12 || kostnad.scale() > 2){
+                                throw new NumberFormatException();
+                            }
+                        }
+                        catch(NumberFormatException ex){
+                            lblFelKostnad.setVisible(true);
+                            return;
+                        }
+                        String selectAnsvarProjekt = "select * from projekt where pid = " + pid + ";";
+                        HashMap<String, String> ettAnsvarProjekt = idb.fetchRow(selectAnsvarProjekt);
+                        String enRad[] = new String[ettAnsvarProjekt.size()];
+                        for(String ettAttribut:ettAnsvarProjekt.keySet()){
+                            switch(ettAttribut){
+                                case "pid":
+                                    enRad[0] = ettAnsvarProjekt.get("pid");
+                                case "projektnamn":
+                                    enRad[1] = ettAnsvarProjekt.get("projektnamn"); 
+                                case "beskrivning":
+                                    enRad[2] = ettAnsvarProjekt.get("beskrivning");
+                                case "startdatum":
+                                    enRad[3] = ettAnsvarProjekt.get("startdatum");
+                                case "slutdatum":
+                                    enRad[4] = ettAnsvarProjekt.get("slutdatum");
+                                case "kostnad":
+                                    enRad[5] = ettAnsvarProjekt.get("kostnad");                   
+                                case "status":
+                                    enRad[6] = ettAnsvarProjekt.get("status");
+                                case "prioritet":
+                                    enRad[7] = ettAnsvarProjekt.get("status");
+                                case "projektchef":
+                                    enRad[8] = ettAnsvarProjekt.get("status");
+                                case "land":
+                                    enRad[9] = ettAnsvarProjekt.get("status");
+                        }
+                    }
+                    if(projektnamn.isEmpty()){
+                        projektnamn = enRad[1];
+                    }
+                    if(beskrivning.isEmpty()){
+                       beskrivning = enRad[2];
+                    }
+                    if(startdatum.isEmpty()){
+                       startdatum = enRad[3];
+                    }
+                    if(slutdatum.isEmpty()){
+                       slutdatum = enRad[4];
+                    }
+                    if(textKostnad.isEmpty()){
+                       textKostnad = enRad[5];
+                    }
+                    if(status.isEmpty()){
+                       status = enRad[6];     
+                    }
+                    if(prioritet.isEmpty()){
+                       prioritet = enRad[7];     
+                    }  
+                    if(textProjektchef.isEmpty()){
+                       textProjektchef = enRad[8];     
+                    }  
+                    if(textLand.isEmpty()){
+                       textLand = enRad[9];     
+                    } 
+                    
+                String updateAnsvarProjekt = "update projekt set projektnamn = '" + projektnamn + "', beskrivning = '" + beskrivning + "', startdatum = '" + startdatum + "', slutdatum = '" + slutdatum + "', kostnad = " + kostnad + ", status = '" + status + "', prioritet = '" + prioritet + "', projektchef = " + projektchef + "', stad = " + land + " where pid = " + pid + ";";
+                idb.update(updateAnsvarProjekt);
+                new AnsvarProjekt(idb,inloggadAnvandare).setVisible(true);
+                this.setVisible(false);
+                }
+                catch(InfException ex){ 
+                System.out.println(ex);
+            }
+        }
     }//GEN-LAST:event_btnSparaActionPerformed
-
+    catch(InfException ex){ //Catch InfExceptions?
+        System.out.println(ex);
+    }
+}  
  
     
     
