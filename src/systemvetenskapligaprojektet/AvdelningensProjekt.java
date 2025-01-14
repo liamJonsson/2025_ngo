@@ -37,107 +37,101 @@ public class AvdelningensProjekt extends javax.swing.JFrame {
         statusFilter(); 
         initStatusFilterListener();
         skapaOchFyllTabell(null);
-        hanteraSearchListener();
-        
-        
+        hanteraSearchListener();              
     }
     
-    private void fyllTabell(){
+private void fyllTabell() {
+    try {
+        // Skapar en array som lagrar kolumnnamnen
+        String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "status", "prioritet", "projektchef", "land"};
+        DefaultTableModel avdelningensProjekt = new DefaultTableModel(kolumnNamn, 0);
 
-        try{
-            //Skapar en array som lagrar kolumnnamnen
-
-        String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "status", "prioritet","projektchef", "land"};
-
-        DefaultTableModel allaProjekt = new DefaultTableModel(kolumnNamn, 0);
-
-       
-
-        String selectId = "select pid from projekt where pid in(select pid from ans_proj where aid in(select aid from anstalld where avdelning = (select avdelning from anstalld where epost = '" + inloggadAnvandare + "'))) order by (pid)";
-
-
+        // Hämta projekt-IDs för alla projekt som är kopplade till den inloggade användarens avdelning
+        String selectId = "SELECT pid FROM projekt WHERE pid IN (" +
+                          "SELECT pid FROM ans_proj WHERE aid IN (" +
+                          "SELECT aid FROM anstalld WHERE avdelning = (" +
+                          "SELECT avdelning FROM anstalld WHERE epost = '" + inloggadAnvandare + "' ))" +
+                          ") ORDER BY pid";
 
         ArrayList<String> pid = idb.fetchColumn(selectId);
-            if(pid != null){
-            
-                for(String ettID:pid){
-                    //int ettPid = Integer.parseInt(ettID);
-                    String selectInfo = "select pid,projektnamn,beskrivning,startdatum,slutdatum,status, prioritet,projektchef,land from projekt where pid = '" + ettID + "';";
+        
+        if (pid != null) {
+            for (String ettID : pid) {
+                // Hämtar information om projektet baserat på dess pid
+                String selectInfo = "SELECT pid, projektnamn, beskrivning, startdatum, slutdatum, status, prioritet, projektchef, land " +
+                                    "FROM projekt WHERE pid = '" + ettID + "';";
 
+                // Vi använder fetchRow här eftersom varje projekt är en enskild rad.
+                HashMap<String, String> info = idb.fetchRow(selectInfo);
 
+                // Skapa en ny rad i tabellen
+                Object[] enRad = new Object[kolumnNamn.length];
+                int index = 0;
 
-                    ArrayList<HashMap<String,String>> info = idb.fetchRows(selectInfo);
-
-                    Object[] enRad = new Object[kolumnNamn.length];
-                    int index = 0;
-                    
-
-                    for(String enKolumn:kolumnNamn){      
-                        if(enKolumn.equals("projektchef")){
-                            String selectFornamn = "select fornamn from anstalld where aid = (select projektchef from projekt where pid = '" + ettID + "');";
-                            String fornamn = idb.fetchSingle(selectFornamn);
-                            String selectEfternamn = "select efternamn from anstalld where aid = (select projektchef from projekt where pid = '" + ettID + "');";
-                            String efternamn = idb.fetchSingle(selectEfternamn);
-                            String namn = fornamn + " " + efternamn;
-                            enRad[index++] = namn;                          
-                        }                        
-                        else{
-                            enRad[index++] = info.get(0).get(enKolumn);
-                                    
-                        }
+                // För varje kolumnnamn, hämta motsvarande data
+                for (String enKolumn : kolumnNamn) {
+                    if (enKolumn.equals("projektchef")) {
+                        // Hämta projektchefens förnamn och efternamn
+                        String selectFornamn = "SELECT fornamn FROM anstalld WHERE aid = (SELECT projektchef FROM projekt WHERE pid = '" + ettID + "');";
+                        String fornamn = idb.fetchSingle(selectFornamn);
+                        String selectEfternamn = "SELECT efternamn FROM anstalld WHERE aid = (SELECT projektchef FROM projekt WHERE pid = '" + ettID + "');";
+                        String efternamn = idb.fetchSingle(selectEfternamn);
+                        String namn = fornamn + " " + efternamn;
+                        enRad[index++] = namn;
+                    } else if (enKolumn.equals("land")) {
+                        // Hämta landets namn
+                        String selectLand = "SELECT namn FROM land WHERE lid = (SELECT land FROM projekt WHERE pid = '" + ettID + "');";
+                        String land = idb.fetchSingle(selectLand);
+                        enRad[index++] = land;
+                    } else {
+                        // För övriga kolumner, hämta information från info
+                        enRad[index++] = info.get(enKolumn);
                     }
-                    allaProjekt.addRow(enRad);
                 }
 
-                tblProjekt.setModel(allaProjekt);
-
+                // Lägg till raden i tabellen för AvdelningensProjekt
+                avdelningensProjekt.addRow(enRad);
             }
 
+            // Sätt den uppdaterade modellen till tabellen
+            tblProjekt.setModel(avdelningensProjekt);
+
+            // Anpassa kolumnbredder
             tblProjekt.setAutoResizeMode(tblProjekt.AUTO_RESIZE_OFF);
 
-        TableColumn col = tblProjekt.getColumnModel().getColumn(0);
+            TableColumn col = tblProjekt.getColumnModel().getColumn(0);
+            col.setPreferredWidth(50);
 
-        col.setPreferredWidth(50);
+            col = tblProjekt.getColumnModel().getColumn(1);
+            col.setPreferredWidth(100);
 
-        col = tblProjekt.getColumnModel().getColumn(1);
+            col = tblProjekt.getColumnModel().getColumn(2);
+            col.setPreferredWidth(250);
 
-        col.setPreferredWidth(100);
+            col = tblProjekt.getColumnModel().getColumn(3);
+            col.setPreferredWidth(100);
 
-        col = tblProjekt.getColumnModel().getColumn(2);
+            col = tblProjekt.getColumnModel().getColumn(4);
+            col.setPreferredWidth(100);
 
-        col.setPreferredWidth(250);
+            col = tblProjekt.getColumnModel().getColumn(5);
+            col.setPreferredWidth(100);
 
-        col = tblProjekt.getColumnModel().getColumn(3);
+            col = tblProjekt.getColumnModel().getColumn(6);
+            col.setPreferredWidth(100);
 
-        col.setPreferredWidth(100);
+            col = tblProjekt.getColumnModel().getColumn(7);
+            col.setPreferredWidth(150);
 
-        col = tblProjekt.getColumnModel().getColumn(4);
-
-        col.setPreferredWidth(100);
-        
-        
-        col = tblProjekt.getColumnModel().getColumn(5);
-
-        col.setPreferredWidth(100);
-        
-        col = tblProjekt.getColumnModel().getColumn(6);
-
-        col.setPreferredWidth(100);
-        
-        col = tblProjekt.getColumnModel().getColumn(7);
-
-        col.setPreferredWidth(150);
-        
-        col = tblProjekt.getColumnModel().getColumn(8);
-
-        col.setPreferredWidth(50);
+            col = tblProjekt.getColumnModel().getColumn(8);
+            col.setPreferredWidth(50);
         }
 
-        catch(InfException ex){
-            System.out.println(ex);
-        }      
-
+    } catch (InfException ex) {
+        System.out.println(ex);
     }
+}
+
     
     private void hamtaAvdelning(){
         try{
@@ -152,18 +146,22 @@ public class AvdelningensProjekt extends javax.swing.JFrame {
         }
     }
     
-    private void skapaOchFyllTabell(String valdStatus) {
+private void skapaOchFyllTabell(String valdStatus) {
     try {
-        String selectInfoProjekt = "select distinct p.pid, p.projektnamn, p.beskrivning,p.startdatum,p.slutdatum,p.status,p.prioritet,p.projektchef,p.land from projekt p inner join ans_proj ap on p.pid = ap.pid inner join anstalld a on ap.aid = a.aid where a.avdelning = (select avdelning from anstalld where epost = '" + inloggadAnvandare + "');";
-
-                
-                //"select pid,projektnamn,beskrivning,startdatum,slutdatum,status,prioritet,projektchef,land from projekt where pid in(select pid from ans_proj where aid in(select aid from anstalld where avdelning =(select avdelning from anstalld where epost = '" 
-        //+ inloggadAnvandare + "')));";
+        // Initial SQL-fråga för att hämta projektdata
+        String selectInfoProjekt = "SELECT DISTINCT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, p.status, p.prioritet, p.projektchef, p.land " +
+                                   "FROM projekt p " +
+                                   "INNER JOIN ans_proj ap ON p.pid = ap.pid " +
+                                   "INNER JOIN anstalld a ON ap.aid = a.aid " +
+                                   "WHERE a.avdelning = (SELECT avdelning FROM anstalld WHERE epost = '" + inloggadAnvandare + "');";
         
-      
-        //WHERE-klausul om valdStatus inte är null eller tomt
+        // Om valdStatus inte är null eller tom, justera SQL-frågan för att inkludera status
         if (valdStatus != null && !valdStatus.isEmpty() && !"Välj status".equals(valdStatus)) {
-            selectInfoProjekt = "select distinct p.pid, p.projektnamn, p.beskrivning,p.startdatum,p.slutdatum,p.status,p.prioritet,p.projektchef,p.land from projekt p inner join ans_proj ap on p.pid = ap.pid inner join anstalld a on ap.aid = a.aid where p.status = '" + valdStatus + "' and a.avdelning = (select avdelning from anstalld where epost = '" + inloggadAnvandare + "');";
+            selectInfoProjekt = "SELECT DISTINCT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, p.status, p.prioritet, p.projektchef, p.land " +
+                                "FROM projekt p " +
+                                "INNER JOIN ans_proj ap ON p.pid = ap.pid " +
+                                "INNER JOIN anstalld a ON ap.aid = a.aid " +
+                                "WHERE p.status = '" + valdStatus + "' AND a.avdelning = (SELECT avdelning FROM anstalld WHERE epost = '" + inloggadAnvandare + "');";
         }
 
         // Kör SQL-frågan
@@ -177,25 +175,68 @@ public class AvdelningensProjekt extends javax.swing.JFrame {
         // Uppdatera tabellen med projektdata
         uppdateraTabell(projektLista);
     } catch (InfException ex) {
+        // Hantera exception och visa ett meddelande till användaren
         JOptionPane.showMessageDialog(this, "Kunde inte fylla tabellen: " + ex.getMessage());
+    } catch (Exception ex) {
+        // Hantera eventuella andra undantag
+        JOptionPane.showMessageDialog(this, "Ett oväntat fel uppstod: " + ex.getMessage());
     }
 }
-    private void uppdateraTabell(ArrayList<HashMap<String, String>> projektLista) {
-    String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "status", "prioritet", "projektchef", "land"};
-    DefaultTableModel modell = new DefaultTableModel(kolumnNamn, 0);
 
-    for (HashMap<String, String> projekt : projektLista) {
-        Object[] rad = new Object[kolumnNamn.length];
-        for (int i = 0; i < kolumnNamn.length; i++) {
-            String kolumnVarde = projekt.getOrDefault(kolumnNamn[i], "Ingen data");  
-             
-            rad[i] = kolumnVarde;
+private void uppdateraTabell(ArrayList<HashMap<String, String>> projektLista) {
+    try {
+        String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "status", "prioritet", "projektchef", "land"};
+        DefaultTableModel modell = new DefaultTableModel(kolumnNamn, 0);
+
+        // Loopa igenom varje projekt i listan och skapa en rad för varje projekt
+        for (HashMap<String, String> projekt : projektLista) {
+            Object[] rad = new Object[kolumnNamn.length];
+
+            // Lägg till data för varje kolumn
+            for (int i = 0; i < kolumnNamn.length; i++) {
+                String kolumnVarde = projekt.getOrDefault(kolumnNamn[i], "Ingen data");
+
+                if (kolumnNamn[i].equals("projektchef")) {
+                    // Hämta projektchefens förnamn och efternamn
+                    String projektchefAid = projekt.get("projektchef");
+                    
+                    // Hämta projektchefens förnamn
+                    String selectFornamn = "SELECT fornamn FROM anstalld WHERE aid = '" + projektchefAid + "';";
+                    String fornamn = idb.fetchSingle(selectFornamn);  // Använd rätt metod här
+                   
+                    // Hämta projektchefens efternamn
+                    String selectEfternamn = "SELECT efternamn FROM anstalld WHERE aid = '" + projektchefAid + "';";
+                    String efternamn = idb.fetchSingle(selectEfternamn);  // Använd rätt metod här
+                    
+                    rad[i] = fornamn + " " + efternamn;
+                } else if (kolumnNamn[i].equals("land")) {
+                    // Hämta landets namn
+                    String landId = projekt.get("land");
+                    
+                    // Hämta landets namn
+                    String selectLand = "SELECT namn FROM land WHERE lid = '" + landId + "';";
+                    String land = idb.fetchSingle(selectLand);  // Använd rätt metod här
+                    
+                    rad[i] = land;
+                } else {
+                    rad[i] = kolumnVarde;
+                }
+            }
+
+            // Lägg till raden i tabellen
+            modell.addRow(rad);
         }
-        modell.addRow(rad);
-    }
 
-    tblProjekt.setModel(modell);
+        // Sätt den uppdaterade modellen som tabellens modell
+        tblProjekt.setModel(modell);
+    } catch (InfException ex) {
+        // Hantera exception och visa ett meddelande till användaren
+        JOptionPane.showMessageDialog(this, "Kunde inte uppdatera tabellen: " + ex.getMessage());
+    } catch (Exception ex) {
+        // Hantera eventuella andra undantag
+        JOptionPane.showMessageDialog(this, "Ett oväntat fel uppstod vid uppdatering av tabellen: " + ex.getMessage());
     }
+}
 
     
     private void statusFilter(){
@@ -275,19 +316,38 @@ private void hanteraDatumSpannSok(String sokTerm) {
             // Loopa genom alla rader och filtrera baserat på datumspannet
             for (int i = 0; i < modell.getRowCount(); i++) {
                 String projektStart = modell.getValueAt(i, 3).toString(); // Förutsätter att startdatum är i kolumn 3
+                String projektSlut = modell.getValueAt(i, 4).toString();  // Förutsätter att slutdatum är i kolumn 4
 
-                // Kontrollera om projektets startdatum är inom det angivna datumspannet
-                if (projektStart.compareTo(startDatumFilter) >= 0 && projektStart.compareTo(slutDatumFilter) <= 0) {
+                // Kontrollera om något av projektdatumen är inom det angivna datumspannet
+                boolean inomDatumspann = false;
+
+                // Om projektets startdatum är inom spannet
+                if (projektStart.compareTo(slutDatumFilter) <= 0 && projektStart.compareTo(startDatumFilter) >= 0) {
+                    inomDatumspann = true;
+                }
+
+                // Om projektets slutdatum är inom spannet
+                if (projektSlut.compareTo(startDatumFilter) >= 0 && projektSlut.compareTo(slutDatumFilter) <= 0) {
+                    inomDatumspann = true;
+                }
+
+                // Om projektets start och slutdatum är innanför spannet, inkludera det
+                if (projektStart.compareTo(startDatumFilter) <= 0 && projektSlut.compareTo(slutDatumFilter) >= 0) {
+                    inomDatumspann = true;
+                }
+
+                // Om något av datumen är inom spannet, lägg till raden i den filtrerade tabellen
+                if (inomDatumspann) {
                     filtreradModell.addRow(new Object[]{
-                            modell.getValueAt(i, 0),
-                            modell.getValueAt(i, 1),
-                            modell.getValueAt(i, 2),
-                            projektStart,
-                            modell.getValueAt(i, 4), // Slutdatum
-                            modell.getValueAt(i, 5), // Kostnad
-                            modell.getValueAt(i, 6), // Status
-                            modell.getValueAt(i, 7), // Prioritet
-                            modell.getValueAt(i, 8)  // Projektchef
+                            modell.getValueAt(i, 0), //Pid
+                            modell.getValueAt(i, 1), //Projektnamn
+                            modell.getValueAt(i, 2), //Beskrivning
+                            projektStart, //Startdatum
+                            projektSlut,  //Slutdatum
+                            modell.getValueAt(i, 5), //Kostnad
+                            modell.getValueAt(i, 6), //Status
+                            modell.getValueAt(i, 7), //Prioritet
+                            modell.getValueAt(i, 8)  //Projektchef
                     });
                 }
             }
@@ -299,6 +359,7 @@ private void hanteraDatumSpannSok(String sokTerm) {
         }
     }
 }
+
 
 
     /**

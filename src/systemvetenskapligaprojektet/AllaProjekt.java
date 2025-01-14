@@ -153,19 +153,38 @@ private void hanteraDatumSpannSok(String sokTerm) {
             // Loopa genom alla rader och filtrera baserat på datumspannet
             for (int i = 0; i < modell.getRowCount(); i++) {
                 String projektStart = modell.getValueAt(i, 3).toString(); // Förutsätter att startdatum är i kolumn 3
+                String projektSlut = modell.getValueAt(i, 4).toString();  // Förutsätter att slutdatum är i kolumn 4
 
-                // Kontrollera om projektets startdatum är inom det angivna datumspannet
-                if (projektStart.compareTo(startDatumFilter) >= 0 && projektStart.compareTo(slutDatumFilter) <= 0) {
+                // Kontrollera om något av projektdatumen är inom det angivna datumspannet
+                boolean inomDatumspann = false;
+
+                // Om projektets startdatum är inom spannet
+                if (projektStart.compareTo(slutDatumFilter) <= 0 && projektStart.compareTo(startDatumFilter) >= 0) {
+                    inomDatumspann = true;
+                }
+
+                // Om projektets slutdatum är inom spannet
+                if (projektSlut.compareTo(startDatumFilter) >= 0 && projektSlut.compareTo(slutDatumFilter) <= 0) {
+                    inomDatumspann = true;
+                }
+
+                // Om projektets start och slutdatum är innanför spannet, inkludera det
+                if (projektStart.compareTo(startDatumFilter) <= 0 && projektSlut.compareTo(slutDatumFilter) >= 0) {
+                    inomDatumspann = true;
+                }
+
+                // Om något av datumen är inom spannet, lägg till raden i den filtrerade tabellen
+                if (inomDatumspann) {
                     filtreradModell.addRow(new Object[]{
-                            modell.getValueAt(i, 0),
-                            modell.getValueAt(i, 1),
-                            modell.getValueAt(i, 2),
-                            projektStart,
-                            modell.getValueAt(i, 4), // Slutdatum
-                            modell.getValueAt(i, 5), // Kostnad
-                            modell.getValueAt(i, 6), // Status
-                            modell.getValueAt(i, 7), // Prioritet
-                            modell.getValueAt(i, 8)  // Projektchef
+                            modell.getValueAt(i, 0), //PID
+                            modell.getValueAt(i, 1), //Projektnamn
+                            modell.getValueAt(i, 2), //Beskrivning
+                            projektStart, //Startdatum
+                            projektSlut,  //Slutdatum
+                            modell.getValueAt(i, 5), //Kostnad
+                            modell.getValueAt(i, 6), //Status
+                            modell.getValueAt(i, 7), //Prioritet
+                            modell.getValueAt(i, 8)  //Projektchef
                     });
                 }
             }
