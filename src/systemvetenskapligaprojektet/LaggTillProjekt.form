@@ -109,11 +109,8 @@
                                   </Group>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblFelmeddelandePrioritet" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFelmeddelandeStatus" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFelmeddelandeKostnad" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="lblFelmeddelandeKostnad" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -164,15 +161,11 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblStatus" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblFelmeddelandeStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="comboStatus" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="lblPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblFelmeddelandePrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="lblPrioritet" min="-2" max="-2" attributes="0"/>
                   <Component id="comboPrioritet" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -316,16 +309,6 @@
     <Component class="javax.swing.JLabel" name="lblFelmeddelandeKostnad">
       <Properties>
         <Property name="text" type="java.lang.String" value="Felaktigt format p&#xe5; kostnad"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblFelmeddelandeStatus">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Felaktigt format p&#xe5; status"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblFelmeddelandePrioritet">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Felaktigt format p&#xe5; prioritet"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="comboStatus">

@@ -14,6 +14,8 @@ import java.util.ArrayList;
 public class laggTillHandlaggare extends javax.swing.JFrame {
     private static InfDB idb;
     private String inloggadAnvandare;
+    private int inlagdPidInt;
+    private int inlagdAidInt;
 
     /**
      * Creates new form laggTillHandlaggare
@@ -26,6 +28,9 @@ public class laggTillHandlaggare extends javax.swing.JFrame {
     }
     
     private void felmeddelandenOsynliga(){
+        lblHandlaggareInfo.setVisible(false);
+        tfAid.setVisible(false);
+        btnSparaAID.setVisible(false);
         lblOgiltigtAid.setVisible(false);
         lblOgiltigtPid.setVisible(false);
         lblHandlaggareLagtsTillProjekt.setVisible(false);
@@ -46,10 +51,11 @@ public class laggTillHandlaggare extends javax.swing.JFrame {
         tfAid = new javax.swing.JTextField();
         tfPid = new javax.swing.JTextField();
         btnTillbaka = new javax.swing.JButton();
-        btnSpara = new javax.swing.JButton();
+        btnSparaPID = new javax.swing.JButton();
         lblOgiltigtPid = new javax.swing.JLabel();
         lblOgiltigtAid = new javax.swing.JLabel();
         lblHandlaggareLagtsTillProjekt = new javax.swing.JLabel();
+        btnSparaAID = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,10 +73,10 @@ public class laggTillHandlaggare extends javax.swing.JFrame {
             }
         });
 
-        btnSpara.setText("Spara");
-        btnSpara.addActionListener(new java.awt.event.ActionListener() {
+        btnSparaPID.setText("Spara");
+        btnSparaPID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSparaActionPerformed(evt);
+                btnSparaPIDActionPerformed(evt);
             }
         });
 
@@ -80,6 +86,13 @@ public class laggTillHandlaggare extends javax.swing.JFrame {
 
         lblHandlaggareLagtsTillProjekt.setText("Handläggaren har lagts till på projektet");
 
+        btnSparaAID.setText("Spara");
+        btnSparaAID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSparaAIDActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,56 +100,53 @@ public class laggTillHandlaggare extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lblLaggTillHandlaggare)
-                        .addGap(118, 118, 118))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(btnSpara)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnTillbaka))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblOgiltigtAid)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblProjektInfo)
+                                    .addComponent(lblHandlaggareInfo)
+                                    .addComponent(lblLaggTillHandlaggare))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(lblHandlaggareInfo)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(tfAid, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lblOgiltigtAid, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(lblProjektInfo)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblOgiltigtPid)
-                                            .addComponent(tfPid, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                            .addComponent(lblHandlaggareLagtsTillProjekt))
-                        .addContainerGap(14, Short.MAX_VALUE))))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(tfPid, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblOgiltigtPid, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addComponent(tfAid, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnSparaPID)
+                            .addComponent(btnSparaAID)
+                            .addComponent(btnTillbaka))
+                        .addGap(0, 23, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblHandlaggareLagtsTillProjekt)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblLaggTillHandlaggare, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblHandlaggareInfo)
-                    .addComponent(tfAid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblOgiltigtAid)
-                .addGap(12, 12, 12)
+                .addGap(2, 2, 2)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblProjektInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfPid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(tfPid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSparaPID))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblOgiltigtPid)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addComponent(lblHandlaggareLagtsTillProjekt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTillbaka)
-                    .addComponent(btnSpara))
+                    .addComponent(lblHandlaggareInfo)
+                    .addComponent(tfAid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSparaAID))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblOgiltigtAid)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(lblHandlaggareLagtsTillProjekt)
+                .addGap(18, 18, 18)
+                .addComponent(btnTillbaka)
                 .addContainerGap())
         );
 
@@ -148,48 +158,78 @@ public class laggTillHandlaggare extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
-    private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
+    private void btnSparaPIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaPIDActionPerformed
         try{
             //Hämtar det som lagts in i rutan för Aid och Pid.
-            String inlagdAid = tfAid.getText();
             String inlagdPid =tfPid.getText();
-            //Hämtar alla aid som är handläggare och lägger det i en ArrayList.
-            String selectAllaHandlaggare = "select aid from handlaggare order by (aid);";
-            ArrayList<String> allaHandlaggare = idb.fetchColumn(selectAllaHandlaggare);
-            //Går igenom alla handlaggares aid, om något av dessa matchar det aid som har lagts in av användaren skapas en ArrayList av de pid som användaren är projektchef för.
-            System.out.println("Inlagt Aid: " + inlagdAid);
-            for(String enHandlaggare : allaHandlaggare){
-                System.out.println("Alla Handläggare Aid: " + enHandlaggare);
-                if(enHandlaggare.equals(inlagdAid)){
-                    String selectAllaProjekt ="select pid from projekt where projektchef = (select aid from anstalld where epost = '" + inloggadAnvandare + "') order by (pid);";
-                    ArrayList<String> allaProjekt = idb.fetchColumn(selectAllaProjekt);
-                    //Loppar igenom de pid som användaren är projektchef för, om något av dessa matchar det inlagda pid så läggs det inlagda pid och aid in i databasen.
-                    for(String ettProjekt : allaProjekt){
+            try{
+                inlagdPidInt = Integer.parseInt(inlagdPid);
+            }
+            catch(NumberFormatException ex){
+                lblOgiltigtPid.setVisible(true);
+            }
+            String selectAllaProjekt = "select pid from projekt where projektchef = (select aid from anstalld where epost = '" + inloggadAnvandare + "') order by (pid);";
+            ArrayList<String> allaProjekt = idb.fetchColumn(selectAllaProjekt);
+            for(String ettProjekt : allaProjekt){
                         if(ettProjekt.equals(inlagdPid)){
-                            int inlagdAidInt = Integer.parseInt(inlagdAid);
-                            int inlagdPidInt = Integer.parseInt(inlagdPid);
-                            String updateAidProjekt = "insert into ans_proj(pid,aid) values (" + inlagdAidInt + "," + inlagdPidInt + ");";
-                            idb.insert(updateAidProjekt);
-                            lblHandlaggareLagtsTillProjekt.setVisible(true);
+                            lblHandlaggareInfo.setVisible(true);
+                            tfAid.setVisible(true);
+                            btnSparaAID.setVisible(true);
+                            break;
                         }
                         else{
                             //Om det inlagda pid inte matchar något av de pid som användaren är projektchef över visas ett felmeddelande.
-                                lblOgiltigtPid.setVisible(true);
+                            lblOgiltigtPid.setVisible(true);
                         }
-                    }
-                }
-                else{
-                    //Om det inlagda aid inte matchar något av de aid som är handläggare visas ett felmeddelande.
-                        lblOgiltigtAid.setVisible(true);
-                }
-            
             }
+            //Hämtar alla aid som är handläggare och lägger det i en ArrayList.
+
+            //Går igenom alla handlaggares aid, om något av dessa matchar det aid som har lagts in av användaren skapas en ArrayList av de pid som användaren är projektchef för.
+            
+                    //Loppar igenom de pid som användaren är projektchef för, om något av dessa matchar det inlagda pid så läggs det inlagda pid och aid in i databasen.
+                    
+
+                            //Om det inlagda pid inte matchar något av de pid som användaren är projektchef över visas ett felmeddelande.
+
+
+                    //Om det inlagda aid inte matchar något av de aid som är handläggare visas ett felmeddelande.
+
             
         }
         catch(InfException ex){
             System.out.println(ex);
         }
-    }//GEN-LAST:event_btnSparaActionPerformed
+    }//GEN-LAST:event_btnSparaPIDActionPerformed
+
+    private void btnSparaAIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaAIDActionPerformed
+        try{
+            String inlagdAid = tfAid.getText();
+            String inlagdPid =tfPid.getText();
+            try{
+                inlagdAidInt = Integer.parseInt(inlagdAid);
+            }
+            catch(NumberFormatException ex){
+                lblOgiltigtAid.setVisible(true);
+            }
+            String selectAllaHandlaggare = "select aid from handlaggare order by (aid);";
+            ArrayList<String> allaHandlaggare = idb.fetchColumn(selectAllaHandlaggare);
+            for(String enHandlaggare : allaHandlaggare){
+                if(enHandlaggare.equals(inlagdAid)){
+                    String updateAidProjekt = "insert into ans_proj(pid,aid) values (" + inlagdPidInt + "," + inlagdAidInt + ");";
+                    idb.insert(updateAidProjekt);
+                    lblHandlaggareLagtsTillProjekt.setVisible(true);
+                    break;
+                }
+                else{
+                    //Om det inlagda aid inte matchar något av de aid som är handläggare visas ett felmeddelande.
+                    lblOgiltigtAid.setVisible(true);
+                }
+            }
+        }
+        catch(InfException ex){
+            System.out.println(ex);
+        }
+    }//GEN-LAST:event_btnSparaAIDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -227,7 +267,8 @@ public class laggTillHandlaggare extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSpara;
+    private javax.swing.JButton btnSparaAID;
+    private javax.swing.JButton btnSparaPID;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JLabel lblHandlaggareInfo;
     private javax.swing.JLabel lblHandlaggareLagtsTillProjekt;

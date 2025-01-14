@@ -70,8 +70,6 @@ public class LaggTillProjekt extends javax.swing.JFrame {
         lblFelmeddelandeProjektchef = new javax.swing.JLabel();
         lblFelmeddelandeLand = new javax.swing.JLabel();
         lblFelmeddelandeKostnad = new javax.swing.JLabel();
-        lblFelmeddelandeStatus = new javax.swing.JLabel();
-        lblFelmeddelandePrioritet = new javax.swing.JLabel();
         comboStatus = new javax.swing.JComboBox<>();
         comboPrioritet = new javax.swing.JComboBox<>();
 
@@ -130,10 +128,6 @@ public class LaggTillProjekt extends javax.swing.JFrame {
         lblFelmeddelandeLand.setText("Vänligen fyll i giltigt ID för land");
 
         lblFelmeddelandeKostnad.setText("Felaktigt format på kostnad");
-
-        lblFelmeddelandeStatus.setText("Felaktigt format på status");
-
-        lblFelmeddelandePrioritet.setText("Felaktigt format på prioritet");
 
         comboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pågående", "Planerad", "Avslutad" }));
 
@@ -212,10 +206,8 @@ public class LaggTillProjekt extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(tfKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblFelmeddelandePrioritet)
-                                    .addComponent(lblFelmeddelandeStatus)
-                                    .addComponent(lblFelmeddelandeKostnad))))
+                                .addComponent(lblFelmeddelandeKostnad)
+                                .addGap(2, 2, 2)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -254,13 +246,10 @@ public class LaggTillProjekt extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblStatus)
-                    .addComponent(lblFelmeddelandeStatus)
                     .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblPrioritet)
-                        .addComponent(lblFelmeddelandePrioritet))
+                    .addComponent(lblPrioritet)
                     .addComponent(comboPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -413,12 +402,10 @@ public class LaggTillProjekt extends javax.swing.JFrame {
     private javax.swing.JLabel lblBeskrivning;
     private javax.swing.JLabel lblFelmeddelandeKostnad;
     private javax.swing.JLabel lblFelmeddelandeLand;
-    private javax.swing.JLabel lblFelmeddelandePrioritet;
     private javax.swing.JLabel lblFelmeddelandeProjektID;
     private javax.swing.JLabel lblFelmeddelandeProjektchef;
     private javax.swing.JLabel lblFelmeddelandeSlutdatum;
     private javax.swing.JLabel lblFelmeddelandeStartdatum;
-    private javax.swing.JLabel lblFelmeddelandeStatus;
     private javax.swing.JLabel lblKostnad;
     private javax.swing.JLabel lblLand;
     private javax.swing.JLabel lblPrioritet;
