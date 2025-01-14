@@ -252,6 +252,11 @@ private void hanteraStatusSok(String sokTerm) {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblProjekt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProjektMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblProjekt);
 
         btnLaggTill.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
@@ -343,6 +348,14 @@ private void hanteraStatusSok(String sokTerm) {
     new RedigeraProjekt(idb, inloggadAnvandare).setVisible(true);
     this.setVisible(false);
     }//GEN-LAST:event_btnRedigeraActionPerformed
+
+    private void tblProjektMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProjektMouseClicked
+        int column = tblProjekt.columnAtPoint(evt.getPoint());
+        if(column == 2){
+            new BeskrivningProjekt(idb,inloggadAnvandare).setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_tblProjektMouseClicked
 
     /**
      * @param args the command line arguments
