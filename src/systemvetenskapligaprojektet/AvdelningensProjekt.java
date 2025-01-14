@@ -220,18 +220,6 @@ public class AvdelningensProjekt extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Ett fel uppstod vid hämtning av statusvärden: " + ex.getMessage());
         }            
     }
-    private void filtreraStatus() {
-    String valdStatus = (String) comboStatusFilter.getSelectedItem();
-
-    // Kontrollera om valdStatus är "Välj status" eller null
-    if (valdStatus == null || "Välj status".equals(valdStatus)) {
-        // Visa alla projekt
-        skapaOchFyllTabell(null); 
-    } else {
-        // Filtrera projekten efter vald status
-        skapaOchFyllTabell(valdStatus); 
-    }
-}
     
 private void initStatusFilterListener() {
     comboBoxAvdelning.addActionListener(new ActionListener() {
