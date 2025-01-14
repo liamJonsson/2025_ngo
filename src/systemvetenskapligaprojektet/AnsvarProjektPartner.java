@@ -52,7 +52,7 @@ public void fyllTabell() {
                 // Hämta partners för varje projekt som den inloggade användaren är projektchef för
                 for (String projektID : projektIDs) {
 
-                    // SQL-fråga för att hämta partners för det aktuella projektet
+                    // Korrigerad SQL-fråga för att hämta partners för det aktuella projektet
                     String selectPartners = "SELECT " +
                                              "pp.pid AS ProjektID, " +
                                              "partner.pid AS PartnerID, " +
@@ -62,11 +62,10 @@ public void fyllTabell() {
                                              "partner.telefon, " +
                                              "partner.adress, " +
                                              "partner.branch, " +
-                                             "stad.namn AS stad " +  // Här är stadens namn
+                                             "partner.stad " +
                                              "FROM projekt_partner pp " +
                                              "JOIN partner ON pp.partner_pid = partner.pid " +
-                                             "JOIN stad ON partner.stad = stad.sid " +
-                                             "WHERE pp.pid = '" + projektID + "';";
+                                             "WHERE pp.pid = '" + projektID + "';"; // Använd projektID för varje projekt
 
                     // Hämta partners kopplade till det aktuella projektet
                     ArrayList<HashMap<String, String>> partners = idb.fetchRows(selectPartners);
@@ -75,27 +74,23 @@ public void fyllTabell() {
                     if (partners != null && !partners.isEmpty()) {
                         // Lägg till partnerinformation i tabellen
                         for (HashMap<String, String> partner : partners) {
-                            String[] enRad = new String[kolumnNamn.length];
+        String[] enRad = new String[kolumnNamn.length];
 
-                            // Mappa varje kolumn med korrekt data
-                            for (int i = 0; i < kolumnNamn.length; i++) {
-                                if (kolumnNamn[i].equals("ProjektID")) {
-                                    // ProjektID från loopen
-                                    enRad[i] = projektID;
-                                } else if (kolumnNamn[i].equals("PartnerID")) {
-                                    // PartnerID från SQL-resultat mappat till "pid"
-                                    enRad[i] = partner.getOrDefault("PartnerID", partner.getOrDefault("pid", "Ingen data"));
-                                } else if (kolumnNamn[i].equals("stad")) {
-                                    // Stadens namn från SQL-resultat
-                                    enRad[i] = partner.getOrDefault("stad", "Ingen data");
-                                } else {
-                                    // Dynamisk mappning av övriga kolumner
-                                    enRad[i] = partner.getOrDefault(kolumnNamn[i], "Ingen data");
-                                }
-                            }
+        for (int i = 0; i < kolumnNamn.length; i++) {
+            if (kolumnNamn[i].equals("ProjektID")) {
+                // ProjektID från loopen
+                enRad[i] = projektID;
+            } else if (kolumnNamn[i].equals("PartnerID")) {
+                // PartnerID från SQL-resultat mappat till "pid"
+                enRad[i] = partner.getOrDefault("PartnerID", partner.getOrDefault("pid", "Ingen data"));
+            } else {
+                // Dynamisk mappning av övriga kolumner
+                enRad[i] = partner.getOrDefault(kolumnNamn[i], "Ingen data");
+            }
+        }
 
-                            // Lägg till raden till tabellen
-                            allaPartners.addRow(enRad);
+        allaPartners.addRow(enRad);
+
                         }
                     }
                 }
@@ -114,7 +109,6 @@ public void fyllTabell() {
         System.out.println("Fel: " + ex);
     }
 }
-
 
 
  
