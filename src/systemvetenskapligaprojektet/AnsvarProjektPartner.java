@@ -29,52 +29,73 @@ public class AnsvarProjektPartner extends javax.swing.JFrame {
             fyllTabell();
     }
     
-    public void fyllTabell() {
-        try {
-            // Hämta den inloggade användarens aid (anställd ID)
-            String aidQuery = "SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare + "';";
-            String aid = idb.fetchSingle(aidQuery);
+public void fyllTabell() {
+    try {
+        // Hämta den inloggade användarens aid (anställd ID)
+        String aidQuery = "SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare + "';";
+        String aid = idb.fetchSingle(aidQuery);
 
-            // Kontrollera om aid hittades
-            if (aid != null) {
+        // Kontrollera om aid hittades
+        if (aid != null) {
 
-                // Kolumnnamn för tabellen
-                String[] kolumnNamn = {"pid", "namn", "kontaktperson", "kontaktepost", "telefon", "adress", "branch", "stad"};
-                DefaultTableModel allaPartners = new DefaultTableModel(kolumnNamn, 0);
+            // Kolumnnamn för tabellen
+            String[] kolumnNamn = {"ProjektID", "PartnerID", "namn", "kontaktperson", "kontaktepost", "telefon", "adress", "branch", "stad"};
+            DefaultTableModel allaPartners = new DefaultTableModel(kolumnNamn, 0);
 
-                // Hämta alla projekt där den inloggade användaren är projektchef
-                String selectProjekt = "SELECT pid FROM projekt WHERE projektchef = '" + aid + "';";
-                ArrayList<String> projektIDs = idb.fetchColumn(selectProjekt);
+            // Hämta alla projekt där den inloggade användaren är projektchef
+            String selectProjekt = "SELECT pid FROM projekt WHERE projektchef = '" + aid + "';";
+            ArrayList<String> projektIDs = idb.fetchColumn(selectProjekt);
 
-                // Kontrollera om några projekt hittades
-                if (projektIDs != null && !projektIDs.isEmpty()) {
+            // Kontrollera om några projekt hittades
+            if (projektIDs != null && !projektIDs.isEmpty()) {
 
-                    // Hämta partners för varje projekt som den inloggade användaren är projektchef för
-                    for (String pid : projektIDs) {
+                // Hämta partners för varje projekt som den inloggade användaren är projektchef för
+                for (String projektID : projektIDs) {
 
-                        // SQL-fråga för att hämta partners kopplade till det aktuella projektet
-                        String selectPartners = "SELECT partner.pid, partner.namn, partner.kontaktperson, partner.kontaktepost, partner.telefon, partner.adress, partner.branch, partner.stad " +
-                                                 "FROM projekt_partner pp " +
-                                                 "JOIN partner ON pp.partner_pid = partner.pid " +
-                                                 "WHERE pp.pid = " + pid + ";";
+                    // SQL-fråga för att hämta partners för det aktuella projektet
+                    String selectPartners = "SELECT " +
+                                             "pp.pid AS ProjektID, " +
+                                             "partner.pid AS PartnerID, " +
+                                             "partner.namn, " +
+                                             "partner.kontaktperson, " +
+                                             "partner.kontaktepost, " +
+                                             "partner.telefon, " +
+                                             "partner.adress, " +
+                                             "partner.branch, " +
+                                             "stad.namn AS stad " +  // Här är stadens namn
+                                             "FROM projekt_partner pp " +
+                                             "JOIN partner ON pp.partner_pid = partner.pid " +
+                                             "JOIN stad ON partner.stad = stad.sid " +
+                                             "WHERE pp.pid = '" + projektID + "';";
 
-                        // Hämta partners kopplade till det aktuella projektet
-                        ArrayList<HashMap<String, String>> partners = idb.fetchRows(selectPartners);
+                    // Hämta partners kopplade till det aktuella projektet
+                    ArrayList<HashMap<String, String>> partners = idb.fetchRows(selectPartners);
 
-                        // Kontrollera om partners hittades
-                        if (partners != null && !partners.isEmpty()) {
+                    // Kontrollera om partners hittades
+                    if (partners != null && !partners.isEmpty()) {
+                        // Lägg till partnerinformation i tabellen
+                        for (HashMap<String, String> partner : partners) {
+                            String[] enRad = new String[kolumnNamn.length];
 
-                            // Lägg till partnerinformation i tabellen
-                            for (HashMap<String, String> partner : partners) {
-                                String[] enRad = new String[kolumnNamn.length];
-                                int index = 0;
-
-                                for (String kolumn : kolumnNamn) {
-                                    enRad[index++] = partner.getOrDefault(kolumn, "Ingen data");
+                            // Mappa varje kolumn med korrekt data
+                            for (int i = 0; i < kolumnNamn.length; i++) {
+                                if (kolumnNamn[i].equals("ProjektID")) {
+                                    // ProjektID från loopen
+                                    enRad[i] = projektID;
+                                } else if (kolumnNamn[i].equals("PartnerID")) {
+                                    // PartnerID från SQL-resultat mappat till "pid"
+                                    enRad[i] = partner.getOrDefault("PartnerID", partner.getOrDefault("pid", "Ingen data"));
+                                } else if (kolumnNamn[i].equals("stad")) {
+                                    // Stadens namn från SQL-resultat
+                                    enRad[i] = partner.getOrDefault("stad", "Ingen data");
+                                } else {
+                                    // Dynamisk mappning av övriga kolumner
+                                    enRad[i] = partner.getOrDefault(kolumnNamn[i], "Ingen data");
                                 }
-
-                                allaPartners.addRow(enRad);
                             }
+
+                            // Lägg till raden till tabellen
+                            allaPartners.addRow(enRad);
                         }
                     }
                 }
@@ -82,13 +103,21 @@ public class AnsvarProjektPartner extends javax.swing.JFrame {
                 // Uppdatera tabellen med de filtrerade partners
                 tblAnsvarProjektPartner.setModel(allaPartners);
 
+            } else {
+                System.out.println("Inga projekt hittades för projektchef med aid: " + aid);
             }
 
-        } catch (InfException ex) {
-            System.out.println(ex);
+        } else {
+            System.out.println("Ingen användare hittades för e-post: " + inloggadAnvandare);
         }
+    } catch (InfException ex) {
+        System.out.println("Fel: " + ex);
     }
+}
 
+
+
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.

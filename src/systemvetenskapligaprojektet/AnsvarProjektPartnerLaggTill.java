@@ -34,34 +34,50 @@ private void fyllDropdownPartners() {
         String aid = idb.fetchSingle(aidQuery);
 
         if (aid != null) {
-            // Hämta alla partners som kan läggas till i projektet
-            String selectPartners = "SELECT partner.pid, partner.namn, partner.kontaktperson, partner.kontaktepost, partner.telefon, partner.adress, partner.branch, partner.stad " +
-                                     "FROM partner;";
-            ArrayList<HashMap<String, String>> partners = idb.fetchRows(selectPartners);
+            // Hämta alla projekt som den inloggade användaren är projektchef för
+            String selectProjekt = "SELECT pid FROM projekt WHERE projektchef = '" + aid + "';";
+            ArrayList<HashMap<String, String>> projektResult = idb.fetchRows(selectProjekt);
 
-            // Lägg till partners i dropdown-listan
-            if (partners != null && !partners.isEmpty()) {
-                ComboValjPartner.removeAllItems(); // Rensa tidigare items
+            if (projektResult != null && !projektResult.isEmpty()) {
+                // Ta första projektet från listan
+                String projektID = projektResult.get(0).get("pid");
 
-                // Lägg till "Välj partner" som första objekt i comboboxen
-                ComboValjPartner.addItem("Välj partner");
+                // SQL-fråga för att hämta partners som inte är kopplade till projektet
+                String selectPartners = "SELECT partner.pid, partner.namn " +
+                                         "FROM partner " +
+                                         "WHERE partner.pid NOT IN (SELECT partner_pid " +
+                                         "FROM projekt_partner WHERE pid = '" + projektID + "');";
 
-                // Lägg till varje partner i comboboxen
-                for (HashMap<String, String> partner : partners) {
-                    String partnerInfo = partner.get("pid") + " - " + partner.get("namn") + ", " + partner.get("kontaktperson");
-                    ComboValjPartner.addItem(partnerInfo); // Lägg till partner i dropdown
+                // Hämta partners som inte är kopplade till projektet
+                ArrayList<HashMap<String, String>> partners = idb.fetchRows(selectPartners);
+
+                if (partners != null && !partners.isEmpty()) {
+                    // Rensa och fyll ComboBox
+                    ComboValjPartner.removeAllItems();
+                    ComboValjPartner.addItem("Välj partner");
+
+                    // Lägg till varje partner i comboboxen
+                    for (HashMap<String, String> partner : partners) {
+                        String partnerInfo = partner.get("pid") + " - " + partner.get("namn");
+                        ComboValjPartner.addItem(partnerInfo);
+                    }
+
+                    // Lämna det första neutrala alternativet valt
+                    ComboValjPartner.setSelectedIndex(0);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Inga partners hittades.");
                 }
-
-                // Lämna det första neutrala alternativet valt
-                ComboValjPartner.setSelectedIndex(0); // Sätt "Välj partner" som valt
             } else {
-                JOptionPane.showMessageDialog(this, "Inga partners hittades.");
+                JOptionPane.showMessageDialog(this, "Det finns inga projekt där du är projektchef.");
             }
         }
     } catch (InfException ex) {
-        JOptionPane.showMessageDialog(this, "Ett fel inträffade vid hämtning av partners.");
+        JOptionPane.showMessageDialog(this, "Ett fel inträffade vid hämtning av partners: " + ex.getMessage());
     }
 }
+
+
+
 
 
 
