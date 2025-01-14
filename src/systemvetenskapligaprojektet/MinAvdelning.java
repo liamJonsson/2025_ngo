@@ -39,10 +39,7 @@ public class MinAvdelning extends javax.swing.JFrame {
                     String namn = idb.fetchSingle(selectNamn);
                     tfNamn.setText(namn);
                     
-                    String selectBeskrivning = "select beskrivning from avdelning where avdid = (select avdelning from anstalld where epost = '" + inloggadAnvandare + "');";
-                    String beskrivning = idb.fetchSingle(selectBeskrivning);
-                    tfBeskrivning.setText(beskrivning);
-                    tfBeskrivning.setToolTipText(beskrivning);
+                    tfBeskrivning.setText("Klicka här för att se beskrivning!");
                     
                     String selectAdress = "select adress from avdelning where avdid = (select avdelning from anstalld where epost = '" + inloggadAnvandare + "');";
                     String adress = idb.fetchSingle(selectAdress);
@@ -188,6 +185,9 @@ public class MinAvdelning extends javax.swing.JFrame {
         tfBeskrivning.setEditable(false);
         tfBeskrivning.setText("jTextField1");
         tfBeskrivning.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tfBeskrivningMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 tfBeskrivningMouseEntered(evt);
             }
@@ -344,6 +344,13 @@ public class MinAvdelning extends javax.swing.JFrame {
         new AvdelningensProjekt(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnProjektActionPerformed
+
+    private void tfBeskrivningMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tfBeskrivningMouseClicked
+        if(evt.getSource() == tfBeskrivning){
+            new AvdelningsBeskrivning(idb,inloggadAnvandare).setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_tfBeskrivningMouseClicked
 
     /**
      * @param args the command line arguments
