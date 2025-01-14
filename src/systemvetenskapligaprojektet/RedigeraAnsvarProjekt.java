@@ -8,6 +8,9 @@ import oru.inf.InfDB; //Ska importeras till alla klasser
 import oru.inf.InfException;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 /**
  *
  * @author lisas
@@ -15,10 +18,11 @@ import java.util.HashMap;
 public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
     private static InfDB idb;
     private String inloggadAnvandare;
-    private int pid;
     private double enKostnad;
     private int projektchef;
     private int land;
+    private String projektID;
+    private int ettProjektID;
     /**
      * Creates new form RedigeraAnsvarProjekt
      */
@@ -26,7 +30,6 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
         initComponents();
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
-        lblFelID.setVisible(false);
         lblFelStartdatum.setVisible(false);
         lblFelSlutdatum.setVisible(false);
         lblFelKostnad.setVisible(false);
@@ -34,7 +37,31 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
         lblFelPrioritet.setVisible(false);
         lblFelProjektchef.setVisible(false);
         lblFelLand.setVisible(false);
+        fyllComboBox(projektID);
     }
+    
+    private void fyllComboBox(String projektID){
+        try{
+        
+        //Hämta projektID från projektchefen som är inloggad
+        String selectPid = "SELECT pid, projektnamn FROM projekt where projektchef in (select aid from anstalld where epost = '" + inloggadAnvandare + "');";
+        
+        ArrayList<HashMap<String, String>> allaPid = idb.fetchRows(selectPid);
+        
+        ComboRedigeraProjekt.removeAllItems();
+        ComboRedigeraProjekt.addItem("Välj projekt");
+        
+        for (HashMap<String, String> projekt : allaPid) {
+                String projektInfo = projekt.get("pid") + " - " + projekt.get("projektnamn");
+                ComboRedigeraProjekt.addItem(projektInfo);
+            }
+        }
+        catch (InfException e) {
+            JOptionPane.showMessageDialog(this, "Kunde inte fylla kopplade partners: " + e.getMessage());
+        }
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,8 +75,6 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
         btnTillbaka = new javax.swing.JButton();
         btnSpara = new javax.swing.JButton();
         lblRedigeraProjektet = new javax.swing.JLabel();
-        lblID = new javax.swing.JLabel();
-        tfID = new javax.swing.JTextField();
         lblProjektnamn = new javax.swing.JLabel();
         lblBeskrivning = new javax.swing.JLabel();
         lblStartdatum = new javax.swing.JLabel();
@@ -75,6 +100,8 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
         lblFelPrioritet = new javax.swing.JLabel();
         lblFelProjektchef = new javax.swing.JLabel();
         lblFelLand = new javax.swing.JLabel();
+        ComboRedigeraProjekt = new javax.swing.JComboBox<>();
+        tfID = new javax.swing.JTextField();
         lblFelID = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -95,8 +122,6 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
 
         lblRedigeraProjektet.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblRedigeraProjektet.setText("Redigera projektets uppgifter");
-
-        lblID.setText("ID");
 
         lblProjektnamn.setText("Projektnamn");
 
@@ -130,7 +155,21 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
 
         lblFelLand.setText("Ange giltigt landID");
 
-        lblFelID.setText("Ange giltigt projektID");
+        ComboRedigeraProjekt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboRedigeraProjekt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ComboRedigeraProjektMouseClicked(evt);
+            }
+        });
+        ComboRedigeraProjekt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboRedigeraProjektActionPerformed(evt);
+            }
+        });
+
+        tfID.setText("jTextField1");
+
+        lblFelID.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -170,36 +209,39 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
                                     .addComponent(tfLand))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblFelID)
+                        .addComponent(lblRedigeraProjektet)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblRedigeraProjektet)
                                 .addGap(85, 85, 85)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(tfID, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(lblFelStartdatum)
                                     .addComponent(lblFelSlutdatum)
                                     .addComponent(lblFelKostnad)
                                     .addComponent(lblFelStatus)
                                     .addComponent(lblFelPrioritet)
                                     .addComponent(lblFelProjektchef)
-                                    .addComponent(lblFelLand))))
+                                    .addComponent(lblFelLand)
+                                    .addComponent(tfID, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblFelID, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboRedigeraProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(58, 58, 58)))
                         .addContainerGap(20, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblRedigeraProjektet)
-                    .addComponent(lblID)
-                    .addComponent(tfID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblFelID)
-                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(lblRedigeraProjektet))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(ComboRedigeraProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(12, 12, 12)
+                .addComponent(tfID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblProjektnamn)
                     .addComponent(tfProjektnamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -242,7 +284,9 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
                     .addComponent(lblLand)
                     .addComponent(tfLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblFelLand))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addComponent(lblFelID)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
                     .addComponent(btnSpara))
@@ -261,50 +305,6 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
         boolean hasError = false;
         boolean hittad = false;
         try{
-            try{
-                String textPID = tfID.getText();
-                pid = Integer.parseInt(textPID);
-                
-                String selectPid = "select pid from projekt where projektchef in (select aid from anstalld where epost = '" + inloggadAnvandare + "');";
-                ArrayList<String> allaPid = idb.fetchColumn(selectPid);
-                    for(String ettPid:allaPid){
-                        int ettID = Integer.parseInt(ettPid);
-                        
-                        if(ettID == pid){
-                        hittad = true;
-                        lblFelID.setVisible(false);
-                        break;
-                    }
-                }
-                if(!hittad){ 
-                    lblFelID.setVisible(true);
-                    hasError = true;
-                }
-            } 
-            catch(NumberFormatException ex){
-                lblFelID.setVisible(true);
-                hasError = true;
-            }
-                try{
-                    String textProjektchef = tfProjektchef.getText();
-                    projektchef = Integer.parseInt(textProjektchef);
-                }
-                
-                catch(NumberFormatException ex){
-                    lblFelProjektchef.setVisible(true);
-                    hasError = true;
-                }
-                
-                try{
-                    String textLand = tfLand.getText();
-                    land = Integer.parseInt(textLand);
-                }
-                
-                catch(NumberFormatException ex){
-                    lblFelLand.setVisible(true);
-                    hasError = true;
-                }
-            
             if(!hasError){
                 try{
                     String projektnamn = tfProjektnamn.getText();
@@ -317,12 +317,32 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
                     String textProjektchef = tfProjektchef.getText();
                     String textLand = tfLand.getText();
                     
-                    
+                    if(!hasError){
+                        try{
+                            textProjektchef = tfProjektchef.getText();
+                            projektchef = Integer.parseInt(textProjektchef);
+                        }
+                        catch(NumberFormatException ex){
+                            lblFelProjektchef.setVisible(true);
+                            hasError = true;
+                        } 
+                    }                 
+                    if(!hasError){
+                        try{
+                            textLand = tfLand.getText();
+                            land = Integer.parseInt(textLand);
+                        }
+
+                        catch(NumberFormatException ex){
+                            lblFelLand.setVisible(true);
+                            hasError = true;
+                        }
+                    }                   
                     BigDecimal kostnad;
                         try{
                             kostnad = new BigDecimal(textKostnad);
                 
-                            //Kontrollera (13, 4)
+                            //Kontrollera (12, 2)
                             if(kostnad.precision() > 12 || kostnad.scale() > 2){
                                 throw new NumberFormatException();
                             }
@@ -331,33 +351,43 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
                             lblFelKostnad.setVisible(true);
                             return;
                         }
-                        String selectAnsvarProjekt = "select * from projekt where pid = " + pid + ";";
+                        String selectAnsvarProjekt = "select * from projekt where pid = " + ettProjektID + ";";
                         HashMap<String, String> ettAnsvarProjekt = idb.fetchRow(selectAnsvarProjekt);
                         String enRad[] = new String[ettAnsvarProjekt.size()];
                         for(String ettAttribut:ettAnsvarProjekt.keySet()){
                             switch(ettAttribut){
                                 case "pid":
                                     enRad[0] = ettAnsvarProjekt.get("pid");
+                                    break;
                                 case "projektnamn":
-                                    enRad[1] = ettAnsvarProjekt.get("projektnamn"); 
+                                    enRad[1] = ettAnsvarProjekt.get("projektnamn");
+                                    break;
                                 case "beskrivning":
                                     enRad[2] = ettAnsvarProjekt.get("beskrivning");
+                                    break;
                                 case "startdatum":
                                     enRad[3] = ettAnsvarProjekt.get("startdatum");
+                                    break;
                                 case "slutdatum":
                                     enRad[4] = ettAnsvarProjekt.get("slutdatum");
+                                    break;
                                 case "kostnad":
-                                    enRad[5] = ettAnsvarProjekt.get("kostnad");                   
+                                    enRad[5] = ettAnsvarProjekt.get("kostnad");
+                                    break;
                                 case "status":
                                     enRad[6] = ettAnsvarProjekt.get("status");
+                                    break;
                                 case "prioritet":
-                                    enRad[7] = ettAnsvarProjekt.get("status");
+                                    enRad[7] = ettAnsvarProjekt.get("prioritet");
+                                    break;
                                 case "projektchef":
-                                    enRad[8] = ettAnsvarProjekt.get("status");
+                                    enRad[8] = ettAnsvarProjekt.get("projektchef");
+                                    break;
                                 case "land":
-                                    enRad[9] = ettAnsvarProjekt.get("status");
+                                    enRad[9] = ettAnsvarProjekt.get("land");
+                                    break;
+                            }
                         }
-                    }
                     if(projektnamn.isEmpty()){
                         projektnamn = enRad[1];
                     }
@@ -386,20 +416,104 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
                        textLand = enRad[9];     
                     } 
                     
-                String updateAnsvarProjekt = "update projekt set projektnamn = '" + projektnamn + "', beskrivning = '" + beskrivning + "', startdatum = '" + startdatum + "', slutdatum = '" + slutdatum + "', kostnad = " + kostnad + ", status = '" + status + "', prioritet = '" + prioritet + "', projektchef = " + projektchef + "', stad = " + land + " where pid = " + pid + ";";
+                String updateAnsvarProjekt = "update projekt set projektnamn = '" + projektnamn + "', beskrivning = '" + beskrivning + "', startdatum = '" + startdatum + "', slutdatum = '" + slutdatum + "', kostnad = " + kostnad + ", status = '" + status + "', prioritet = '" + prioritet + "', projektchef = " + projektchef + ", land = " + land + " where pid = " + ettProjektID + ";";
+                    System.out.println(updateAnsvarProjekt);
                 idb.update(updateAnsvarProjekt);
                 new AnsvarProjekt(idb,inloggadAnvandare).setVisible(true);
                 this.setVisible(false);
                 }
                 catch(InfException ex){ 
-                System.out.println(ex);
+                    System.out.println(ex);
+                }
             }
         }
+        catch(NumberFormatException ex){ 
+            System.out.println(ex);
+        }
     }//GEN-LAST:event_btnSparaActionPerformed
-    catch(InfException ex){ //Catch InfExceptions?
-        System.out.println(ex);
+
+
+    
+    private void fyllTextfields(){
+        ComboRedigeraProjekt.addActionListener(evt -> {
+            String projekt = ComboRedigeraProjekt.getSelectedItem().toString();
+            
+
+            if (!projekt.equals("Välj projekt")) {
+                String textValtProjekt = "Välj projekt: " + projekt;
+                System.out.println(textValtProjekt);
+                // Regex för att matcha siffran direkt efter "Välj projekt: "
+                Pattern pattern = Pattern.compile("Välj projekt: (\\d+)");
+                Matcher matcher = pattern.matcher(textValtProjekt);
+
+                // Kontrollera om mönstret hittades
+                if (matcher.find()) {
+                    // Extrahera den första matchade gruppen
+                    String ettProjekt = matcher.group(1);
+                    ettProjektID = Integer.parseInt(ettProjekt);
+                    
+                    System.out.println("Numret är: " + ettProjektID);
+                } else {
+                    System.out.println("Ingen match hittades."); 
+                }
+            } 
+        });
+        try{
+            String selectInfo = "select * from projekt where pid = " + ettProjektID + ";";
+            System.out.println(selectInfo);
+            ArrayList<HashMap<String, String>> info = idb.fetchRows(selectInfo);
+            
+            for(HashMap<String, String> enRad:info){
+                for(String ettAttribut:enRad.keySet()){
+                    switch(ettAttribut){
+                        case "projektnamn":
+                            tfProjektnamn.setText(enRad.get(ettAttribut)); 
+                            break;
+                        case "beskrivning":
+                            tfBeskrivning.setText(enRad.get(ettAttribut));
+                            break;
+                        case "startdatum":
+                            tfStartdatum.setText(enRad.get(ettAttribut));
+                            break;
+                        case "slutdatum":
+                            tfSlutdatum.setText(enRad.get(ettAttribut));
+                            break;
+                        case "kostnad":
+                            tfKostnad.setText(enRad.get(ettAttribut));
+                            break;
+                        case "status":
+                            tfStatus.setText(enRad.get(ettAttribut));
+                            break;
+                        case "prioritet":
+                            tfPrioritet.setText(enRad.get(ettAttribut));
+                            break;
+                        case "projektchef":
+                            tfProjektchef.setText(enRad.get(ettAttribut));
+                            break;
+                        case "land":
+                            tfLand.setText(enRad.get(ettAttribut));
+                            break;
+                    }
+                }
+            }
+        }
+        catch(InfException ex){
+            System.out.println(ex);
+        }
     }
-}  
+    
+    private void ComboRedigeraProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboRedigeraProjektActionPerformed
+         fyllTextfields();
+    }//GEN-LAST:event_ComboRedigeraProjektActionPerformed
+
+    private void ComboRedigeraProjektMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ComboRedigeraProjektMouseClicked
+        
+
+        
+        //int valtProjekt = Integer.parseInt(valtPid[0]);
+        //return valtProjekt;
+    }//GEN-LAST:event_ComboRedigeraProjektMouseClicked
+ 
  
     
     
@@ -441,6 +555,7 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboRedigeraProjekt;
     private javax.swing.JButton btnSpara;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JLabel lblBeskrivning;
@@ -452,7 +567,6 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
     private javax.swing.JLabel lblFelSlutdatum;
     private javax.swing.JLabel lblFelStartdatum;
     private javax.swing.JLabel lblFelStatus;
-    private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblKostnad;
     private javax.swing.JLabel lblLand;
     private javax.swing.JLabel lblPrioritet;
