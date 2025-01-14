@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 /**
  *
  * @author iftinserar
@@ -23,6 +25,7 @@ public class RedigeraProjekt extends javax.swing.JFrame {
         initComponents();
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;
+        fyllDropdownProjekt();
         lblFelmeddelandeProjektID.setVisible(false);
         lblFelmeddelandeStartdatum.setVisible(false);
         lblFelmeddelandeSlutdatum.setVisible(false);
@@ -42,7 +45,6 @@ public class RedigeraProjekt extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         lblProjektID = new javax.swing.JLabel();
         lblProjektNamn = new javax.swing.JLabel();
         lblBeskrivning = new javax.swing.JLabel();
@@ -73,10 +75,10 @@ public class RedigeraProjekt extends javax.swing.JFrame {
         lblFelmeddelandePrioritet = new javax.swing.JLabel();
         lblFelmeddelandeProjektchef = new javax.swing.JLabel();
         lblFelmeddelandeLand = new javax.swing.JLabel();
+        lblAllaAnstallda = new javax.swing.JLabel();
+        ComboValjProjektID = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("Redigera projekts uppgifter");
 
         lblProjektID.setText("ID");
 
@@ -128,96 +130,77 @@ public class RedigeraProjekt extends javax.swing.JFrame {
 
         lblFelmeddelandeLand.setText("Vänligen fyll i giltigt ID för land");
 
+        lblAllaAnstallda.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
+        lblAllaAnstallda.setText("REDIGERA PROJEKTET");
+
+        ComboValjProjektID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblBeskrivning)
-                        .addGap(18, 18, 18)
-                        .addComponent(tfRedigeraBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblStartdatum)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfRedigeraStartdatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblSlutdatum)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfRedigeraSlutdatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblStatus)
-                        .addGap(18, 18, 18)
-                        .addComponent(tfRedigeraStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblPrioritet)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfRedigeraPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblProjektchef)
-                        .addGap(18, 18, 18)
-                        .addComponent(tfRedigeraProjektchef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblProjektNamn)
-                            .addComponent(lblProjektID))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfRedigeraProjektNamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(tfRedigeraProjektID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblFelmeddelandeStartdatum)
-                                    .addComponent(lblFelmeddelandeProjektID)
-                                    .addComponent(lblFelmeddelandeSlutdatum)
-                                    .addComponent(lblFelmeddelandeKostnad)
-                                    .addComponent(lblFelmeddelandeStatus)
-                                    .addComponent(lblFelmeddelandePrioritet)
-                                    .addComponent(lblFelmeddelandeProjektchef)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblKostnad)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfRedigeraKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(72, 72, 72))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(btnSpara)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnTillbaka)
                 .addGap(26, 26, 26))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblLand)
-                .addGap(18, 18, 18)
-                .addComponent(tfRedigeraLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblFelmeddelandeLand)
-                .addGap(96, 96, 96))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(lblAllaAnstallda))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblLand)
+                            .addComponent(lblProjektchef)
+                            .addComponent(lblPrioritet)
+                            .addComponent(lblStatus)
+                            .addComponent(lblKostnad)
+                            .addComponent(lblSlutdatum)
+                            .addComponent(lblStartdatum)
+                            .addComponent(lblBeskrivning)
+                            .addComponent(lblProjektNamn)
+                            .addComponent(lblProjektID))
+                        .addGap(52, 52, 52)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(tfRedigeraStartdatum, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                                .addComponent(tfRedigeraSlutdatum)
+                                .addComponent(tfRedigeraKostnad)
+                                .addComponent(tfRedigeraStatus)
+                                .addComponent(tfRedigeraLand)
+                                .addComponent(tfRedigeraProjektchef)
+                                .addComponent(tfRedigeraPrioritet)
+                                .addComponent(tfRedigeraBeskrivning)
+                                .addComponent(tfRedigeraProjektNamn))
+                            .addComponent(tfRedigeraProjektID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblFelmeddelandeProjektID)
+                            .addComponent(lblFelmeddelandeLand)
+                            .addComponent(lblFelmeddelandeProjektchef)
+                            .addComponent(lblFelmeddelandePrioritet)
+                            .addComponent(lblFelmeddelandeStatus)
+                            .addComponent(lblFelmeddelandeKostnad)
+                            .addComponent(lblFelmeddelandeSlutdatum)
+                            .addComponent(lblFelmeddelandeStartdatum)
+                            .addComponent(ComboValjProjektID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(61, 61, 61))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(lblAllaAnstallda)
+                .addGap(25, 25, 25)
+                .addComponent(ComboValjProjektID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblProjektID)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(tfRedigeraProjektID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblFelmeddelandeProjektID)))
-                .addGap(18, 18, 18)
+                    .addComponent(tfRedigeraProjektID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFelmeddelandeProjektID))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblProjektNamn)
                     .addComponent(tfRedigeraProjektNamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -225,42 +208,42 @@ public class RedigeraProjekt extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBeskrivning)
                     .addComponent(tfRedigeraBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblStartdatum)
-                    .addComponent(tfRedigeraStartdatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandeStartdatum))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSlutdatum)
+                    .addComponent(lblFelmeddelandeStartdatum)
+                    .addComponent(tfRedigeraStartdatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblStartdatum))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfRedigeraSlutdatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSlutdatum)
                     .addComponent(lblFelmeddelandeSlutdatum))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblKostnad)
                     .addComponent(tfRedigeraKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblKostnad)
                     .addComponent(lblFelmeddelandeKostnad))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblStatus)
                     .addComponent(tfRedigeraStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblStatus)
                     .addComponent(lblFelmeddelandeStatus))
-                .addGap(23, 23, 23)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPrioritet)
+                    .addComponent(lblFelmeddelandePrioritet)
                     .addComponent(tfRedigeraPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandePrioritet))
+                    .addComponent(lblPrioritet))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblProjektchef)
                     .addComponent(tfRedigeraProjektchef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandeProjektchef))
+                    .addComponent(lblFelmeddelandeProjektchef)
+                    .addComponent(lblProjektchef))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblLand)
                     .addComponent(tfRedigeraLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandeLand))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                    .addComponent(lblFelmeddelandeLand)
+                    .addComponent(lblLand))
+                .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
                     .addComponent(btnSpara))
@@ -372,6 +355,29 @@ public class RedigeraProjekt extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSparaActionPerformed
 
+    
+    public void fyllDropdownProjekt(){
+        try{
+            
+            String namn = "select pojektnamn from projekt";
+            ArrayList<HashMap<String, String>> projekt = idb.fetchRows(namn);
+            
+            if (projekt != null && !projekt.isEmpty()) {
+                ComboValjProjektID.removeAllItems();
+                
+                for (HashMap<String, String> ettProjekt : projekt) {
+                    String projektNamn = ettProjekt.get("projektnamn");
+                    ComboValjProjektID.addItem(projektNamn); // Lägg till partner i dropdown
+                }
+            ComboValjProjektID.setSelectedIndex(0);
+            }
+            
+        }
+        catch (InfException ex) {
+            JOptionPane.showMessageDialog(this, "Ett fel inträffade vid hämtning av projekt.");
+        }
+}
+    
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
     new AllaProjekt(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);        
@@ -413,9 +419,10 @@ public class RedigeraProjekt extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboValjProjektID;
     private javax.swing.JButton btnSpara;
     private javax.swing.JButton btnTillbaka;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblAllaAnstallda;
     private javax.swing.JLabel lblBeskrivning;
     private javax.swing.JLabel lblFelmeddelandeKostnad;
     private javax.swing.JLabel lblFelmeddelandeLand;

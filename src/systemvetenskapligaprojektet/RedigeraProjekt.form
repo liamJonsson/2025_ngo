@@ -23,95 +23,62 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblBeskrivning" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="tfRedigeraBeskrivning" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblStartdatum" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="tfRedigeraStartdatum" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblSlutdatum" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="tfRedigeraSlutdatum" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblStatus" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="tfRedigeraStatus" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblPrioritet" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="tfRedigeraPrioritet" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblProjektchef" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="tfRedigeraProjektchef" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblProjektNamn" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblProjektID" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="tfRedigeraProjektNamn" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="tfRedigeraProjektID" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="90" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblFelmeddelandeStartdatum" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFelmeddelandeProjektID" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFelmeddelandeSlutdatum" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFelmeddelandeKostnad" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFelmeddelandeStatus" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFelmeddelandePrioritet" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFelmeddelandeProjektchef" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblKostnad" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="tfRedigeraKostnad" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
-          </Group>
           <Group type="102" alignment="0" attributes="0">
               <Component id="btnSpara" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
               <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblLand" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="tfRedigeraLand" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="lblFelmeddelandeLand" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="lblAllaAnstallda" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblLand" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblProjektchef" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblPrioritet" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblStatus" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblKostnad" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblSlutdatum" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblStartdatum" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblBeskrivning" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblProjektNamn" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblProjektID" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="tfRedigeraStartdatum" pref="175" max="32767" attributes="0"/>
+                              <Component id="tfRedigeraSlutdatum" max="32767" attributes="0"/>
+                              <Component id="tfRedigeraKostnad" max="32767" attributes="0"/>
+                              <Component id="tfRedigeraStatus" max="32767" attributes="0"/>
+                              <Component id="tfRedigeraLand" max="32767" attributes="0"/>
+                              <Component id="tfRedigeraProjektchef" max="32767" attributes="0"/>
+                              <Component id="tfRedigeraPrioritet" max="32767" attributes="0"/>
+                              <Component id="tfRedigeraBeskrivning" max="32767" attributes="0"/>
+                              <Component id="tfRedigeraProjektNamn" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="tfRedigeraProjektID" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="166" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblFelmeddelandeProjektID" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFelmeddelandeLand" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFelmeddelandeProjektchef" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFelmeddelandePrioritet" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFelmeddelandeStatus" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFelmeddelandeKostnad" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFelmeddelandeSlutdatum" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFelmeddelandeStartdatum" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="ComboValjProjektID" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -119,16 +86,16 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblProjektID" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="tfRedigeraProjektID" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="lblFelmeddelandeProjektID" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+              <Component id="lblAllaAnstallda" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+              <Component id="ComboValjProjektID" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblProjektID" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfRedigeraProjektID" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelmeddelandeProjektID" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace pref="42" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblProjektNamn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfRedigeraProjektNamn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -138,49 +105,49 @@
                   <Component id="lblBeskrivning" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfRedigeraBeskrivning" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblStartdatum" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfRedigeraStartdatum" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblFelmeddelandeStartdatum" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfRedigeraStartdatum" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblStartdatum" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblSlutdatum" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfRedigeraSlutdatum" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblSlutdatum" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblFelmeddelandeSlutdatum" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblKostnad" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfRedigeraKostnad" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblKostnad" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblFelmeddelandeKostnad" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfRedigeraStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblFelmeddelandeStatus" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfRedigeraPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblFelmeddelandePrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfRedigeraPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblProjektchef" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfRedigeraProjektchef" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblFelmeddelandeProjektchef" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblProjektchef" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblLand" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfRedigeraLand" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblFelmeddelandeLand" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblLand" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="26" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnTillbaka" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSpara" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -191,11 +158,6 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Redigera projekts uppgifter"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="lblProjektID">
       <Properties>
         <Property name="text" type="java.lang.String" value="ID"/>
@@ -321,6 +283,29 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="V&#xe4;nligen fyll i giltigt ID f&#xf6;r land"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblAllaAnstallda">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="18" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="REDIGERA PROJEKTET"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="ComboValjProjektID">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="4">
+            <StringItem index="0" value="Item 1"/>
+            <StringItem index="1" value="Item 2"/>
+            <StringItem index="2" value="Item 3"/>
+            <StringItem index="3" value="Item 4"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
