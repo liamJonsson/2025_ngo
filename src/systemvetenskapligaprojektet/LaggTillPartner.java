@@ -242,6 +242,7 @@ public class LaggTillPartner extends javax.swing.JFrame {
             lblFelStadsID.setVisible(false);
             lblFelEmail.setVisible(false);
             lblFelTelefon.setVisible(false);
+            boolean fel = false;
             
             String textPID = tfID.getText();
             String namn = tfNamn.getText();
@@ -258,35 +259,37 @@ public class LaggTillPartner extends javax.swing.JFrame {
                 }
                 catch(NumberFormatException ex){
                     lblFelID.setVisible(true);
+                    fel = true;
                 }
-
                 try{
                     stadsID = Integer.parseInt(textStadsID);
                 }
                 catch(NumberFormatException ex){
                     lblFelStadsID.setVisible(true);
+                    fel = true;
+ 
                 }
+                if(!fel){
+                    String checkaPID = "select pid from partner where pid = " + pid + ";";
+                    String idFinns = idb.fetchSingle(checkaPID);
 
+                    String checkaStadsID = "select stad from partner where stad = " + stadsID + ";";
+                    String stadsIDFinns = idb.fetchSingle(checkaStadsID);
 
-                String checkaPID = "select pid from partner where pid = " + pid + ";";
-                String idFinns = idb.fetchSingle(checkaPID);
+                    if(idFinns != null){ 
+                       lblFelID.setVisible(true);
+                    }
 
-                String checkaStadsID = "select stad from partner where stad = " + stadsID + ";";
-                String stadsIDFinns = idb.fetchSingle(checkaStadsID);
+                    if(stadsIDFinns == null) {
+                       lblFelStadsID.setVisible(true);
+                    }
 
-                if(idFinns != null){ 
-                   lblFelID.setVisible(true);
+                    String insertNyStad = "insert into partner (pid, namn, kontaktperson, kontaktepost, telefon, adress, branch, stad) values (" + pid + ", '" + namn + "', '" + kontaktPerson + "', '" + kontaktEpost + "', '" + telefon + "', '" + adress + "', '" + branch + "', " + stadsID + ");";
+                    idb.insert(insertNyStad);
+
+                    new AllaPartners(idb,inloggadAnvandare).setVisible(true);
+                    this.setVisible(false);
                 }
-
-                if(stadsIDFinns == null) {
-                   lblFelStadsID.setVisible(true);
-                }
-
-                String insertNyStad = "insert into partner (pid, namn, kontaktperson, kontaktepost, telefon, adress, branch, stad) values (" + pid + ", '" + namn + "', '" + kontaktPerson + "', '" + kontaktEpost + "', '" + telefon + "', '" + adress + "', '" + branch + "', " + stadsID +");";
-                idb.insert(insertNyStad);
-
-                new AllaPartners(idb,inloggadAnvandare).setVisible(true);
-                this.setVisible(false);
             }
             else{
                 if(!validera.valideringEmail(kontaktEpost)){
