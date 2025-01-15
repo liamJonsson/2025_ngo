@@ -23,6 +23,7 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
     private int land;
     private String projektID;
     private int ettProjektID;
+    private Validering validera;
     /**
      * Creates new form RedigeraAnsvarProjekt
      */
@@ -159,7 +160,7 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
 
         lblFelKostnad.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblFelKostnad.setForeground(new java.awt.Color(255, 0, 0));
-        lblFelKostnad.setText("Använd korrekt format: XXXX.XX");
+        lblFelKostnad.setText("Använd korrekt format:  Max 12 siffror varav 2 decimaler");
 
         lblFelProjektchef.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblFelProjektchef.setForeground(new java.awt.Color(255, 0, 0));
@@ -222,16 +223,13 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
                             .addComponent(tfBeskrivning)
                             .addComponent(tfStartdatum)
                             .addComponent(tfSlutdatum)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ComboRedigeraProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblFelKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblFelProjektchef, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblFelLand, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(comboPrioritet, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(comboStatus, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGap(0, 101, Short.MAX_VALUE))))
+                            .addComponent(ComboRedigeraProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFelProjektchef, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFelLand, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(comboPrioritet, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(comboStatus, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblFelKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblRedigeraProjektet)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -241,7 +239,7 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
                             .addComponent(btnSpara)
                             .addGap(18, 18, 18)
                             .addComponent(btnTillbaka))))
-                .addGap(35, 35, 35))
+                .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -323,6 +321,7 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
         lblFelKostnad.setVisible(false);
         lblFelProjektchef.setVisible(false);
         lblFelLand.setVisible(false);
+
         try{
             if(!hasError){
                 try{
@@ -336,97 +335,129 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
                     String status = (String) comboStatus.getSelectedItem();
                     String prioritet = (String) comboPrioritet.getSelectedItem();
                     
-                    if(!hasError){
-                        try{
-                            textProjektchef = tfProjektchef.getText();
-                            projektchef = Integer.parseInt(textProjektchef);
-                        }
-                        catch(NumberFormatException ex){
-                            lblFelProjektchef.setVisible(true);
-                            hasError = true;
-                        } 
-                    }                 
-                    if(!hasError){
-                        try{
-                            textLand = tfLand.getText();
-                            land = Integer.parseInt(textLand);
-                        }
+                    if(validera.valideringDatum(startdatum) && validera.valideringDatum(slutdatum)){
+                        if(!hasError){
+                            try{
+                                textProjektchef = tfProjektchef.getText();
+                                projektchef = Integer.parseInt(textProjektchef);
+                            }
+                            catch(NumberFormatException ex){
+                                lblFelProjektchef.setVisible(true);
+                                hasError = true;
+                            } 
+                        }                 
+                        if(!hasError){
+                            try{
+                                textLand = tfLand.getText();
+                                land = Integer.parseInt(textLand);
+                            }
 
-                        catch(NumberFormatException ex){
-                            lblFelLand.setVisible(true);
-                            hasError = true;
-                        }
-                    }                   
-                    BigDecimal kostnad;
-                        try{
-                            kostnad = new BigDecimal(textKostnad);
-                
-                            //Kontrollera (12, 2)
-                            if(kostnad.precision() > 12 || kostnad.scale() > 2){
-                                throw new NumberFormatException();
+                            catch(NumberFormatException ex){
+                                lblFelLand.setVisible(true);
+                                hasError = true;
                             }
-                        }
-                        catch(NumberFormatException ex){
-                            lblFelKostnad.setVisible(true);
-                            return;
-                        }
-                        String selectAnsvarProjekt = "select * from projekt where pid = " + ettProjektID + ";";
-                        HashMap<String, String> ettAnsvarProjekt = idb.fetchRow(selectAnsvarProjekt);
-                        String enRad[] = new String[ettAnsvarProjekt.size()];
-                        for(String ettAttribut:ettAnsvarProjekt.keySet()){
-                            switch(ettAttribut){
-                                case "pid":
-                                    enRad[0] = ettAnsvarProjekt.get("pid");
-                                    break;
-                                case "projektnamn":
-                                    enRad[1] = ettAnsvarProjekt.get("projektnamn");
-                                    break;
-                                case "beskrivning":
-                                    enRad[2] = ettAnsvarProjekt.get("beskrivning");
-                                    break;
-                                case "startdatum":
-                                    enRad[3] = ettAnsvarProjekt.get("startdatum");
-                                    break;
-                                case "slutdatum":
-                                    enRad[4] = ettAnsvarProjekt.get("slutdatum");
-                                    break;
-                                case "kostnad":
-                                    enRad[5] = ettAnsvarProjekt.get("kostnad");
-                                    break;
-                                case "projektchef":
-                                    enRad[8] = ettAnsvarProjekt.get("projektchef");
-                                    break;
-                                case "land":
-                                    enRad[9] = ettAnsvarProjekt.get("land");
-                                    break;
+                        } 
+                        if(!hasError){
+                            String selectProjektchef = "select aid from handlaggare where aid = " + projektchef + ";";
+                            String enProjektchef = idb.fetchSingle(selectProjektchef);
+                            String selectLand = "select lid from land where lid = " + land + ";";
+                            String ettLand = idb.fetchSingle(selectLand);
+                            
+                            if(enProjektchef == null){
+                                lblFelProjektchef.setVisible(true);
                             }
+                            if(ettLand == null){
+                                lblFelLand.setVisible(true);
+                            }
+                            BigDecimal kostnad;
+                                try{
+                                    kostnad = new BigDecimal(textKostnad);
+
+                                    //Kontrollera (12, 2)
+                                    if (kostnad.precision() - kostnad.scale() > 10 || kostnad.scale() > 2) {
+                                        lblFelKostnad.setVisible(true);
+                                        return;
+                                    }
+                                }
+                                catch (NumberFormatException ex) {
+                                    lblFelKostnad.setVisible(true);
+                                    return;
+                                }
+                                String selectAnsvarProjekt = "select * from projekt where pid = " + ettProjektID + ";";
+                                HashMap<String, String> ettAnsvarProjekt = idb.fetchRow(selectAnsvarProjekt);
+                                String enRad[] = new String[ettAnsvarProjekt.size()];
+                                for(String ettAttribut:ettAnsvarProjekt.keySet()){
+                                    switch(ettAttribut){
+                                        case "pid":
+                                            enRad[0] = ettAnsvarProjekt.get("pid");
+                                            break;
+                                        case "projektnamn":
+                                            enRad[1] = ettAnsvarProjekt.get("projektnamn");
+                                            break;
+                                        case "beskrivning":
+                                            enRad[2] = ettAnsvarProjekt.get("beskrivning");
+                                            break;
+                                        case "startdatum":
+                                            enRad[3] = ettAnsvarProjekt.get("startdatum");
+                                            break;
+                                        case "slutdatum":
+                                            enRad[4] = ettAnsvarProjekt.get("slutdatum");
+                                            break;
+                                        case "kostnad":
+                                            enRad[5] = ettAnsvarProjekt.get("kostnad");
+                                            break;
+                                        case "projektchef":
+                                            enRad[8] = ettAnsvarProjekt.get("projektchef");
+                                            break;
+                                        case "land":
+                                            enRad[9] = ettAnsvarProjekt.get("land");
+                                            break;
+                                    }
+                                }
+                                if(projektnamn.isEmpty()){
+                                    projektnamn = enRad[1];
+                                }
+                                if(beskrivning.isEmpty()){
+                                   beskrivning = enRad[2];
+                                }
+                                if(startdatum.isEmpty()){
+                                   startdatum = enRad[3];
+                                }
+                                if(slutdatum.isEmpty()){
+                                   slutdatum = enRad[4];
+                                }
+                                if(textKostnad.isEmpty()){
+                                   textKostnad = enRad[5];
+                                }
+                                if(textProjektchef.isEmpty()){
+                                   textProjektchef = enRad[8];     
+                                }  
+                                if(textLand.isEmpty()){
+                                   textLand = enRad[9];     
+                                } 
+                                try{
+                                    String updateAnsvarProjekt = "update projekt set projektnamn = '" + projektnamn + "', beskrivning = '" + beskrivning + "', startdatum = '" + startdatum + "', slutdatum = '" + slutdatum + "', kostnad = " + kostnad + ", status = '" + status + "', prioritet = '" + prioritet + "', projektchef = " + projektchef + ", land = " + land + " where pid = " + ettProjektID + ";";
+                                    System.out.println(updateAnsvarProjekt);
+                                    idb.update(updateAnsvarProjekt);
+                                    lblLyckat.setVisible(true);
+                                }
+                                catch(InfException ex){
+                                    System.out.println(ex);
+                                }
                         }
-                    if(projektnamn.isEmpty()){
-                        projektnamn = enRad[1];
                     }
-                    if(beskrivning.isEmpty()){
-                       beskrivning = enRad[2];
+                    else{
+                        if(!validera.valideringDatum(startdatum)){
+                            lblFelStartdatum.setVisible(true);
+                        }
+                        else if(!validera.valideringDatum(slutdatum)){
+                            lblFelSlutdatum.setVisible(true);
+                        }
+                        else{
+                            lblFelStartdatum.setVisible(true);
+                            lblFelSlutdatum.setVisible(true);
+                        }
                     }
-                    if(startdatum.isEmpty()){
-                       startdatum = enRad[3];
-                    }
-                    if(slutdatum.isEmpty()){
-                       slutdatum = enRad[4];
-                    }
-                    if(textKostnad.isEmpty()){
-                       textKostnad = enRad[5];
-                    }
-                    if(textProjektchef.isEmpty()){
-                       textProjektchef = enRad[8];     
-                    }  
-                    if(textLand.isEmpty()){
-                       textLand = enRad[9];     
-                    } 
-                    
-                String updateAnsvarProjekt = "update projekt set projektnamn = '" + projektnamn + "', beskrivning = '" + beskrivning + "', startdatum = '" + startdatum + "', slutdatum = '" + slutdatum + "', kostnad = " + kostnad + ", status = '" + status + "', prioritet = '" + prioritet + "', projektchef = " + projektchef + ", land = " + land + " where pid = " + ettProjektID + ";";
-                    System.out.println(updateAnsvarProjekt);
-                idb.update(updateAnsvarProjekt);
-                lblLyckat.setVisible(true);
                 }
                 catch(InfException ex){ 
                     System.out.println(ex);
@@ -457,7 +488,8 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
                     ettProjektID = Integer.parseInt(ettProjekt);
                     
                     System.out.println("Numret är: " + ettProjektID);
-                } else {
+                } 
+                else{
                     System.out.println("Ingen match hittades."); 
                 }
             } 

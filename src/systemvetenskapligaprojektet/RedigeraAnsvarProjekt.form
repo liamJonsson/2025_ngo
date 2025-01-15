@@ -50,19 +50,14 @@
                           <Component id="tfBeskrivning" max="32767" attributes="0"/>
                           <Component id="tfStartdatum" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfSlutdatum" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="ComboRedigeraProjekt" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFelKostnad" alignment="0" min="-2" pref="178" max="-2" attributes="0"/>
-                                  <Component id="lblFelProjektchef" alignment="0" min="-2" pref="191" max="-2" attributes="0"/>
-                                  <Component id="lblFelLand" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="comboPrioritet" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="comboStatus" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="0" pref="101" max="32767" attributes="0"/>
+                          <Component id="ComboRedigeraProjekt" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFelProjektchef" alignment="0" min="-2" pref="191" max="-2" attributes="0"/>
+                          <Component id="lblFelLand" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="comboPrioritet" alignment="0" max="32767" attributes="0"/>
+                              <Component id="comboStatus" alignment="0" max="32767" attributes="0"/>
                           </Group>
+                          <Component id="lblFelKostnad" alignment="0" min="-2" pref="301" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
@@ -78,7 +73,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -306,7 +301,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Anv&#xe4;nd korrekt format: XXXX.XX"/>
+        <Property name="text" type="java.lang.String" value="Anv&#xe4;nd korrekt format:  Max 12 siffror varav 2 decimaler"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblFelProjektchef">
