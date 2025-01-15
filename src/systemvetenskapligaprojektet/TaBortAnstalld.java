@@ -13,6 +13,7 @@ public class TaBortAnstalld extends javax.swing.JFrame {
 
     private static InfDB idb;
     private String inloggadAnvandare;
+    private int aid;
     
     public TaBortAnstalld(InfDB idb, String inloggadAnvandare) {
         initComponents();
@@ -132,16 +133,23 @@ public class TaBortAnstalld extends javax.swing.JFrame {
             String taBortAid = tfTaBortID.getText();
 
             //Gör om String till int
-            int aid = Integer.parseInt(taBortAid);
-            
+            try{
+                aid = Integer.parseInt(taBortAid);
+            }
+            catch(NumberFormatException ex){
+                System.out.println(ex);
+            }
             //Kollar ifall aid finns i databasen
             String kontrolleraAid = "select aid from anstalld where aid = " + aid + ";";
+            System.out.println(kontrolleraAid);
             String aidFinns = idb.fetchSingle(kontrolleraAid);
             
             String kontrollHandlaggare = "select aid from handlaggare where aid = " + aid + ";";
             String anstalldArHandlaggare = idb.fetchSingle(kontrollHandlaggare);
+            System.out.println(kontrolleraAid);
             
-            //Om aid finns i databasen tar vi bort den, först från Handläggare/Admin
+            //Om aid finns i databasen tar vi bort den, först från Handläggare/Admin, sen från ans_proj, sen från avdelning,
+            //och till slut projekt men bara om aid ligger i dessa tabeller
             if(aidFinns != null){
                 if(anstalldArHandlaggare == null){
                     String taBortAdministrator = "delete from admin where aid = " + aid + ";";
@@ -151,6 +159,27 @@ public class TaBortAnstalld extends javax.swing.JFrame {
                     String taBortHandlaggare = "delete from handlaggare where aid = " + aid + ";";
                     idb.delete(taBortHandlaggare);
                 }
+                String selectAns_Proj = "select aid from ans_proj where aid = " + aid + ";";
+                String ans_proj = idb.fetchSingle(selectAns_Proj);
+                System.out.println(selectAns_Proj);
+                String selectAvdelning = "select chef from avdelning where aid = " + aid + ";";
+                String avdelning = idb.fetchSingle(selectAvdelning);
+                System.out.println(selectAvdelning);
+                String selectProjekt = "select projektchef from projekt where aid = " + aid + ";";
+                String projekt = idb.fetchSingle(selectProjekt);
+                System.out.println(selectProjekt);
+                if(ans_proj != null){
+                    String taBortAns_Proj = "delete from ans_proj where aid = " + aid + ";";
+                    idb.delete(taBortAns_Proj);
+                }
+                if(avdelning != null){
+                    String taBortAvdelning = "delete from avdelning where chef = " + aid + ";";
+                    idb.delete(taBortAvdelning);
+                }               
+                if(projekt != null){
+                    String taBortProjekt = "delete from projekt where projektchef = " + aid + ";";
+                    idb.delete(taBortProjekt);
+                }               
             }
             //och sen från Anstalld
             if(aidFinns != null){
