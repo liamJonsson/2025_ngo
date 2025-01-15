@@ -23,46 +23,39 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="126" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="btnLoggaUt" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
                       <Component id="lblInloggadAnvandare" min="-2" pref="180" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="btnAllaAnstallda" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnAllaAvdelningar" alignment="0" pref="130" max="32767" attributes="0"/>
+                          <Component id="btnAllaPartners" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnAllaLander" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnAllaProjekt" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnMinaSidor" alignment="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
+              <EmptySpace pref="80" max="32767" attributes="0"/>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="btnAllaPartners" alignment="1" min="-2" pref="135" max="-2" attributes="0"/>
-                  <Component id="btnAllaLander" alignment="1" min="-2" pref="135" max="-2" attributes="0"/>
-                  <Component id="btnAllaProjekt" alignment="1" min="-2" pref="135" max="-2" attributes="0"/>
-                  <Component id="btnMinaSidor" alignment="1" min="-2" pref="135" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnAllaAnstallda" min="-2" pref="135" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
-                          <Component id="btnAllaAvdelningar" min="-2" pref="135" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-              </Group>
-              <EmptySpace max="32767" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Component id="btnLoggaUt" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Component id="lblInloggadAnvandare" min="-2" pref="20" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Component id="btnMinaSidor" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnAllaAnstallda" min="-2" max="-2" attributes="0"/>
@@ -74,9 +67,9 @@
               <Component id="btnAllaLander" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnAllaPartners" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="31" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Component id="btnLoggaUt" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -84,7 +77,10 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btnMinaSidor">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Mina Sidor"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Mina sidor"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMinaSidorActionPerformed"/>
@@ -92,7 +88,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnAllaAnstallda">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Alla Anst&#xe4;llda"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Alla anst&#xe4;llda"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAllaAnstalldaActionPerformed"/>
@@ -100,7 +99,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnAllaAvdelningar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Alla Avdelningar"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Alla avdelningar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAllaAvdelningarActionPerformed"/>
@@ -108,7 +110,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnAllaPartners">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Alla Partners"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Alla partners"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAllaPartnersActionPerformed"/>
@@ -116,7 +121,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnAllaLander">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Alla L&#xe4;nder"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Alla l&#xe4;nder"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAllaLanderActionPerformed"/>
@@ -124,7 +132,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnAllaProjekt">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Alla Projekt"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Alla projekt"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAllaProjektActionPerformed"/>
@@ -132,13 +143,21 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnLoggaUt">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Logga Ut"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Logga ut"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLoggaUtActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblInloggadAnvandare">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="14" style="1"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
