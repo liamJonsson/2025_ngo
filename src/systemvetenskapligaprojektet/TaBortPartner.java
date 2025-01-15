@@ -34,37 +34,22 @@ public class TaBortPartner extends javax.swing.JFrame {
     private void initComponents() {
 
         lblTaBortPartner = new javax.swing.JLabel();
-        tfTaBortID = new javax.swing.JTextField();
         lblTaBortPartnerLyckad = new javax.swing.JLabel();
         lblFelIDTaBort = new javax.swing.JLabel();
         btnTaBort = new javax.swing.JButton();
         btnTillbakaTaBort = new javax.swing.JButton();
+        tfTaBortID = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblTaBortPartner.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblTaBortPartner.setText("Ta bort en partner");
+        lblTaBortPartner.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
+        lblTaBortPartner.setText("TA BORT EN PARTNER");
 
-        tfTaBortID.setEditable(false);
-        tfTaBortID.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
-        tfTaBortID.setForeground(new java.awt.Color(102, 102, 102));
-        tfTaBortID.setText("Fyll i ID:t på den partner du önskar ta bort");
-        tfTaBortID.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tfTaBortIDMouseClicked(evt);
-            }
-        });
-        tfTaBortID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfTaBortIDActionPerformed(evt);
-            }
-        });
-
-        lblTaBortPartnerLyckad.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        lblTaBortPartnerLyckad.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblTaBortPartnerLyckad.setForeground(new java.awt.Color(0, 153, 0));
-        lblTaBortPartnerLyckad.setText("Partnern har tagits bort");
+        lblTaBortPartnerLyckad.setText("Partnern har tagits bort!");
 
-        lblFelIDTaBort.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        lblFelIDTaBort.setFont(new java.awt.Font("Microsoft JhengHei UI", 2, 12)); // NOI18N
         lblFelIDTaBort.setForeground(new java.awt.Color(255, 0, 0));
         lblFelIDTaBort.setText("ID:t finns inte i systemet");
 
@@ -82,64 +67,71 @@ public class TaBortPartner extends javax.swing.JFrame {
             }
         });
 
+        tfTaBortID.setEditable(false);
+        tfTaBortID.setFont(new java.awt.Font("Microsoft JhengHei UI", 2, 12)); // NOI18N
+        tfTaBortID.setForeground(new java.awt.Color(102, 102, 102));
+        tfTaBortID.setText("Fyll i ID:t på den partner du önskar ta bort");
+        tfTaBortID.setMinimumSize(new java.awt.Dimension(247, 32));
+        tfTaBortID.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tfTaBortIDMouseClicked(evt);
+            }
+        });
+        tfTaBortID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfTaBortIDActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(115, 115, 115)
-                        .addComponent(lblTaBortPartner))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTaBortPartnerLyckad)
-                            .addComponent(lblFelIDTaBort)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tfTaBortID, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(57, 57, 57)
+                            .addComponent(lblTaBortPartner))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(35, 35, 35)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblFelIDTaBort, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(btnTaBort)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGap(103, 103, 103)
                                     .addComponent(btnTillbakaTaBort))
-                                .addComponent(tfTaBortID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(90, Short.MAX_VALUE))
+                                .addComponent(lblTaBortPartnerLyckad, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(36, 36, 36)
                 .addComponent(lblTaBortPartner)
                 .addGap(18, 18, 18)
                 .addComponent(tfTaBortID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblTaBortPartnerLyckad)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblFelIDTaBort)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addGap(75, 75, 75)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTaBort)
                     .addComponent(btnTillbakaTaBort))
-                .addGap(49, 49, 49))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTaBortPartnerLyckad)
+                .addGap(35, 35, 35))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tfTaBortIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tfTaBortIDMouseClicked
-        tfTaBortID.setEditable(true);
-        tfTaBortID.setText("");
-    }//GEN-LAST:event_tfTaBortIDMouseClicked
-
-    private void tfTaBortIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTaBortIDActionPerformed
-        
-    }//GEN-LAST:event_tfTaBortIDActionPerformed
 
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
         try{
             String taBortPid = tfTaBortID.getText();
             int pid = Integer.parseInt(taBortPid);
         
-            String kontrolleraPid = "select aid from anstalld where aid = " + pid + ";";
+            String kontrolleraPid = "select pid from partner where pid = " + pid + ";";
             String pidFinns = idb.fetchSingle(kontrolleraPid);
         
             if(pidFinns != null){
@@ -165,6 +157,15 @@ public class TaBortPartner extends javax.swing.JFrame {
         new AllaPartners(idb,inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaTaBortActionPerformed
+
+    private void tfTaBortIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tfTaBortIDMouseClicked
+        tfTaBortID.setEditable(true);
+        tfTaBortID.setText("");
+    }//GEN-LAST:event_tfTaBortIDMouseClicked
+
+    private void tfTaBortIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTaBortIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfTaBortIDActionPerformed
 
     /**
      * @param args the command line arguments
