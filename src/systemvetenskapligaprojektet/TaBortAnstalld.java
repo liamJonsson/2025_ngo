@@ -37,11 +37,11 @@ public class TaBortAnstalld extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblTaBortAnstalld.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblTaBortAnstalld.setText("Ta bort en anställd");
+        lblTaBortAnstalld.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
+        lblTaBortAnstalld.setText("TA BORT EN ANSTÄLLD");
 
         tfTaBortID.setEditable(false);
-        tfTaBortID.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        tfTaBortID.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         tfTaBortID.setForeground(new java.awt.Color(102, 102, 102));
         tfTaBortID.setText("Fyll i ID:t på den anställde du önskar ta bort");
         tfTaBortID.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -55,6 +55,7 @@ public class TaBortAnstalld extends javax.swing.JFrame {
             }
         });
 
+        btnTillbakaTaBort.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnTillbakaTaBort.setText("Tillbaka");
         btnTillbakaTaBort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,6 +63,7 @@ public class TaBortAnstalld extends javax.swing.JFrame {
             }
         });
 
+        btnTaBort.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnTaBort.setText("Ta bort");
         btnTaBort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,51 +71,51 @@ public class TaBortAnstalld extends javax.swing.JFrame {
             }
         });
 
-        lblFelIDTaBort.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        lblFelIDTaBort.setFont(new java.awt.Font("Microsoft JhengHei UI", 2, 12)); // NOI18N
         lblFelIDTaBort.setForeground(new java.awt.Color(255, 0, 0));
         lblFelIDTaBort.setText("ID:t finns inte i systemet");
 
-        lblTaBortAnstalldLyckad.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        lblTaBortAnstalldLyckad.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblTaBortAnstalldLyckad.setForeground(new java.awt.Color(0, 153, 0));
-        lblTaBortAnstalldLyckad.setText("Den anställde har tagits bort");
+        lblTaBortAnstalldLyckad.setText("Den anställde har tagits bort!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
+                    .addComponent(lblFelIDTaBort, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(tfTaBortID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblTaBortAnstalldLyckad)
-                            .addComponent(lblFelIDTaBort)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(btnTaBort)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnTillbakaTaBort))
-                                .addComponent(tfTaBortID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addComponent(lblTaBortAnstalld)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                            .addComponent(lblTaBortAnstalldLyckad, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnTaBort)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnTillbakaTaBort)))))
+                .addGap(35, 35, 35))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblTaBortAnstalld)
+                .addGap(55, 55, 55))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(lblTaBortAnstalld)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addComponent(tfTaBortID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
-                .addComponent(lblTaBortAnstalldLyckad)
-                .addGap(2, 2, 2)
                 .addComponent(lblFelIDTaBort)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGap(65, 65, 65)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTaBort)
                     .addComponent(btnTillbakaTaBort))
+                .addGap(2, 2, 2)
+                .addComponent(lblTaBortAnstalldLyckad)
                 .addGap(35, 35, 35))
         );
 
@@ -141,13 +143,11 @@ public class TaBortAnstalld extends javax.swing.JFrame {
             }
             //Kollar ifall aid finns i databasen
             String kontrolleraAid = "select aid from anstalld where aid = " + aid + ";";
-            System.out.println(kontrolleraAid);
             String aidFinns = idb.fetchSingle(kontrolleraAid);
             
             String kontrollHandlaggare = "select aid from handlaggare where aid = " + aid + ";";
             String anstalldArHandlaggare = idb.fetchSingle(kontrollHandlaggare);
-            System.out.println(kontrolleraAid);
-            
+       
             //Om aid finns i databasen tar vi bort den, först från Handläggare/Admin, sen från ans_proj, sen från avdelning,
             //och till slut projekt men bara om aid ligger i dessa tabeller
             if(aidFinns != null){
@@ -161,23 +161,26 @@ public class TaBortAnstalld extends javax.swing.JFrame {
                 }
                 String selectAns_Proj = "select aid from ans_proj where aid = " + aid + ";";
                 String ans_proj = idb.fetchSingle(selectAns_Proj);
-                System.out.println(selectAns_Proj);
-                String selectAvdelning = "select chef from avdelning where aid = " + aid + ";";
+
+                String selectAvdelning = "select chef from avdelning where chef = " + aid + ";";
                 String avdelning = idb.fetchSingle(selectAvdelning);
-                System.out.println(selectAvdelning);
-                String selectProjekt = "select projektchef from projekt where aid = " + aid + ";";
+
+                String selectProjekt = "select projektchef from projekt where projektchef = " + aid + ";";
                 String projekt = idb.fetchSingle(selectProjekt);
-                System.out.println(selectProjekt);
+
                 if(ans_proj != null){
                     String taBortAns_Proj = "delete from ans_proj where aid = " + aid + ";";
+                                System.out.println(taBortAns_Proj);
                     idb.delete(taBortAns_Proj);
                 }
                 if(avdelning != null){
                     String taBortAvdelning = "delete from avdelning where chef = " + aid + ";";
+                                System.out.println(taBortAvdelning);
                     idb.delete(taBortAvdelning);
                 }               
                 if(projekt != null){
                     String taBortProjekt = "delete from projekt where projektchef = " + aid + ";";
+                                System.out.println(taBortProjekt);
                     idb.delete(taBortProjekt);
                 }               
             }
