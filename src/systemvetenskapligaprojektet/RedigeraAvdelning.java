@@ -96,9 +96,7 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
         lblStad.setText("Stad");
 
         lblChef.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
-        lblChef.setText("Chef");
-
-        tfNamn.setEditable(false);
+        lblChef.setText("Avdelningschef");
 
         btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnTillbaka.setText("Tillbaka");
@@ -166,31 +164,33 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
                             .addComponent(lblEpost)
                             .addComponent(lblTelefon)
                             .addComponent(lblStad)
-                            .addComponent(lblChef))
-                        .addGap(106, 106, 106)
+                            .addComponent(lblChef, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfNamn)
-                            .addComponent(tfBeskrivning)
-                            .addComponent(tfAdress)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblFelmeddelandeEpost, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblFelmeddelandeTel, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblFelmeddelandeStad, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblFelmeddelandeAvdelningschef, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(tfEpost)
-                            .addComponent(tfTelefon)
-                            .addComponent(tfStad)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 294, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblLyckat, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(btnSpara)
                                         .addGap(18, 18, 18)
                                         .addComponent(btnTillbaka))))
-                            .addComponent(tfChef))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(75, 75, 75)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfBeskrivning)
+                                    .addComponent(tfNamn)
+                                    .addComponent(tfAdress)
+                                    .addComponent(tfEpost)
+                                    .addComponent(tfTelefon)
+                                    .addComponent(tfStad)
+                                    .addComponent(tfChef)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblFelmeddelandeAvdelningschef, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblFelmeddelandeStad, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblFelmeddelandeTel, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblFelmeddelandeEpost, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))))
                 .addGap(74, 74, 74))
         );
         layout.setVerticalGroup(
@@ -198,7 +198,7 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(lblRedigeraAvdelning)
-                .addGap(28, 28, 28)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblProjektID)
                     .addComponent(ComboRedigeraAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))

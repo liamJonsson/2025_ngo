@@ -24,85 +24,90 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                      <Component id="lblAllaAnstallda" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblAllaAnstallda" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lblProjektNamn" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblBeskrivning" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblStartdatum" min="-2" pref="67" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="106" pref="106" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="tfRedigeraBeskrivning" min="-2" pref="258" max="-2" attributes="0"/>
+                              <Component id="tfRedigeraStartdatum" min="-2" pref="258" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="tfRedigeraProjektNamn" alignment="1" min="-2" pref="258" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblLand" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblProjektchef" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblPrioritet" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblStatus" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblKostnad" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblSlutdatum" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblStartdatum" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblBeskrivning" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblProjektNamn" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblProjektID" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="lblKostnad" max="32767" attributes="0"/>
+                          <Component id="lblSlutdatum" max="32767" attributes="0"/>
+                          <Component id="lblProjektID" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="tfRedigeraStartdatum" pref="175" max="32767" attributes="0"/>
-                                  <Component id="tfRedigeraSlutdatum" max="32767" attributes="0"/>
-                                  <Component id="tfRedigeraKostnad" max="32767" attributes="0"/>
-                                  <Component id="tfRedigeraLand" max="32767" attributes="0"/>
-                                  <Component id="tfRedigeraProjektchef" max="32767" attributes="0"/>
-                                  <Component id="tfRedigeraBeskrivning" max="32767" attributes="0"/>
-                                  <Component id="tfRedigeraProjektNamn" max="32767" attributes="0"/>
-                                  <Component id="ComboValjProjektID" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace pref="99" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblFelmeddelandeProjektID" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFelmeddelandeLand" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFelmeddelandeProjektchef" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFelmeddelandeKostnad" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFelmeddelandeSlutdatum" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFelmeddelandeStartdatum" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                          <Component id="lblFelmeddelandeStartdatum" min="-2" pref="258" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="tfRedigeraSlutdatum" alignment="0" max="32767" attributes="0"/>
+                              <Component id="tfRedigeraKostnad" alignment="0" max="32767" attributes="0"/>
+                              <Component id="ComboValjProjektID" alignment="0" pref="258" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
+                          <Component id="lblFelmeddelandeSlutdatum" alignment="0" min="-2" pref="250" max="-2" attributes="0"/>
+                          <Component id="lblFelmeddelandeKostnad" alignment="0" min="-2" pref="183" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="lblLand" max="32767" attributes="0"/>
+                              <Component id="lblProjektchef" pref="138" max="32767" attributes="0"/>
+                              <Component id="lblPrioritet" max="32767" attributes="0"/>
+                              <Component id="lblStatus" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="lblFelmeddelande" min="-2" pref="116" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblFelmeddelandeProjektchef" min="-2" pref="181" max="-2" attributes="0"/>
+                          <Component id="lblFelmeddelandeLand" alignment="0" min="-2" pref="152" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jComboBox1" max="32767" attributes="0"/>
-                                  <Component id="jComboBox2" pref="175" max="32767" attributes="0"/>
+                                  <Component id="tfRedigeraProjektchef" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="tfRedigeraLand" max="32767" attributes="0"/>
+                                  <Component id="jComboBox1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jComboBox2" alignment="0" pref="258" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                  <Component id="lblLyckat" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="btnSpara" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <Component id="btnSpara" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="lblFelmeddelande" max="32767" attributes="0"/>
-                  <Component id="lblLyckat" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
-              <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Component id="lblAllaAnstallda" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblProjektID" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblFelmeddelandeProjektID" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ComboValjProjektID" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="42" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblProjektNamn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfRedigeraProjektNamn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -114,22 +119,25 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblFelmeddelandeStartdatum" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfRedigeraStartdatum" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblStartdatum" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfRedigeraStartdatum" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+              <Component id="lblFelmeddelandeStartdatum" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="tfRedigeraSlutdatum" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblSlutdatum" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblFelmeddelandeSlutdatum" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfRedigeraSlutdatum" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+              <Component id="lblFelmeddelandeSlutdatum" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="tfRedigeraKostnad" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblKostnad" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblFelmeddelandeKostnad" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfRedigeraKostnad" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+              <Component id="lblFelmeddelandeKostnad" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblStatus" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -142,25 +150,27 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="tfRedigeraProjektchef" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblFelmeddelandeProjektchef" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblProjektchef" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfRedigeraProjektchef" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+              <Component id="lblFelmeddelandeProjektchef" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="tfRedigeraLand" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblFelmeddelandeLand" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblLand" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfRedigeraLand" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-              <Component id="lblFelmeddelande" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+              <Component id="lblFelmeddelandeLand" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnTillbaka" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSpara" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblLyckat" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelmeddelande" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="lblLyckat" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -168,51 +178,81 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="lblProjektID">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="V&#xe4;lj projekt att redigera"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblProjektNamn">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Namn"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblBeskrivning">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Beskrivning"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblStartdatum">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Startdatum"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblSlutdatum">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Slutdatum"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblKostnad">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Kostnad"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblStatus">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Status"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblPrioritet">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Prioritet"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblProjektchef">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Projektchef"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblLand">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Land"/>
       </Properties>
     </Component>
@@ -232,6 +272,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnSpara">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Spara"/>
       </Properties>
       <Events>
@@ -240,40 +283,69 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnTillbaka">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI" size="12" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Tillbaka"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTillbakaActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblFelmeddelandeProjektID">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Ogiltigt ID"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="lblFelmeddelandeStartdatum">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Felaktigt format p&#xe5; startdatum"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI Light" size="12" style="2"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Anv&#xe4;nd korrekt datumformat: YYYY-MM-DD"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblFelmeddelandeSlutdatum">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Felaktigt format p&#xe5; slutdatum"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI Light" size="12" style="2"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Anv&#xe4;nd korrekt datumformat: YYYY-MM-DD"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblFelmeddelandeKostnad">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Felaktigt format p&#xe5; kostnad"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI Light" size="12" style="2"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Anv&#xe4;nd korrekt format: XXXX.XX"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblFelmeddelandeProjektchef">
       <Properties>
-        <Property name="text" type="java.lang.String" value="V&#xe4;nligen fyll i giltigt ID f&#xf6;r projektchef"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI Light" size="12" style="2"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="V&#xe4;lj ett existerande anst&#xe4;llningsID"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblFelmeddelandeLand">
       <Properties>
-        <Property name="text" type="java.lang.String" value="V&#xe4;nligen fyll i giltigt ID f&#xf6;r land"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI Light" size="12" style="2"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="V&#xe4;lj ett existerande landsID"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblAllaAnstallda">
@@ -281,7 +353,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Microsoft JhengHei UI" size="18" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="REDIGERA PROJEKTET"/>
+        <Property name="text" type="java.lang.String" value="REDIGERA PROJEKT"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="ComboValjProjektID">
@@ -304,6 +376,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblLyckat">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI Light" size="12" style="2"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="99" red="0" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Projektet har &#xe4;ndrats! "/>
       </Properties>
     </Component>
@@ -337,6 +415,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblFelmeddelande">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI Light" size="12" style="2"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Alla f&#xe4;lt m&#xe5;ste fyllas i"/>
       </Properties>
     </Component>
