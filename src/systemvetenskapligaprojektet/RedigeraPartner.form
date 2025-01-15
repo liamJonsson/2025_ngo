@@ -30,50 +30,56 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="lblIDFel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-          </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="lblRedigeraPartner" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="lblID" min="-2" pref="37" max="-2" attributes="0"/>
-                                  <Component id="lblNamn" min="-2" pref="37" max="-2" attributes="0"/>
-                                  <Component id="lblKontaktP" min="-2" pref="37" max="-2" attributes="0"/>
-                                  <Component id="lblKontaktEpost" min="-2" pref="37" max="-2" attributes="0"/>
-                                  <Component id="lblTelefon" min="-2" pref="37" max="-2" attributes="0"/>
-                                  <Component id="lblAdress" min="-2" pref="37" max="-2" attributes="0"/>
-                                  <Component id="lblBranch" min="-2" pref="37" max="-2" attributes="0"/>
-                                  <Component id="lblStad" min="-2" pref="37" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="tfRedigeraStad" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
-                                  <Component id="tfRedigeraBranch" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
-                                  <Component id="tfRedigeraAdress" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
-                                  <Component id="tfRedigeraKontaktP" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
-                                  <Component id="tfRedigeraTelefon" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
-                                  <Component id="tfRedigeraNamn" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
-                                  <Component id="tfRedigeraID" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
-                                  <Component id="tfRedigeraKontaktEpost" min="-2" pref="71" max="-2" attributes="0"/>
-                              </Group>
+                  <Component id="btnSpara" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                      <Component id="lblRedigeraPartner" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="lblID" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="lblNamn" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="lblKontaktP" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="lblKontaktEpost" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="lblTelefon" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="lblAdress" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="lblBranch" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="lblStad" min="-2" pref="37" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="tfRedigeraStad" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
+                              <Component id="tfRedigeraBranch" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
+                              <Component id="tfRedigeraAdress" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
+                              <Component id="tfRedigeraKontaktP" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
+                              <Component id="tfRedigeraTelefon" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
+                              <Component id="tfRedigeraNamn" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
+                              <Component id="tfRedigeraID" alignment="1" min="-2" pref="71" max="-2" attributes="0"/>
+                              <Component id="tfRedigeraKontaktEpost" min="-2" pref="71" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="143" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="btnSpara" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                          <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblIDFel" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="lblFelEpost" min="-2" pref="37" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="203" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Component id="lblFelTelefon" min="-2" pref="37" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                      <Component id="lblFelStad" min="-2" pref="50" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -82,12 +88,11 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Component id="lblRedigeraPartner" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Component id="lblIDFel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="tfRedigeraID" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblID" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblIDFel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -103,11 +108,13 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblKontaktEpost" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfRedigeraKontaktEpost" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelEpost" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblTelefon" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfRedigeraTelefon" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelTelefon" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -123,13 +130,14 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="tfRedigeraStad" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblStad" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelStad" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnTillbaka" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSpara" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="27" max="32767" attributes="0"/>
+              <EmptySpace pref="33" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -219,6 +227,21 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSparaActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelTelefon">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fel tel"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelStad">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fel stad"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelEpost">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="FelEpost"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

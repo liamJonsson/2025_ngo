@@ -15,6 +15,8 @@ public class RedigeraPartner extends javax.swing.JFrame {
     private static InfDB idb;
     private String inloggadAnvandare;
     private int pid;
+    private int stadsID;
+    private Validering validera;
     /**
      * Creates new form RedigeraPartner
      */
@@ -23,6 +25,9 @@ public class RedigeraPartner extends javax.swing.JFrame {
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;
         lblIDFel.setVisible(false);
+        lblFelEpost.setVisible(false);
+        lblFelTelefon.setVisible(false);
+        lblFelStad.setVisible(false);
     }
 
     /**
@@ -55,6 +60,9 @@ public class RedigeraPartner extends javax.swing.JFrame {
         lblIDFel = new javax.swing.JLabel();
         btnTillbaka = new javax.swing.JButton();
         btnSpara = new javax.swing.JButton();
+        lblFelTelefon = new javax.swing.JLabel();
+        lblFelStad = new javax.swing.JLabel();
+        lblFelEpost = new javax.swing.JLabel();
 
         lblValutaFel.setText("FEL VALUTA");
 
@@ -95,58 +103,67 @@ public class RedigeraPartner extends javax.swing.JFrame {
             }
         });
 
+        lblFelTelefon.setText("Fel tel");
+
+        lblFelStad.setText("Fel stad");
+
+        lblFelEpost.setText("FelEpost");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblIDFel)
-                .addGap(52, 52, 52))
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSpara)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(lblRedigeraPartner)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblKontaktP, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblKontaktEpost, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblAdress, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblStad, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(50, 50, 50)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(tfRedigeraStad, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfRedigeraBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfRedigeraAdress, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfRedigeraKontaktP, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfRedigeraTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfRedigeraNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfRedigeraID, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfRedigeraKontaktEpost, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnTillbaka)
+                            .addComponent(lblIDFel))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lblFelEpost, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(203, 203, 203)))
+                    .addComponent(lblFelTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblRedigeraPartner)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblKontaktP, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblKontaktEpost, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblAdress, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblStad, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(50, 50, 50)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(tfRedigeraStad, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfRedigeraBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfRedigeraAdress, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfRedigeraKontaktP, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfRedigeraTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfRedigeraNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfRedigeraID, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfRedigeraKontaktEpost, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(143, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnSpara)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnTillbaka)
-                        .addGap(31, 31, 31))))
+                        .addGap(24, 24, 24)
+                        .addComponent(lblFelStad, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(lblRedigeraPartner)
-                .addGap(28, 28, 28)
-                .addComponent(lblIDFel)
-                .addGap(33, 33, 33)
+                .addGap(77, 77, 77)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfRedigeraID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblID))
+                    .addComponent(lblID)
+                    .addComponent(lblIDFel))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfRedigeraNamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -158,11 +175,13 @@ public class RedigeraPartner extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblKontaktEpost)
-                    .addComponent(tfRedigeraKontaktEpost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(tfRedigeraKontaktEpost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFelEpost))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTelefon)
-                    .addComponent(tfRedigeraTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfRedigeraTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFelTelefon))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfRedigeraAdress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,12 +193,13 @@ public class RedigeraPartner extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfRedigeraStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblStad))
+                    .addComponent(lblStad)
+                    .addComponent(lblFelStad))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
                     .addComponent(btnSpara))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pack();
@@ -194,6 +214,10 @@ public class RedigeraPartner extends javax.swing.JFrame {
         boolean hasError = false;
         boolean hittad = false;
         try{
+            lblIDFel.setVisible(false);
+            lblFelEpost.setVisible(false);
+            lblFelTelefon.setVisible(false);
+            lblFelStad.setVisible(false);
             try{
                 String textPid = tfRedigeraID.getText();
                 String selectPid = "select pid from partner;";
@@ -214,8 +238,33 @@ public class RedigeraPartner extends javax.swing.JFrame {
             }
             catch(NumberFormatException ex){
                 lblIDFel.setVisible(true);
-                hasError = true;
+                hasError = true;                                                       
             }
+            try{
+                hittad = false;
+                String textStad = tfRedigeraStad.getText();
+                String selectStad = "select sid from stad;";
+                ArrayList<String> allaStader = idb.fetchColumn(selectStad);
+                stadsID = Integer.parseInt(textStad);
+                for(String enStad:allaStader){
+                    int ettID = Integer.parseInt(enStad);
+                    if(ettID == stadsID){
+                        System.out.println(ettID);                       
+                        hittad = true;
+                        lblFelStad.setVisible(false);
+                        break;
+                    }
+                }
+                if(!hittad){ 
+                    lblFelStad.setVisible(true);
+                    hasError = true;
+                }
+            }
+            catch(NumberFormatException ex){
+                lblFelStad.setVisible(true);
+                hasError = true;                                                       
+            }
+            
             if(!hasError){
                 try{
                     String namn = tfRedigeraNamn.getText();
@@ -223,58 +272,68 @@ public class RedigeraPartner extends javax.swing.JFrame {
                     String kontaktEpost = tfRedigeraKontaktEpost.getText();
                     String telefon = tfRedigeraTelefon.getText();
                     String adress = tfRedigeraAdress.getText();
-                    String branch = tfRedigeraBranch.getText();
-                    String stad = tfRedigeraStad.getText(); 
+                    String branch = tfRedigeraBranch.getText();                   
                     
-                    String selectPartner = "select * from partner where pid = " + pid + ";";
-                    HashMap<String, String> enPartner = idb.fetchRow(selectPartner);
-                    String enRad[] = new String[enPartner.size()];
-                    for(String ettAttribut:enPartner.keySet()){
-                        switch(ettAttribut){
-                            case "pid":
-                                enRad[0] = enPartner.get("pid");
-                            case "namn":
-                                enRad[1] = enPartner.get("namn");
-                            case "kontaktperson":
-                                enRad[2] = enPartner.get("kontaktPerson");
-                            case "kontaktepost":
-                                enRad[3] = enPartner.get("kontaktEpost");
-                            case "telefon":
-                                enRad[4] = enPartner.get("telefon");
-                            case "adress":
-                                enRad[5] = enPartner.get("adress");
-                            case "branch":
-                                enRad[6] = enPartner.get("branch");
-                            case "stad":
-                                enRad[7] = enPartner.get("stad");
+                    if(validera.valideringEmail(kontaktEpost) && validera.valideringTelefonPartner(telefon)){
+                        String selectPartner = "select * from partner where pid = " + pid + ";";
+                        HashMap<String, String> enPartner = idb.fetchRow(selectPartner);
+                        String enRad[] = new String[enPartner.size()];
+                        for(String ettAttribut:enPartner.keySet()){
+                            switch(ettAttribut){
+                                case "pid":
+                                    enRad[0] = enPartner.get("pid");
+                                case "namn":
+                                    enRad[1] = enPartner.get("namn");
+                                case "kontaktperson":
+                                    enRad[2] = enPartner.get("kontaktPerson");
+                                case "kontaktepost":
+                                    enRad[3] = enPartner.get("kontaktEpost");
+                                case "telefon":
+                                    enRad[4] = enPartner.get("telefon");
+                                case "adress":
+                                    enRad[5] = enPartner.get("adress");
+                                case "branch":
+                                    enRad[6] = enPartner.get("branch");
+                                case "stad":
+                                    enRad[7] = enPartner.get("stad");
+                            }
+                        }
+                        if(namn.isEmpty()){
+                            namn = enRad[1];
+                        }
+                        if(kontaktPerson.isEmpty()){
+                            kontaktPerson = enRad[2];
+                        }
+                        if(kontaktEpost.isEmpty()){
+                            kontaktEpost = enRad[3];
+                        }
+                        if(telefon.isEmpty()){
+                            telefon = enRad[4];
+                        }
+                        if(adress.isEmpty()){
+                            adress = enRad[5];
+                        }
+                        if(branch.isEmpty()){
+                            branch = enRad[6];
+                        }
+                    
+                        String updatePartner = "update partner set namn = '" + namn + "', kontaktperson = '" + kontaktPerson + "', kontaktepost = '" + kontaktEpost + "', telefon = '" + telefon + "', adress = '" + adress + "', branch = '" + branch + "', stad = '" + stadsID + "' where pid = " + pid + ";";
+                        idb.update(updatePartner);
+                        new AllaPartners(idb,inloggadAnvandare).setVisible(true);
+                        this.setVisible(false);
+                    }
+                    else{
+                        if(!validera.valideringEmail(kontaktEpost)){
+                            lblFelEpost.setVisible(true);
+                        }
+                        else if(!validera.valideringTelefon(telefon)){
+                            lblFelTelefon.setVisible(true);
+                        }
+                        else{
+                            lblFelEpost.setVisible(true);
+                            lblFelTelefon.setVisible(true);
                         }
                     }
-                    if(namn.isEmpty()){
-                        namn = enRad[1];
-                    }
-                    if(kontaktPerson.isEmpty()){
-                        kontaktPerson = enRad[2];
-                    }
-                    if(kontaktEpost.isEmpty()){
-                        kontaktEpost = enRad[3];
-                    }
-                    if(telefon.isEmpty()){
-                        telefon = enRad[4];
-                    }
-                    if(adress.isEmpty()){
-                        adress = enRad[5];
-                    }
-                    if(branch.isEmpty()){
-                        branch = enRad[6];
-                    }
-                    if(stad.isEmpty()){
-                        stad = enRad[7];
-                    }
-                    
-                String updatePartner = "update partner set namn = '" + namn + "', kontaktperson = '" + kontaktPerson + "', kontaktepost = " + kontaktEpost + ", telefon = '" + telefon + "', adress = '" + adress + "', branch = '" + branch + "', stad = '" + stad + "' where pid = " + pid + ";";
-                idb.update(updatePartner);
-                new AllaPartners(idb,inloggadAnvandare).setVisible(true);
-                this.setVisible(false);
                 }
                 catch(InfException ex){ 
                 System.out.println(ex);
@@ -331,6 +390,9 @@ public class RedigeraPartner extends javax.swing.JFrame {
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JLabel lblAdress;
     private javax.swing.JLabel lblBranch;
+    private javax.swing.JLabel lblFelEpost;
+    private javax.swing.JLabel lblFelStad;
+    private javax.swing.JLabel lblFelTelefon;
     private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblIDFel;
     private javax.swing.JLabel lblKontaktEpost;
