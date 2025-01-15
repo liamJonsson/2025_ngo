@@ -5,6 +5,8 @@
 package systemvetenskapligaprojektet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -18,6 +20,7 @@ import oru.inf.InfException;
 public class ProjektPartners extends javax.swing.JFrame {
     private static InfDB idb;
     private String inloggadAnvandare;
+    private int ettProjektID;
     /**
      * Creates new form ProjektPartners
      */
@@ -27,6 +30,8 @@ public class ProjektPartners extends javax.swing.JFrame {
         initComponents();
         fyllTabell();
         fyllComboBox();
+        uppdateraTabell();
+        
         
     }
      private void fyllTabell(){
@@ -38,11 +43,7 @@ public class ProjektPartners extends javax.swing.JFrame {
 
         DefaultTableModel projektetsPartners = new DefaultTableModel(kolumnNamn, 0);
 
-       
-
-        String selectId = "select pid from partner where pid in(select partner_pid from projekt_partner where pid in(select pid from ans_proj where aid =(select aid from anstalld where epost = '" + inloggadAnvandare + "'))) order by (pid);";
-
-
+        String selectId = "select distinct pa.pid from partner pa join projekt_partner pp on pa.pid = pp.partner_pid join projekt pr on pp.pid = pr.pid join ans_proj ap on pr.pid = ap.pid join anstalld an on ap.aid = an.aid or pr.projektchef = an.aid where an.epost ='" + inloggadAnvandare + "' order by pa.pid;";
 
         ArrayList<String> pid = idb.fetchColumn(selectId);
             if(pid != null){
@@ -143,6 +144,113 @@ public class ProjektPartners extends javax.swing.JFrame {
         catch (InfException e) {
             JOptionPane.showMessageDialog(this, "Kunde inte fylla kopplade partners: " + e.getMessage());
         }
+    }
+     
+     private void uppdateraTabell(){
+        comboBoxProjekt.addActionListener(evt -> {
+            //Hämtar datan i comboboxen som valdes
+            String projekt = comboBoxProjekt.getSelectedItem().toString();
+            System.out.println(projekt);
+            //Om comboboxen inte är vald på "Välj projekt"
+            
+            if(projekt.equals("Välj projekt")) {
+                fyllTabell();
+            }
+            
+            if (!projekt.equals("Välj projekt")) {
+                // Regex för att matcha pid som står i starten av projekt
+                Pattern pattern = Pattern.compile("(\\d+)");
+                Matcher matcher = pattern.matcher(projekt);
+                // Kontrollera om mönstret hittades
+                if(matcher.find()){
+                    String ettProjekt = matcher.group(1);
+                    ettProjektID = Integer.parseInt(ettProjekt);
+                }        
+                    try{
+            //Skapar en array som lagrar kolumnnamnen
+
+        String[] kolumnNamn = {"pid", "namn", "kontaktperson", "kontaktepost", "telefon", "adress", "branch","stad"};
+
+        DefaultTableModel projektetsPartners = new DefaultTableModel(kolumnNamn, 0);
+
+        String selectId = "select pid from partner where pid in(select partner_pid from projekt_partner where pid = " + ettProjektID + ");";
+        ArrayList<String> pid = idb.fetchColumn(selectId);
+            if(pid != null){
+            
+                for(String ettID:pid){
+                    //int ettPid = Integer.parseInt(ettID);
+                    String selectInfo = "select pid,namn,kontaktperson,kontaktepost,telefon,adress,branch,stad from partner where pid = '" + ettID + "';";
+
+
+
+                    ArrayList<HashMap<String,String>> info = idb.fetchRows(selectInfo);
+
+                    Object[] enRad = new Object[kolumnNamn.length];
+                    int index = 0;
+                    
+                    //ev ta bort for loop info + ändra else satsen
+                    for(HashMap<String,String> enRadInfo:info){
+                            for(String enKolumn:kolumnNamn){      
+                                if(enKolumn.equals("stad")){
+                                    String selectStadNamn = "select namn from stad where sid = (select stad from partner where pid = '" + ettID + "');";
+                                    String stadNamn = idb.fetchSingle(selectStadNamn);
+                                    enRad[index++] = stadNamn;                          
+                                }                        
+                                else{
+                                    enRad[index++] = enRadInfo.get(enKolumn);
+
+                                }
+                            }
+                            projektetsPartners.addRow(enRad);
+                    }
+                }
+
+                tblPartners.setModel( projektetsPartners);
+
+            }
+
+            tblPartners.setAutoResizeMode(tblPartners.AUTO_RESIZE_OFF);
+
+        TableColumn col = tblPartners.getColumnModel().getColumn(0);
+
+        col.setPreferredWidth(50);
+
+        col = tblPartners.getColumnModel().getColumn(1);
+
+        col.setPreferredWidth(150);
+
+        col = tblPartners.getColumnModel().getColumn(2);
+
+        col.setPreferredWidth(150);
+
+        col = tblPartners.getColumnModel().getColumn(3);
+
+        col.setPreferredWidth(175);
+
+        col = tblPartners.getColumnModel().getColumn(4);
+
+        col.setPreferredWidth(150);
+        
+        col = tblPartners.getColumnModel().getColumn(5);
+
+        col.setPreferredWidth(150);
+        
+        col = tblPartners.getColumnModel().getColumn(6);
+
+        col.setPreferredWidth(150);
+        
+        col = tblPartners.getColumnModel().getColumn(7);
+
+        col.setPreferredWidth(125);
+        
+        }
+
+        catch(InfException ex){
+            System.out.println(ex.getMessage());
+                }      
+
+            }
+        });
     }
     
 
