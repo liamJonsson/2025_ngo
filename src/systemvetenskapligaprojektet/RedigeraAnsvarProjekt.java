@@ -36,10 +36,10 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
         lblFelProjektchef.setVisible(false);
         lblFelLand.setVisible(false);
         lblLyckat.setVisible(false);
-        fyllComboBox(projektID);
+        fyllComboBox();
     }
     
-    private void fyllComboBox(String projektID){
+    private void fyllComboBox(){
         try{
         
         //Hämta projektID från projektchefen som är inloggad
@@ -592,3 +592,6 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
     private javax.swing.JTextField tfStartdatum;
     // End of variables declaration//GEN-END:variables
 }
+
+
+//tom från början och ta med både handläggare + projektchef +++ för mina sidor skriv in distinct så inte det uppkommer dubletter.

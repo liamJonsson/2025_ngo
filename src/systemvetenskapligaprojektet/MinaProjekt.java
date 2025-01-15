@@ -15,6 +15,7 @@ import java.util.HashMap;
 import javax.swing.DefaultListModel;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 public class MinaProjekt extends javax.swing.JFrame {
     private static InfDB idb;
@@ -154,8 +155,8 @@ private void uppdateraTabell(ArrayList<HashMap<String, String>> projektLista) {
         Object[] rad = new Object[kolumnNamn.length];
         for (int i = 0; i < kolumnNamn.length; i++) {
             String kolumnVarde = projekt.getOrDefault(kolumnNamn[i], "Ingen data");
-            if ("partner_namn".equals(kolumnNamn[i])) {
-                kolumnVarde = projekt.getOrDefault("namn", "Ingen data");
+                if("partner_namn".equals(kolumnNamn[i])){
+                    kolumnVarde = "Klicka här för att se info om partner/partners!";
             }
             rad[i] = kolumnVarde;
         }
@@ -163,6 +164,30 @@ private void uppdateraTabell(ArrayList<HashMap<String, String>> projektLista) {
     }
 
     tblMinaprojekt.setModel(modell);
+    
+    tblMinaprojekt.setAutoResizeMode(tblMinaprojekt.AUTO_RESIZE_OFF);
+            TableColumn col = tblMinaprojekt.getColumnModel().getColumn(0);
+            col.setPreferredWidth(50);
+            col = tblMinaprojekt.getColumnModel().getColumn(1);
+            col.setPreferredWidth(100);
+            col = tblMinaprojekt.getColumnModel().getColumn(2);
+            col.setPreferredWidth(150);
+            col = tblMinaprojekt.getColumnModel().getColumn(3);
+            col.setPreferredWidth(100);
+            col = tblMinaprojekt.getColumnModel().getColumn(4);
+            col.setPreferredWidth(100);
+            col = tblMinaprojekt.getColumnModel().getColumn(5);
+            col.setPreferredWidth(100);
+            col = tblMinaprojekt.getColumnModel().getColumn(6);
+            col.setPreferredWidth(100);
+            col = tblMinaprojekt.getColumnModel().getColumn(7);
+            col.setPreferredWidth(75);
+            col = tblMinaprojekt.getColumnModel().getColumn(8);
+            col.setPreferredWidth(75);
+            col = tblMinaprojekt.getColumnModel().getColumn(9);
+            col.setPreferredWidth(75);
+            col = tblMinaprojekt.getColumnModel().getColumn(10);
+            col.setPreferredWidth(250);
 }
     
 private void statusFilter() {
@@ -248,6 +273,11 @@ private void initStatusFilterListener() {
             }
         ));
         tblMinaprojekt.setEnabled(false);
+        tblMinaprojekt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblMinaprojektMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblMinaprojekt);
 
         btnTillbaka.setText("Tillbaka");
@@ -279,7 +309,7 @@ private void initStatusFilterListener() {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(ComboStatusFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31))
@@ -321,6 +351,14 @@ private void initStatusFilterListener() {
         new AnsvarProjekt(idb,inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnAnsvarProjektActionPerformed
+
+    private void tblMinaprojektMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMinaprojektMouseClicked
+            int column = tblMinaprojekt.columnAtPoint(evt.getPoint());
+        if(column == 10){
+            new ProjektPartners(idb,inloggadAnvandare).setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_tblMinaprojektMouseClicked
                     
     /**
      * @param args the command line arguments
