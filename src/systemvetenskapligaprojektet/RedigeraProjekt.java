@@ -397,7 +397,14 @@ public class RedigeraProjekt extends javax.swing.JFrame {
 
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
     boolean hasError = false;
-
+    lblFelmeddelandeStartdatum.setVisible(false);
+    lblFelmeddelandeSlutdatum.setVisible(false);
+    lblFelmeddelandeKostnad.setVisible(false);
+    lblFelmeddelandeProjektchef.setVisible(false);
+    lblFelmeddelandeLand.setVisible(false);
+    lblLyckat.setVisible(false);
+    lblFelmeddelande.setVisible(false);
+    
     try {
         String projektnamn = tfRedigeraProjektNamn.getText();
         String beskrivning = tfRedigeraBeskrivning.getText();

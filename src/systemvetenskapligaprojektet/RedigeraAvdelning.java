@@ -258,6 +258,11 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
         boolean hasError = false;
         boolean hittad = false;
+        lblFelmeddelandeStad.setVisible(false);
+        lblFelmeddelandeAvdelningschef.setVisible(false);
+        lblFelmeddelandeEpost.setVisible(false);
+        lblFelmeddelandeTel.setVisible(false);
+        lblLyckat.setVisible(false);
         try{
             if(!hasError){
                 try{

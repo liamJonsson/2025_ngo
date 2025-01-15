@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 /**
  *
  * @author limme
@@ -23,8 +27,9 @@ public class RedigeraLand extends javax.swing.JFrame {
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;
         initComponents();
-        lblFelID.setVisible(false);
         lblValutaFel.setVisible(false);
+        lblLyckat1.setVisible(false);
+        fyllComboBox();
     }
     
     /**
@@ -37,7 +42,7 @@ public class RedigeraLand extends javax.swing.JFrame {
     private void initComponents() {
 
         lblLaggTillEttLand = new javax.swing.JLabel();
-        tfRedigeraID = new javax.swing.JTextField();
+        lblLyckat = new javax.swing.JLabel();
         tfRedigeraNamn = new javax.swing.JTextField();
         tfRedigeraSprak = new javax.swing.JTextField();
         tfRedigeraValuta = new javax.swing.JTextField();
@@ -45,7 +50,6 @@ public class RedigeraLand extends javax.swing.JFrame {
         tfRedigeraPolitiskStruktur = new javax.swing.JTextField();
         tfRedigeraEkonomi = new javax.swing.JTextField();
         lblValutaFel = new javax.swing.JLabel();
-        lblFelID = new javax.swing.JLabel();
         btnTillbaka = new javax.swing.JButton();
         btnSpara = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -56,16 +60,23 @@ public class RedigeraLand extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         lblLaggTillEttLand1 = new javax.swing.JLabel();
+        ComboValjLandID = new javax.swing.JComboBox<>();
+        lblLyckat1 = new javax.swing.JLabel();
 
         lblLaggTillEttLand.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblLaggTillEttLand.setText("Redigera landets uppgifter");
 
+        lblLyckat.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
+        lblLyckat.setForeground(new java.awt.Color(0, 153, 0));
+        lblLyckat.setText("Ändringarna har sparats!");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblValutaFel.setText("FEL VALUTA");
+        lblValutaFel.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
+        lblValutaFel.setForeground(new java.awt.Color(255, 0, 0));
+        lblValutaFel.setText("Använd korrekt format: XXXX.XX");
 
-        lblFelID.setText("FEL ID!");
-
+        btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,6 +84,7 @@ public class RedigeraLand extends javax.swing.JFrame {
             }
         });
 
+        btnSpara.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnSpara.setText("Spara");
         btnSpara.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,88 +92,92 @@ public class RedigeraLand extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("ID");
+        jLabel1.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
+        jLabel1.setText("Välj land att redigera");
 
+        jLabel2.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         jLabel2.setText("Namn");
 
+        jLabel3.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         jLabel3.setText("Språk");
 
+        jLabel4.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         jLabel4.setText("Valuta");
 
+        jLabel5.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         jLabel5.setText("Tidszon");
 
+        jLabel6.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         jLabel6.setText("Politisk Struktur");
 
+        jLabel7.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         jLabel7.setText("Ekonomi");
 
-        lblLaggTillEttLand1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblLaggTillEttLand1.setText("Redigera landets uppgifter");
+        lblLaggTillEttLand1.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
+        lblLaggTillEttLand1.setText("REDIGERA LAND");
+
+        ComboValjLandID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboValjLandID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboValjLandIDActionPerformed(evt);
+            }
+        });
+
+        lblLyckat1.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
+        lblLyckat1.setForeground(new java.awt.Color(0, 153, 0));
+        lblLyckat1.setText("Ändringarna har sparats!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblLaggTillEttLand1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(35, 35, 35)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tfRedigeraNamn)
+                                    .addComponent(tfRedigeraSprak)
+                                    .addComponent(tfRedigeraValuta)
+                                    .addComponent(tfRedigeraTidszon)
+                                    .addComponent(lblValutaFel, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfRedigeraPolitiskStruktur)
+                                    .addComponent(tfRedigeraEkonomi)
+                                    .addComponent(ComboValjLandID, 0, 192, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tfRedigeraEkonomi, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tfRedigeraPolitiskStruktur, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tfRedigeraTidszon, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tfRedigeraValuta, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tfRedigeraSprak, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tfRedigeraNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(75, 75, 75)
-                                .addComponent(tfRedigeraID, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(119, 119, 119))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblLaggTillEttLand1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblFelID, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblValutaFel)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnSpara)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnTillbaka)))
-                        .addGap(31, 31, 31))))
+                                    .addComponent(lblLyckat1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnSpara)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnTillbaka)))))
+                        .addGap(35, 35, 35))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblValutaFel)
-                    .addComponent(lblLaggTillEttLand1))
-                .addGap(18, 18, 18)
-                .addComponent(lblFelID)
-                .addGap(18, 18, 18)
+                .addGap(35, 35, 35)
+                .addComponent(lblLaggTillEttLand1)
+                .addGap(49, 49, 49)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfRedigeraID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(ComboValjLandID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfRedigeraNamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,6 +190,8 @@ public class RedigeraLand extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfRedigeraValuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
+                .addGap(2, 2, 2)
+                .addComponent(lblValutaFel, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfRedigeraTidszon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -186,11 +204,13 @@ public class RedigeraLand extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfRedigeraEkonomi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
                     .addComponent(btnSpara))
-                .addGap(19, 19, 19))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblLyckat1)
+                .addGap(35, 35, 35))
         );
 
         pack();
@@ -204,29 +224,9 @@ public class RedigeraLand extends javax.swing.JFrame {
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
         boolean hasError = false;
         boolean hittad = false;
+        lblValutaFel.setVisible(false);
+        lblLyckat1.setVisible(false);
         try{
-            try{
-                String textLid = tfRedigeraID.getText();
-                String selectLid = "select lid from land;";
-                ArrayList<String> allaLid = idb.fetchColumn(selectLid);
-                lid = Integer.parseInt(textLid);
-                for(String ettLid:allaLid){
-                    int ettID = Integer.parseInt(ettLid);
-                    if(ettID == lid){
-                        hittad = true;
-                        lblFelID.setVisible(false);
-                        break;
-                    }
-                }
-                if(!hittad){ 
-                    lblFelID.setVisible(true);
-                    hasError = true;
-                }
-            }
-            catch(NumberFormatException ex){
-                lblFelID.setVisible(true);
-                hasError = true;
-            }
             if(!hasError){
                 try{
                     String namn = tfRedigeraNamn.getText();
@@ -288,20 +288,94 @@ public class RedigeraLand extends javax.swing.JFrame {
                     
                 String updateLand = "update land set namn = '" + namn + "', sprak = '" + sprak + "', valuta = " + valuta + ", tidszon = '" + tidszon + "', politisk_struktur = '" + politiskStruktur + "', ekonomi = '" + ekonomi + "' where lid = " + lid + ";";
                 idb.update(updateLand);
-                new AllaLander(idb,inloggadAnvandare).setVisible(true);
-                this.setVisible(false);
+                lblLyckat1.setVisible(true);
                 }
                 catch(InfException ex){ 
                 System.out.println(ex);
             }
         }        
     }//GEN-LAST:event_btnSparaActionPerformed
-    catch(InfException ex){ //Catch InfExceptions?
+    catch(NumberFormatException ex){ //Catch InfExceptions?
         System.out.println(ex);
     }
 }   
-        
-        
+ 
+    private void ComboValjLandIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboValjLandIDActionPerformed
+        fyllTextfields();
+    }//GEN-LAST:event_ComboValjLandIDActionPerformed
+ 
+    public void fyllComboBox(){
+        try{
+            String selectLid = "select lid, namn from land order by (lid);";
+            
+            ArrayList<HashMap<String, String>> allaLid = idb.fetchRows(selectLid);
+            
+            ComboValjLandID.removeAllItems();
+            ComboValjLandID.addItem("Välj land");
+            
+            for (HashMap<String, String> land : allaLid) {
+                String landsInfo = land.get("lid") + " - " + land.get("namn");
+                ComboValjLandID.addItem(landsInfo);
+            }
+        }
+        catch (InfException e) {
+            JOptionPane.showMessageDialog(this, "Kunde inte fylla länder: " + e.getMessage());
+        }
+    }
+    
+    
+    private void fyllTextfields(){
+        ComboValjLandID.addActionListener(evt -> {
+            String land = ComboValjLandID.getSelectedItem().toString();
+            
+            if (!land.equals("Välj land")) {
+                String textValtLand = "Välj land: " + land;
+                // Regex för att matcha siffran direkt efter "Välj avdelning: "
+                Pattern pattern = Pattern.compile("Välj land: (\\d+)");
+                Matcher matcher = pattern.matcher(textValtLand);
+                
+                if (matcher.find()) {
+                    // Extrahera den första matchade gruppen
+                    String enAvdelning = matcher.group(1);
+                    lid = Integer.parseInt(enAvdelning);
+                } else {
+                    System.out.println("Ingen match hittades."); 
+                }
+            } 
+        });
+        try{
+            String selectInfo = "select * from land where lid = " + lid + ";";
+            ArrayList<HashMap<String, String>> info = idb.fetchRows(selectInfo);
+            
+            for(HashMap<String, String> enRad:info){
+                for(String ettAttribut:enRad.keySet()){
+                    switch(ettAttribut){
+                        case "namn":
+                            tfRedigeraNamn.setText(enRad.get(ettAttribut)); 
+                            break;
+                        case "sprak":
+                            tfRedigeraSprak.setText(enRad.get(ettAttribut));
+                            break;
+                        case "valuta":
+                            tfRedigeraValuta.setText(enRad.get(ettAttribut));
+                            break;
+                        case "tidszon":
+                            tfRedigeraTidszon.setText(enRad.get(ettAttribut));
+                            break;
+                        case "politisk_struktur":
+                            tfRedigeraPolitiskStruktur.setText(enRad.get(ettAttribut));
+                            break;
+                        case "ekonomi":
+                            tfRedigeraEkonomi.setText(enRad.get(ettAttribut));
+                            break;
+                    }
+                }
+            }
+        }
+        catch(InfException ex){
+            System.out.println(ex); 
+        }
+    }
         
     /**
      * @param args the command line arguments
@@ -339,6 +413,7 @@ public class RedigeraLand extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboValjLandID;
     private javax.swing.JButton btnSpara;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JLabel jLabel1;
@@ -348,12 +423,12 @@ public class RedigeraLand extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel lblFelID;
     private javax.swing.JLabel lblLaggTillEttLand;
     private javax.swing.JLabel lblLaggTillEttLand1;
+    private javax.swing.JLabel lblLyckat;
+    private javax.swing.JLabel lblLyckat1;
     private javax.swing.JLabel lblValutaFel;
     private javax.swing.JTextField tfRedigeraEkonomi;
-    private javax.swing.JTextField tfRedigeraID;
     private javax.swing.JTextField tfRedigeraNamn;
     private javax.swing.JTextField tfRedigeraPolitiskStruktur;
     private javax.swing.JTextField tfRedigeraSprak;
