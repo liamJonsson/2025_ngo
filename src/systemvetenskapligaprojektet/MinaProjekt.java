@@ -24,27 +24,27 @@ public class MinaProjekt extends javax.swing.JFrame {
     private JComboBox<String> comboStatusFilter;
 
     public MinaProjekt(InfDB idb, String inloggadAnvandare) {
-    this.idb = idb;
-    this.inloggadAnvandare = inloggadAnvandare;
-    comboStatusFilter = ComboStatusFilter; // Anslut den definierade JComboBox
-    initComponents();
-    statusFilter();  // Lägg till detta anrop för att fylla comboboxen
-    initStatusFilterListener();
-    skapaOchFyllTabell(null); // Visa alla projekt från början
-    kontrolleraRollOchHanteraKnappar();
-    btnAnsvarProjekt.setVisible(false);
-    kontrollIfProjektchef();
+        this.idb = idb;
+        this.inloggadAnvandare = inloggadAnvandare;
+        comboStatusFilter = ComboStatusFilter; // Anslut den definierade JComboBox
+        initComponents();
+        statusFilter();  // Lägg till detta anrop för att fylla comboboxen
+        initStatusFilterListener();
+        skapaOchFyllTabell(null); // Visa alla projekt från början
+        kontrolleraRollOchHanteraKnappar();
+        btnAnsvarProjekt.setVisible(false);
+        kontrollIfProjektchef();
     }
     
     private void kontrollIfProjektchef(){
         try{
-        ArrayList<String> projektchef = new ArrayList<>();
+            ArrayList<String> projektchef = new ArrayList<>();
         
-        String selectProjektchef = "select projektchef from projekt;";
-        projektchef = idb.fetchColumn(selectProjektchef);
+            String selectProjektchef = "select projektchef from projekt;";
+            projektchef = idb.fetchColumn(selectProjektchef);
         
-        String selectAid = "select aid from anstalld where epost = '" + inloggadAnvandare + "';";
-        String anstalldsID = idb.fetchSingle(selectAid);
+            String selectAid = "select aid from anstalld where epost = '" + inloggadAnvandare + "';";
+            String anstalldsID = idb.fetchSingle(selectAid);
         
         for(String ettProjektchefsID:projektchef){
             if(ettProjektchefsID.equals(anstalldsID)){
@@ -69,32 +69,32 @@ public class MinaProjekt extends javax.swing.JFrame {
     }
 
     private String hamtaAnvandareID() throws InfException {
-    if (inloggadAnvandare == null || inloggadAnvandare.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "E-postadress saknas för den inloggade användaren.");
-        return null;
-    }
-    String query = "SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare.trim() + "'";
-    String aid = idb.fetchSingle(query);
-    if (aid == null) {
-        JOptionPane.showMessageDialog(this, "Användaren kunde inte identifieras via e-post.");
-    }
-    return aid;
+        if (inloggadAnvandare == null || inloggadAnvandare.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "E-postadress saknas för den inloggade användaren.");
+            return null;
+            }
+            String query = "SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare.trim() + "'";
+            String aid = idb.fetchSingle(query);
+        if (aid == null) {
+            JOptionPane.showMessageDialog(this, "Användaren kunde inte identifieras via e-post.");
+     }
+        return aid;
     }
 
     private boolean isProjektchef(String aid) throws InfException {
-    String query = "SELECT COUNT(*) FROM projekt WHERE projektchef = '" + aid + "'";  
-    String resultat = idb.fetchSingle(query);
-    // Kontrollera om resultatet är större än 0, vilket innebär att användaren är projektchef
-    return resultat != null && Integer.parseInt(resultat) > 0;
-    }
+        String query = "SELECT COUNT(*) FROM projekt WHERE projektchef = '" + aid + "'";  
+        String resultat = idb.fetchSingle(query);
+        // Kontrollera om resultatet är större än 0, vilket innebär att användaren är projektchef
+        return resultat != null && Integer.parseInt(resultat) > 0;
+        }
     
     private void visaKostnadsKolumn(boolean visa) {
-    int kolumnIndex = 5; // Kostnadskolumn
+        int kolumnIndex = 5; // Kostnadskolumn
 
-    if (tblMinaprojekt.getColumnModel().getColumnCount() > kolumnIndex) {
-        int minWidth = visa ? 75 : 0;
-        int maxWidth = visa ? 200 : 0;
-        int preferredWidth = visa ? 100 : 0;
+        if (tblMinaprojekt.getColumnModel().getColumnCount() > kolumnIndex) {
+            int minWidth = visa ? 75 : 0;
+            int maxWidth = visa ? 200 : 0;
+            int preferredWidth = visa ? 100 : 0;
 
         tblMinaprojekt.getColumnModel().getColumn(kolumnIndex).setMinWidth(minWidth);
         tblMinaprojekt.getColumnModel().getColumn(kolumnIndex).setMaxWidth(maxWidth);
@@ -102,70 +102,77 @@ public class MinaProjekt extends javax.swing.JFrame {
     }
 }
     
-private void skapaOchFyllTabell(String valdStatus) {
-    try {
-        String aid = hamtaAnvandareID();
-        if (aid == null) return;
+    private void skapaOchFyllTabell(String valdStatus) {
+        try {
+             String aid = hamtaAnvandareID();
+            if (aid == null) return;
         
-        //Query för att ta fram projekt som en användare är kopplad till via tabellen ans_proj
-        String handlaggareQuery = 
-            "SELECT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, p.projektchef, p.land, partner.namn " +
-            "FROM projekt p " +
-            "LEFT JOIN projekt_partner pt ON p.pid = pt.pid " +
-            "LEFT JOIN partner ON pt.partner_pid = partner.pid " +
-            "JOIN ans_proj ON p.pid = ans_proj.pid " +
-            "WHERE ans_proj.aid = '" + aid + "'";
+                //Query för att ta fram projekt som en användare är kopplad till via tabellen ans_proj
+                String handlaggareQuery = 
+                    "SELECT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, p.projektchef, p.land, " +
+                    "GROUP_CONCAT(partner.namn separator ',') as partners "+
+                    "FROM projekt p " +
+                    "LEFT JOIN projekt_partner pt ON p.pid = pt.pid " +
+                    "LEFT JOIN partner ON pt.partner_pid = partner.pid " +
+                    "JOIN ans_proj ON p.pid = ans_proj.pid " +
+                    "WHERE ans_proj.aid = '" + aid + "' " +
+                    "GROUP BY p.pid";
 
-        //Query för att ta fram projekt där användaren är projektchef
-        String projektchefQuery = 
-            "SELECT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, p.projektchef, p.land, partner.namn " +
-            "FROM projekt p " +
-            "LEFT JOIN projekt_partner pt ON p.pid = pt.pid " +
-            "LEFT JOIN partner ON pt.partner_pid = partner.pid " +
-            "WHERE p.projektchef = '" + aid + "'";
-        
-        //slår samman båda resultaten till en enda tabell och tar automatiskt bort dubbletter
-        String baseQuery = handlaggareQuery + " UNION " + projektchefQuery;
+                //Query för att ta fram projekt där användaren är projektchef
+                String projektchefQuery = 
+                    "SELECT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, p.projektchef, p.land, " +
+                    "GROUP_CONCAT(partner.namn separator ',') as partners " +
+                    "FROM projekt p " +
+                    "LEFT JOIN projekt_partner pt ON p.pid = pt.pid " +
+                    "LEFT JOIN partner ON pt.partner_pid = partner.pid " +
+                    "WHERE p.projektchef = '" + aid + "' " +
+                    "GROUP BY p.pid";
+            
+                //slår samman båda resultaten till en enda tabell och tar automatiskt bort dubbletter
+                String baseQuery = handlaggareQuery + " UNION " + projektchefQuery; 
+                System.out.println("Base query: " + baseQuery);
 
-        // Om en status är vald, filtrera resultaten
-        if (valdStatus != null && !valdStatus.isEmpty()) {
-            baseQuery = "SELECT * FROM (" + baseQuery + ") AS filtrerad WHERE status = '" + valdStatus + "'";
-        }
+              
+                // Om en status är vald, filtrera resultaten
+            if (valdStatus != null && !valdStatus.isEmpty()) {
+                 baseQuery = "SELECT * FROM (" + baseQuery + ") AS filtrerad WHERE status = '" + valdStatus + "'";
+                }
 
-        ArrayList<HashMap<String, String>> projektLista = idb.fetchRows(baseQuery);
+                ArrayList<HashMap<String, String>> projektLista = idb.fetchRows(baseQuery);
 
-        if (projektLista == null || projektLista.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Inga projekt hittades.");
-            return;
-        }
+            if (projektLista == null || projektLista.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Inga projekt hittades.");
+                return;
+            }
 
         uppdateraTabell(projektLista);
-    } catch (InfException e) {
+        } catch (InfException e) {
         JOptionPane.showMessageDialog(this, "Kunde inte fylla tabellen: " + e.getMessage());
-    }
+        }
 }
 
 
 
-private void uppdateraTabell(ArrayList<HashMap<String, String>> projektLista) {
-    String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "kostnad", "status", "prioritet", "projektchef", "land", "partner_namn"};
-    DefaultTableModel modell = new DefaultTableModel(kolumnNamn, 0);
+    private void uppdateraTabell(ArrayList<HashMap<String, String>> projektLista) {
+        String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "kostnad", "status", "prioritet", "projektchef", "land", "partner_namn"};
+        DefaultTableModel modell = new DefaultTableModel(kolumnNamn, 0);
 
-    for (HashMap<String, String> projekt : projektLista) {
-        Object[] rad = new Object[kolumnNamn.length];
-        for (int i = 0; i < kolumnNamn.length; i++) {
-            String kolumnVarde = projekt.getOrDefault(kolumnNamn[i], "Ingen data");
-                if("partner_namn".equals(kolumnNamn[i])){
+        for (HashMap<String, String> projekt : projektLista) {
+            Object[] rad = new Object[kolumnNamn.length];
+            for (int i = 0; i < kolumnNamn.length; i++) {
+                String kolumnVarde = projekt.getOrDefault(kolumnNamn[i], "Ingen data");
+                    if("partner_namn".equals(kolumnNamn[i])){
                     kolumnVarde = "Klicka här för att se info om partner/partners!";
+                }
+                rad[i] = kolumnVarde;
             }
-            rad[i] = kolumnVarde;
+            modell.addRow(rad);
         }
-        modell.addRow(rad);
-    }
 
-    tblMinaprojekt.setModel(modell);
-    
-    tblMinaprojekt.setAutoResizeMode(tblMinaprojekt.AUTO_RESIZE_OFF);
+        tblMinaprojekt.setModel(modell);
+        
+         //Sätter storleken på kolumnerna.
+        tblMinaprojekt.setAutoResizeMode(tblMinaprojekt.AUTO_RESIZE_OFF);
             TableColumn col = tblMinaprojekt.getColumnModel().getColumn(0);
             col.setPreferredWidth(50);
             col = tblMinaprojekt.getColumnModel().getColumn(1);
@@ -190,58 +197,45 @@ private void uppdateraTabell(ArrayList<HashMap<String, String>> projektLista) {
             col.setPreferredWidth(250);
 }
     
-private void statusFilter() {
-    try {
-        // Hämta statusar från databasen
-        String query = "SELECT DISTINCT status FROM projekt";
-        ArrayList<String> resultatLista = idb.fetchColumn(query);
+    private void statusFilter() {
+        try {
+            // Hämta statusar från databasen
+            String query = "SELECT DISTINCT status FROM projekt";
+            ArrayList<String> resultatLista = idb.fetchColumn(query);
 
-        // Kontrollera att resultatet inte är tomt
-        if (resultatLista != null && !resultatLista.isEmpty()) {
-            ComboStatusFilter.removeAllItems(); // Rensa comboboxen
+            // Kontrollera att resultatet inte är tomt
+            if (resultatLista != null && !resultatLista.isEmpty()) {
+                ComboStatusFilter.removeAllItems(); // Rensa comboboxen
 
-            // Lägg till "Välj status" som första objekt i comboboxen
-            ComboStatusFilter.addItem("Välj status");
+                // Lägg till "Välj status" som första objekt i comboboxen
+                ComboStatusFilter.addItem("Välj status");
 
-            // Lägg till varje status som finns i databasen
-            for (String status : resultatLista) {
-                ComboStatusFilter.addItem(status);
-            }
+                // Lägg till varje status som finns i databasen
+                for (String status : resultatLista) {
+                    ComboStatusFilter.addItem(status);
+             }
 
-            // Lämna det första neutrala alternativet valt
-            ComboStatusFilter.setSelectedIndex(0); // Sätt "Välj status" som valt
-        } else {
-            JOptionPane.showMessageDialog(this, "Inga statusvärden hittades i databasen.");
-        }
-    } catch (InfException e) {
-        JOptionPane.showMessageDialog(this, "Ett fel uppstod vid hämtning av statusvärden: " + e.getMessage());
+                // Lämna det första neutrala alternativet valt
+                ComboStatusFilter.setSelectedIndex(0); // Sätt "Välj status" som valt
+             } else {
+                JOptionPane.showMessageDialog(this, "Inga statusvärden hittades i databasen.");
+             }
+            } catch (InfException e) {
+            JOptionPane.showMessageDialog(this, "Ett fel uppstod vid hämtning av statusvärden: " + e.getMessage());
+             }
     }
-}
 
-    private void filtreraStatus() {
-    String valdStatus = (String) comboStatusFilter.getSelectedItem();
-
-    if (valdStatus == null || valdStatus.isEmpty()) {
-        skapaOchFyllTabell(null); // Visa alla projekt om inget filter är valt
-    } else {
-        skapaOchFyllTabell(valdStatus); // Filtrera efter vald status
-    }
-    }
     
-private void initStatusFilterListener() {
-    ComboStatusFilter.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String valdStatus = (String) ComboStatusFilter.getSelectedItem();
-            skapaOchFyllTabell(valdStatus);  // Uppdatera tabellen baserat på det valda statusvärdet
-        }
-    });
-}
-
-    private void andraProjekt() {
-    //new andraProjekt(idb,inloggadAnvandare).setVisible(true);
-       //this.setVisible(false);
+    private void initStatusFilterListener() {
+        ComboStatusFilter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String valdStatus = (String) ComboStatusFilter.getSelectedItem();
+                skapaOchFyllTabell(valdStatus);  // Uppdatera tabellen baserat på det valda statusvärdet
+            }
+        });
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
