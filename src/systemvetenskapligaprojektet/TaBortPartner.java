@@ -13,6 +13,7 @@ public class TaBortPartner extends javax.swing.JFrame {
 
     private static InfDB idb;
     private String inloggadAnvandare;
+    private int pid;
     /**
      * Creates new form TaBortPartner
      */
@@ -129,17 +130,26 @@ public class TaBortPartner extends javax.swing.JFrame {
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
         try{
             String taBortPid = tfTaBortID.getText();
-            int pid = Integer.parseInt(taBortPid);
-        
-            String kontrolleraPid = "select pid from partner where pid = " + pid + ";";
-            String pidFinns = idb.fetchSingle(kontrolleraPid);
+            try{
+                pid = Integer.parseInt(taBortPid);
+            }
+            catch(NumberFormatException ex){
+                System.out.println(ex);
+            }
+            String selectPid = "select pid from partner where pid = " + pid + ";";
+            String pidFinns = idb.fetchSingle(selectPid);
         
             if(pidFinns != null){
+                String selectProjekt_partner = "select pid from projekt_partner where partner_pid = " + pid + ";";
+                String projekt_partner = idb.fetchSingle(selectProjekt_partner);
+                if(projekt_partner != null){
+                    String taBortProjekt_partner = "delete from projekt_partner where partner_pid = " + pid + ";";
+                    idb.delete(taBortProjekt_partner);
+                }
                 String taBort = "delete from partner where pid = " + pid + ";";
-                idb.delete(taBort); 
+                idb.delete(taBort);
                 lblTaBortPartnerLyckad.setVisible(true);
-               }
-               
+            }              
             else{
                 lblFelIDTaBort.setVisible(true);
             }
