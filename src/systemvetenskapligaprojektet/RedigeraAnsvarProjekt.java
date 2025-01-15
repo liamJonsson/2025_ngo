@@ -190,7 +190,7 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
 
         lblLyckat.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblLyckat.setForeground(new java.awt.Color(0, 153, 0));
-        lblLyckat.setText("Avdelningen har lagts till! ");
+        lblLyckat.setText("Ändringarna har sparats!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -236,7 +236,7 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
                         .addComponent(lblRedigeraProjektet)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblLyckat)
+                        .addComponent(lblLyckat, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(btnSpara)
                             .addGap(18, 18, 18)
@@ -487,12 +487,6 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
                         case "kostnad":
                             tfKostnad.setText(enRad.get(ettAttribut));
                             break;
-                  //      case "status":
-                 //           tfStatus.setText(enRad.get(ettAttribut));
-                  //          break;
-                  //      case "prioritet":
-                 //           tfPrioritet.setText(enRad.get(ettAttribut));
-                  //          break;
                         case "projektchef":
                             tfProjektchef.setText(enRad.get(ettAttribut));
                             break;

@@ -70,7 +70,7 @@
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                      <Component id="lblLyckat" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblLyckat" min="-2" pref="144" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="btnSpara" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -394,7 +394,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="99" red="0" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Avdelningen har lagts till! "/>
+        <Property name="text" type="java.lang.String" value="&#xc4;ndringarna har sparats!"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import javax.swing.JOptionPane;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
  *
  * @author limme
@@ -19,6 +22,7 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
     private int chefsID;
     private String stad;
     private String chef;
+    
     /**
      * Creates new form RedigeraAvdelning
      */
@@ -26,9 +30,12 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
         this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         initComponents();
-        lblFelmeddelandeID.setVisible(false);
         lblFelmeddelandeStad.setVisible(false);
         lblFelmeddelandeAvdelningschef.setVisible(false);
+        lblFelmeddelandeEpost.setVisible(false);
+        lblFelmeddelandeTel.setVisible(false);
+        lblLyckat.setVisible(false);
+        fyllComboBox();
     }
 
     /**
@@ -41,9 +48,6 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
     private void initComponents() {
 
         lblRedigeraAvdelning = new javax.swing.JLabel();
-        lblFraga = new javax.swing.JLabel();
-        lblID = new javax.swing.JLabel();
-        tfID = new javax.swing.JTextField();
         lblNamn = new javax.swing.JLabel();
         lblBeskrivning = new javax.swing.JLabel();
         lblAdress = new javax.swing.JLabel();
@@ -60,33 +64,43 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
         tfChef = new javax.swing.JTextField();
         btnTillbaka = new javax.swing.JButton();
         btnSpara = new javax.swing.JButton();
-        lblFelmeddelandeID = new javax.swing.JLabel();
         lblFelmeddelandeStad = new javax.swing.JLabel();
         lblFelmeddelandeAvdelningschef = new javax.swing.JLabel();
+        lblFelmeddelandeEpost = new javax.swing.JLabel();
+        lblFelmeddelandeTel = new javax.swing.JLabel();
+        lblProjektID = new javax.swing.JLabel();
+        ComboRedigeraAvdelning = new javax.swing.JComboBox<>();
+        lblLyckat = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblRedigeraAvdelning.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblRedigeraAvdelning.setText("Redigera Avdelning");
+        lblRedigeraAvdelning.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
+        lblRedigeraAvdelning.setText("REDIGERA UPPGIFTER");
 
-        lblFraga.setText("Vilken avdelning vill du redigera?");
-
-        lblID.setText("AvdID");
-
+        lblNamn.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblNamn.setText("Namn");
 
+        lblBeskrivning.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblBeskrivning.setText("Beskrivning");
 
+        lblAdress.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblAdress.setText("Adress");
 
+        lblEpost.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblEpost.setText("Epost");
 
+        lblTelefon.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblTelefon.setText("Telefon");
 
+        lblStad.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblStad.setText("Stad");
 
+        lblChef.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblChef.setText("Chef");
 
+        tfNamn.setEditable(false);
+
+        btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,6 +108,7 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
             }
         });
 
+        btnSpara.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnSpara.setText("Spara");
         btnSpara.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,31 +116,48 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
             }
         });
 
-        lblFelmeddelandeID.setForeground(new java.awt.Color(255, 0, 0));
-        lblFelmeddelandeID.setText("Felaktigt ID");
-
+        lblFelmeddelandeStad.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblFelmeddelandeStad.setForeground(new java.awt.Color(255, 0, 0));
-        lblFelmeddelandeStad.setText("Vänligen fyll i giltigt stadsID");
+        lblFelmeddelandeStad.setText("Välj ett existerande stadsID");
 
+        lblFelmeddelandeAvdelningschef.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblFelmeddelandeAvdelningschef.setForeground(new java.awt.Color(255, 0, 0));
-        lblFelmeddelandeAvdelningschef.setText("Vänligen fyll i ett giltigt ID för avdelningschefen");
+        lblFelmeddelandeAvdelningschef.setText("Välj ett existerande anställningsID");
+
+        lblFelmeddelandeEpost.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
+        lblFelmeddelandeEpost.setForeground(new java.awt.Color(255, 0, 0));
+        lblFelmeddelandeEpost.setText("Fyll i en giltig epostadress: XXX@XXX.XXX");
+
+        lblFelmeddelandeTel.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
+        lblFelmeddelandeTel.setForeground(new java.awt.Color(255, 0, 0));
+        lblFelmeddelandeTel.setText("Fyll i ett giltigt telefonnummer: XXXXXXXXXX");
+
+        lblProjektID.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
+        lblProjektID.setText("Välj projekt att redigera");
+
+        ComboRedigeraAvdelning.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "3 - Kommunikation och medvetenhet om digitala rättigheter." }));
+        ComboRedigeraAvdelning.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboRedigeraAvdelningActionPerformed(evt);
+            }
+        });
+
+        lblLyckat.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
+        lblLyckat.setForeground(new java.awt.Color(0, 153, 0));
+        lblLyckat.setText("Ändringarna har sparats!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblRedigeraAvdelning)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblFraga)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfID, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblFelmeddelandeID))
+                        .addComponent(lblProjektID)
+                        .addGap(35, 35, 35)
+                        .addComponent(ComboRedigeraAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblBeskrivning)
@@ -135,71 +167,84 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
                             .addComponent(lblTelefon)
                             .addComponent(lblStad)
                             .addComponent(lblChef))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfChef, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                            .addComponent(tfStad)
-                            .addComponent(tfTelefon)
-                            .addComponent(tfEpost)
-                            .addComponent(tfAdress)
-                            .addComponent(tfBeskrivning)
-                            .addComponent(tfNamn))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(106, 106, 106)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblFelmeddelandeStad)
-                            .addComponent(lblFelmeddelandeAvdelningschef)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnTillbaka)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSpara)))
-                .addContainerGap(150, Short.MAX_VALUE))
+                            .addComponent(tfNamn)
+                            .addComponent(tfBeskrivning)
+                            .addComponent(tfAdress)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblFelmeddelandeEpost, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblFelmeddelandeTel, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblFelmeddelandeStad, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblFelmeddelandeAvdelningschef, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(tfEpost)
+                            .addComponent(tfTelefon)
+                            .addComponent(tfStad)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblLyckat, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnSpara)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnTillbaka))))
+                            .addComponent(tfChef))))
+                .addGap(74, 74, 74))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(35, 35, 35)
                 .addComponent(lblRedigeraAvdelning)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblFraga)
-                    .addComponent(tfID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandeID)
-                    .addComponent(lblID))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(lblProjektID)
+                    .addComponent(ComboRedigeraAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNamn)
                     .addComponent(tfNamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBeskrivning)
                     .addComponent(tfBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblAdress)
                     .addComponent(tfAdress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEpost)
                     .addComponent(tfEpost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(2, 2, 2)
+                .addComponent(lblFelmeddelandeEpost)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTelefon)
                     .addComponent(tfTelefon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(2, 2, 2)
+                .addComponent(lblFelmeddelandeTel)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblStad)
-                    .addComponent(tfStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandeStad))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(tfStad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addComponent(lblFelmeddelandeStad)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblChef)
-                    .addComponent(tfChef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandeAvdelningschef))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(tfChef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addComponent(lblFelmeddelandeAvdelningschef)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
                     .addComponent(btnSpara))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblLyckat)
+                .addGap(35, 35, 35))
         );
 
         pack();
@@ -214,28 +259,6 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
         boolean hasError = false;
         boolean hittad = false;
         try{
-            try{
-                String ID = tfID.getText();
-                String selectAllaAvdid = "select avdid from avdelning;";
-                ArrayList<String> allaAvdid = idb.fetchColumn(selectAllaAvdid);
-                avdid = Integer.parseInt(ID);
-                for(String ettAvdid:allaAvdid){
-                    int ettID = Integer.parseInt(ettAvdid);
-                    if(ettID==avdid){
-                        hittad = true;
-                        lblFelmeddelandeID.setVisible(false);
-                        break;
-                    }
-                }
-                if(!hittad){
-                    lblFelmeddelandeID.setVisible(true);
-                    hasError = true;
-                }
-            }
-            catch(NumberFormatException ex){
-                lblFelmeddelandeID.setVisible(true);
-                hasError = true;    
-            }
             if(!hasError){
                 try{
                     hittad = false;
@@ -346,8 +369,7 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
                 String updateAvdelning = "update avdelning set namn = '" + namn + "', beskrivning = '" + beskrivning + "', adress = '" + adress + "', epost = '" 
                         + epost + "', telefon = '" + telefon + "', stad = " + stadsID + ", chef = " + chefsID + " where avdid = " + avdid + ";";
                 idb.update(updateAvdelning);
-                new AllaAvdelningar(idb,inloggadAnvandare).setVisible(true);
-                this.setVisible(false);
+                lblLyckat.setVisible(true);
             }
         }
         catch(InfException ex){ //Catch InfExceptions?
@@ -355,6 +377,88 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSparaActionPerformed
 
+    private void ComboRedigeraAvdelningActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboRedigeraAvdelningActionPerformed
+        fyllTextfields();
+    }//GEN-LAST:event_ComboRedigeraAvdelningActionPerformed
+
+    public void fyllComboBox(){
+        try{
+            String selectAvdid = "select avdid, namn from avdelning order by (avdid);";
+            
+            ArrayList<HashMap<String, String>> allaAvdid = idb.fetchRows(selectAvdid);
+            
+            ComboRedigeraAvdelning.removeAllItems();
+            ComboRedigeraAvdelning.addItem("Välj avdelning");
+            
+            for (HashMap<String, String> avdelning : allaAvdid) {
+                String avdelningsInfo = avdelning.get("avdid") + " - " + avdelning.get("namn");
+                ComboRedigeraAvdelning.addItem(avdelningsInfo);
+            }
+        }
+        catch (InfException e) {
+            JOptionPane.showMessageDialog(this, "Kunde inte fylla avdelningar: " + e.getMessage());
+        }
+    }
+   
+    private void fyllTextfields(){
+        ComboRedigeraAvdelning.addActionListener(evt -> {
+            String avdelning = ComboRedigeraAvdelning.getSelectedItem().toString();
+            
+            if (!avdelning.equals("Välj avdelning")) {
+                String textValdAvdelning = "Välj avdelning: " + avdelning;
+                System.out.println(textValdAvdelning);
+                // Regex för att matcha siffran direkt efter "Välj avdelning: "
+                Pattern pattern = Pattern.compile("Välj avdelning: (\\d+)");
+                Matcher matcher = pattern.matcher(textValdAvdelning);
+                
+                if (matcher.find()) {
+                    // Extrahera den första matchade gruppen
+                    String enAvdelning = matcher.group(1);
+                    avdid = Integer.parseInt(enAvdelning);
+                    
+                    System.out.println("Numret är: " + avdid);
+                } else {
+                    System.out.println("Ingen match hittades."); 
+                }
+            } 
+        });
+        try{
+            String selectInfo = "select * from avdelning where avdid = " + avdid + ";";
+            System.out.println(selectInfo);
+            ArrayList<HashMap<String, String>> info = idb.fetchRows(selectInfo);
+            
+            for(HashMap<String, String> enRad:info){
+                for(String ettAttribut:enRad.keySet()){
+                    switch(ettAttribut){
+                        case "namn":
+                            tfNamn.setText(enRad.get(ettAttribut)); 
+                            break;
+                        case "beskrivning":
+                            tfBeskrivning.setText(enRad.get(ettAttribut));
+                            break;
+                        case "adress":
+                            tfAdress.setText(enRad.get(ettAttribut));
+                            break;
+                        case "epost":
+                            tfEpost.setText(enRad.get(ettAttribut));
+                            break;
+                        case "telefon":
+                            tfTelefon.setText(enRad.get(ettAttribut));
+                            break;
+                        case "stad":
+                            tfStad.setText(enRad.get(ettAttribut));
+                            break;
+                        case "chef":
+                            tfChef.setText(enRad.get(ettAttribut));
+                            break;
+                    }
+                }
+            }
+        }
+        catch(InfException ex){
+            System.out.println(ex); 
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -391,6 +495,7 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboRedigeraAvdelning;
     private javax.swing.JButton btnSpara;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JLabel lblAdress;
@@ -398,11 +503,12 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
     private javax.swing.JLabel lblChef;
     private javax.swing.JLabel lblEpost;
     private javax.swing.JLabel lblFelmeddelandeAvdelningschef;
-    private javax.swing.JLabel lblFelmeddelandeID;
+    private javax.swing.JLabel lblFelmeddelandeEpost;
     private javax.swing.JLabel lblFelmeddelandeStad;
-    private javax.swing.JLabel lblFraga;
-    private javax.swing.JLabel lblID;
+    private javax.swing.JLabel lblFelmeddelandeTel;
+    private javax.swing.JLabel lblLyckat;
     private javax.swing.JLabel lblNamn;
+    private javax.swing.JLabel lblProjektID;
     private javax.swing.JLabel lblRedigeraAvdelning;
     private javax.swing.JLabel lblStad;
     private javax.swing.JLabel lblTelefon;
@@ -410,7 +516,6 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
     private javax.swing.JTextField tfBeskrivning;
     private javax.swing.JTextField tfChef;
     private javax.swing.JTextField tfEpost;
-    private javax.swing.JTextField tfID;
     private javax.swing.JTextField tfNamn;
     private javax.swing.JTextField tfStad;
     private javax.swing.JTextField tfTelefon;
