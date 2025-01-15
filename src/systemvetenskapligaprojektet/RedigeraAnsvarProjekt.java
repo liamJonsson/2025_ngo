@@ -442,16 +442,14 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
     
     private void fyllTextfields(){
         ComboRedigeraProjekt.addActionListener(evt -> {
+            //Hämtar datan i comboboxen som valdes
             String projekt = ComboRedigeraProjekt.getSelectedItem().toString();
-            
-
+            System.out.println(projekt);
+            //Om comboboxen inte är vald på "Välj projekt"
             if (!projekt.equals("Välj projekt")) {
-                String textValtProjekt = "Välj projekt: " + projekt;
-                System.out.println(textValtProjekt);
-                // Regex för att matcha siffran direkt efter "Välj projekt: "
-                Pattern pattern = Pattern.compile("Välj projekt: (\\d+)");
-                Matcher matcher = pattern.matcher(textValtProjekt);
-
+                // Regex för att matcha siffran direkt efter
+                Pattern pattern = Pattern.compile("(\\d+)");
+                Matcher matcher = pattern.matcher(projekt);
                 // Kontrollera om mönstret hittades
                 if (matcher.find()) {
                     // Extrahera den första matchade gruppen
@@ -587,5 +585,3 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 }
 
-
-//tom från början och ta med både handläggare + projektchef +++ för mina sidor skriv in distinct så inte det uppkommer dubletter.
