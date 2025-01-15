@@ -131,6 +131,9 @@ public class TaBortAnstalld extends javax.swing.JFrame {
     //Tar bort en anställd
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
         try{
+            //Gör felmeddelande ej synligt vid nytt försök
+            lblFelIDTaBort.setVisible(false);
+            
             //Hämtar den ifyllda texten från textrutan
             String taBortAid = tfTaBortID.getText();
 
