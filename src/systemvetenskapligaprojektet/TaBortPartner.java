@@ -129,6 +129,8 @@ public class TaBortPartner extends javax.swing.JFrame {
 
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
         try{
+            lblFelIDTaBort.setVisible(false);
+            lblTaBortPartnerLyckad.setVisible(false);
             String taBortPid = tfTaBortID.getText();
             try{
                 pid = Integer.parseInt(taBortPid);
