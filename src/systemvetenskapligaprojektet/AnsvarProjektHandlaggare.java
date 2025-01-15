@@ -218,7 +218,7 @@ public class AnsvarProjektHandlaggare extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void btnLaggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaggTillActionPerformed
-        new laggTillHandlaggare(idb, inloggadAnvandare).setVisible(true);
+        new AnsvarProjektHandlaggareLaggTill(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnLaggTillActionPerformed
 

@@ -28,6 +28,7 @@ public class AnsvarProjektPartnerLaggTill extends javax.swing.JFrame {
         initComponents();
         fyllDropdownPartners();
         fyllDropdownProjekt();
+        lblLyckat.setVisible(false);
 
         // Lägg till lyssnare för ComboBoxen
         setupComboBoxListeners();
@@ -139,6 +140,7 @@ public class AnsvarProjektPartnerLaggTill extends javax.swing.JFrame {
         ComboValjPartner = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         ComboValjProjekt = new javax.swing.JComboBox<>();
+        lblLyckat = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -166,31 +168,40 @@ public class AnsvarProjektPartnerLaggTill extends javax.swing.JFrame {
 
         ComboValjProjekt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        lblLyckat.setText("Partner har lagts till i projektet!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(btnSpara)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnTillbaka)
-                .addGap(23, 23, 23))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(lblValjPartner)
+                                .addGap(18, 18, 18)
+                                .addComponent(ComboValjPartner, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(ComboValjProjekt, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 164, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnSpara)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTillbaka)))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblValjPartner)
-                        .addGap(18, 18, 18)
-                        .addComponent(ComboValjPartner, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(ComboValjProjekt, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(lblLyckat)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,10 +217,12 @@ public class AnsvarProjektPartnerLaggTill extends javax.swing.JFrame {
                     .addComponent(lblValjPartner)
                     .addComponent(ComboValjPartner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addComponent(lblLyckat, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTillbaka)
-                    .addComponent(btnSpara))
-                .addContainerGap(47, Short.MAX_VALUE))
+                    .addComponent(btnSpara)
+                    .addComponent(btnTillbaka))
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -245,14 +258,10 @@ public class AnsvarProjektPartnerLaggTill extends javax.swing.JFrame {
             String insertPartnerInProject = "INSERT INTO projekt_partner (pid, partner_pid) VALUES (" + projektID + ", " + partnerID + ");";
             System.out.println("SQL-query för att lägga till partner i projekt: " + insertPartnerInProject);  // Felsökningsutskrift
             idb.insert(insertPartnerInProject);
-
-            JOptionPane.showMessageDialog(this, "Partner har lagts till i projektet.");
-
-            // Återgå till föregående vy
-            new AnsvarProjektPartner(idb, inloggadAnvandare).setVisible(true);
-            this.setVisible(false);
-        } catch (InfException ex) {
-            JOptionPane.showMessageDialog(this, "Ett fel inträffade vid sparande av partner.");
+            lblLyckat.setVisible(false);
+       
+                } catch (InfException e){
+            JOptionPane.showMessageDialog(this, "Kunde inte lägga till partner: " + e.getMessage());
         }
     }//GEN-LAST:event_btnSparaActionPerformed
 
@@ -298,6 +307,7 @@ public class AnsvarProjektPartnerLaggTill extends javax.swing.JFrame {
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblLyckat;
     private javax.swing.JLabel lblValjPartner;
     // End of variables declaration//GEN-END:variables
 }
