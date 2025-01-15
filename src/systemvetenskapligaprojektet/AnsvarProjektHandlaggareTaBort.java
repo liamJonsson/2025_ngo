@@ -6,39 +6,31 @@ package systemvetenskapligaprojektet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
-import oru.inf.InfDB; //importeras i alla klasser som vi ska använda
-import oru.inf.InfException; //importeras i alla klasser som vi ska använda
-
+import oru.inf.InfDB;
+import oru.inf.InfException;
 /**
  *
- * @author iftinserar
+ * @author mejaa
  */
-public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
+public class AnsvarProjektHandlaggareTaBort extends javax.swing.JFrame {
 
     private static InfDB idb;
     private String inloggadAnvandare;
     private String projektID;
-    /**
-     * Creates new form AnsvarProjektPartnerTaBort
-     */
-    public AnsvarProjektPartnerTaBort(InfDB idb, String inloggadAnvandare, String projektID) {
-      this.idb = idb;
+
+    public AnsvarProjektHandlaggareTaBort(InfDB idb, String inloggadAnvandare, String projektID) {
+        this.idb = idb;
         this.inloggadAnvandare = inloggadAnvandare;
         this.projektID = projektID;
         initComponents();
         fyllDropdownProjekt();
-        fyllDropdownKoppladePartners(projektID);
+        fyllDropdownKoppladeHandlaggare(projektID);
         lblLyckat.setVisible(false);
-
         
         // Lägg till lyssnare för ComboValjProjekt
-        ComboValjProjekt.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ComboValjProjektItemStateChanged(evt);
-            }
-        });
+        ComboValjProjekt.addItemListener(evt -> ComboValjProjektItemStateChanged(evt));
     }
-    
+
     // Fyll ComboBox med projekt där den inloggade användaren är projektchef
     private void fyllDropdownProjekt() {
         try {
@@ -72,72 +64,77 @@ public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Ett fel inträffade vid hämtning av projekt: " + ex.getMessage());
         }
     }
-    
-    // Fyll ComboBox med kopplade partners för det valda projektet
-    private void fyllDropdownKoppladePartners(String projektID) {
-        try {
-            // SQL-fråga som hämtar partners kopplade till projektet
-            String query = "SELECT partner.pid, partner.namn " +
-                           "FROM projekt_partner " +
-                           "JOIN partner ON projekt_partner.partner_pid = partner.pid " +
-                           "WHERE projekt_partner.pid = " + projektID;
 
-            ArrayList<HashMap<String, String>> koppladePartners = idb.fetchRows(query);
+    // Fyll ComboBox med kopplade handläggare för det valda projektet
+    private void fyllDropdownKoppladeHandlaggare(String projektID) {
+        try {
+            // SQL-fråga som hämtar handläggare kopplade till projektet
+            String query = "SELECT anstalld.aid, anstalld.fornamn, anstalld.efternamn " +
+                           "FROM anstalld " +
+                           "JOIN ans_proj ON anstalld.aid = ans_proj.aid " +
+                           "WHERE ans_proj.pid = " + projektID;
+
+            // Hämtar resultaten från databasen
+            ArrayList<HashMap<String, String>> koppladeHandlaggare = idb.fetchRows(query);
 
             // Rensa och fyll ComboBox
-            ComboTaBortPartner.removeAllItems();
-            ComboTaBortPartner.addItem("Välj partner");
+            ComboValjHandlaggare.removeAllItems();
+            ComboValjHandlaggare.addItem("Välj handläggare");
 
-            // Lägg till varje partner i comboboxen
-            for (HashMap<String, String> partner : koppladePartners) {
-                String partnerInfo = partner.get("pid") + " - " + partner.get("namn");
-                ComboTaBortPartner.addItem(partnerInfo);
+            // Lägg till varje handläggare i ComboBoxen
+            for (HashMap<String, String> handlaggare : koppladeHandlaggare) {
+                String handlaggareInfo = handlaggare.get("aid") + " - " + handlaggare.get("fornamn") + " " + handlaggare.get("efternamn");
+                ComboValjHandlaggare.addItem(handlaggareInfo);
             }
         } catch (InfException e) {
-            JOptionPane.showMessageDialog(this, "Kunde inte fylla kopplade partners: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Kunde inte fylla kopplade handläggare: " + e.getMessage());
         }
     }
 
-    // Metod för att ta bort en partner från det valda projektet
-    private void taBortPartnerFrånProjekt(String projektID) {
+    
+    //Metod för att ta bort en handläggare från det valda projektet
+    private void taBortHandlaggareFrånProjekt(String projektID) {
         try {
-            // Hämta den valda partnern från ComboBoxen
-            String valdPartner = (String) ComboTaBortPartner.getSelectedItem();
-            if (valdPartner == null || valdPartner.equals("Välj partner")) {
-                JOptionPane.showMessageDialog(this, "Välj en partner att ta bort.");
+            // Hämta den valda handläggaren från ComboBoxen
+            String valdHandlaggare = (String) ComboValjHandlaggare.getSelectedItem();
+            if (valdHandlaggare == null || valdHandlaggare.equals("Välj handläggare")) {
+                JOptionPane.showMessageDialog(this, "Välj en handläggare att ta bort.");
                 return;
             }
 
-            // Extrahera partnerID från den valda partnern
-            String partnerID = valdPartner.split(" - ")[0]; // Hämta partnerID
+            // Extrahera handläggareID (aid) från den valda handläggaren
+            String handlaggareID = valdHandlaggare.split(" - ")[0]; // Hämta aid
 
-            // SQL-fråga för att ta bort den valda partnern från projektet
-            String deleteQuery = "DELETE FROM projekt_partner " +
-                                 "WHERE pid = " + projektID + " AND partner_pid = " + partnerID;
+            // SQL-fråga för att ta bort den valda handläggaren från projektet
+            String deleteQuery = "DELETE FROM ans_proj " +
+                                 "WHERE pid = " + projektID + " AND aid = " + handlaggareID;
 
             // Exekvera delete-frågan
             idb.delete(deleteQuery);
 
-            lblLyckat.setVisible(true);
-            fyllDropdownKoppladePartners(projektID); // Uppdatera ComboBoxen efter borttagning
+            // Uppdatera ComboBoxen och visa meddelande
+            JOptionPane.showMessageDialog(this, "Handläggaren har tagits bort från projektet.");
+            fyllDropdownKoppladeHandlaggare(projektID); // Uppdatera listan av handläggare
 
         } catch (InfException e) {
-            JOptionPane.showMessageDialog(this, "Kunde inte ta bort partner: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Kunde inte ta bort handläggare: " + e.getMessage());
         }
     }
 
-    // Hantera val av projekt i ComboValjProjekt
+
+    //Hantera val av projekt i ComboValjProjekt
     private void ComboValjProjektItemStateChanged(java.awt.event.ItemEvent evt) {
         if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
             String selectedProjekt = (String) ComboValjProjekt.getSelectedItem();
             if (!selectedProjekt.equals("Välj projekt")) {
                 // Extrahera projektID och spara i global variabel
                 projektID = selectedProjekt.split(" - ")[0];
-                // Anropa fyllDropdownKoppladePartners för att uppdatera partnerlistan
-                fyllDropdownKoppladePartners(projektID);
+                // Anropa fyllDropdownKoppladeHandlaggare för att uppdatera handläggarlistan
+                fyllDropdownKoppladeHandlaggare(projektID);
             }
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -148,17 +145,22 @@ public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         btnSpara = new javax.swing.JButton();
         btnTillbaka = new javax.swing.JButton();
-        ComboTaBortPartner = new javax.swing.JComboBox<>();
-        lblValjPartner = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        ComboValjProjekt = new javax.swing.JComboBox<>();
         lblLyckat = new javax.swing.JLabel();
+        ComboValjProjekt = new javax.swing.JComboBox<>();
+        ComboValjHandlaggare = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Ta bort partner från projekt");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setText("Ta bort handläggare från projekt");
+
+        jLabel2.setText("Välj projekt");
+
+        jLabel3.setText("Välj handläggare");
 
         btnSpara.setText("Spara");
         btnSpara.addActionListener(new java.awt.event.ActionListener() {
@@ -174,79 +176,72 @@ public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
             }
         });
 
-        ComboTaBortPartner.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        lblValjPartner.setText("Välj partner");
-
-        jLabel2.setText("Välj projekt");
+        lblLyckat.setText("Handläggaren har tagits bort från projektet!");
 
         ComboValjProjekt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        lblLyckat.setText("Partner har tagits bort från projektet!");
+        ComboValjHandlaggare.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(99, 99, 99)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel2)
-                        .addGap(2, 2, 2)
-                        .addComponent(ComboValjProjekt, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(16, 16, 16))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
+                        .addGap(16, 16, 16)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblLyckat, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnSpara)
-                                .addGap(204, 204, 204)
-                                .addComponent(btnTillbaka)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblValjPartner)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                .addComponent(ComboTaBortPartner, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
+                                .addGap(240, 240, 240)
+                                .addComponent(btnTillbaka))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(ComboValjHandlaggare, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(ComboValjProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblLyckat, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(71, 71, 71)
+                        .addComponent(jLabel1)))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(16, 16, 16)
                 .addComponent(jLabel1)
-                .addGap(22, 22, 22)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(ComboValjProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ComboTaBortPartner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblValjPartner))
-                .addGap(33, 33, 33)
+                    .addComponent(jLabel3)
+                    .addComponent(ComboValjHandlaggare, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(lblLyckat)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSpara)
                     .addComponent(btnTillbaka))
-                .addGap(25, 25, 25))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
-    taBortPartnerFrånProjekt(projektID);
+    taBortHandlaggareFrånProjekt(projektID);
     }//GEN-LAST:event_btnSparaActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-    new AnsvarProjektPartner(idb, inloggadAnvandare).setVisible(true);
-    this.setVisible(false);
+        new AnsvarProjektHandlaggare(idb, inloggadAnvandare).setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     /**
@@ -258,40 +253,22 @@ public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AnsvarProjektPartnerTaBort.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AnsvarProjektPartnerTaBort.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AnsvarProjektPartnerTaBort.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AnsvarProjektPartnerTaBort.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //new AnsvarProjektPartnerTaBort().setVisible(true);
+                //new TaBortHandlaggare().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> ComboTaBortPartner;
+    private javax.swing.JComboBox<String> ComboValjHandlaggare;
     private javax.swing.JComboBox<String> ComboValjProjekt;
     private javax.swing.JButton btnSpara;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lblLyckat;
-    private javax.swing.JLabel lblValjPartner;
     // End of variables declaration//GEN-END:variables
 }

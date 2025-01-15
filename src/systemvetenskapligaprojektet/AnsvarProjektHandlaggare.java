@@ -9,6 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -191,7 +192,24 @@ public class AnsvarProjektHandlaggare extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
-        // TODO add your handling code here:
+    try {
+        // Hämta det aktuella projektet där användaren är projektchef
+        String selectProjekt = "SELECT pid FROM projekt WHERE projektchef = (SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare + "');";
+        ArrayList<String> projektIDs = idb.fetchColumn(selectProjekt);
+
+        if (!projektIDs.isEmpty()) {
+            // Använd första projektet från listan
+            String projektID = projektIDs.get(0);
+
+            // Skapa och visa den nya vyn för att ta bort handläggare med det hämtade projektID
+            new AnsvarProjektHandlaggareTaBort(idb, inloggadAnvandare, projektID).setVisible(true);
+            this.setVisible(false); // Döljer nuvarande fönster
+        } else {
+            JOptionPane.showMessageDialog(this, "Det finns inga projekt där du är projektchef.");
+        }
+    } catch (InfException ex) {
+        JOptionPane.showMessageDialog(this, "Ett fel inträffade vid hämtning av projekt: " + ex.getMessage());
+    }
     }//GEN-LAST:event_btnTaBortActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
