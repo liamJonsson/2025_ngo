@@ -23,12 +23,6 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="btnSpara" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-          </Group>
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
@@ -51,34 +45,49 @@
                       </Group>
                       <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="tfRedigeraStartdatum" pref="175" max="32767" attributes="0"/>
-                              <Component id="tfRedigeraSlutdatum" max="32767" attributes="0"/>
-                              <Component id="tfRedigeraKostnad" max="32767" attributes="0"/>
-                              <Component id="tfRedigeraStatus" max="32767" attributes="0"/>
-                              <Component id="tfRedigeraLand" max="32767" attributes="0"/>
-                              <Component id="tfRedigeraProjektchef" max="32767" attributes="0"/>
-                              <Component id="tfRedigeraPrioritet" max="32767" attributes="0"/>
-                              <Component id="tfRedigeraBeskrivning" max="32767" attributes="0"/>
-                              <Component id="tfRedigeraProjektNamn" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="tfRedigeraStartdatum" pref="175" max="32767" attributes="0"/>
+                                  <Component id="tfRedigeraSlutdatum" max="32767" attributes="0"/>
+                                  <Component id="tfRedigeraKostnad" max="32767" attributes="0"/>
+                                  <Component id="tfRedigeraLand" max="32767" attributes="0"/>
+                                  <Component id="tfRedigeraProjektchef" max="32767" attributes="0"/>
+                                  <Component id="tfRedigeraBeskrivning" max="32767" attributes="0"/>
+                                  <Component id="tfRedigeraProjektNamn" max="32767" attributes="0"/>
+                                  <Component id="ComboValjProjektID" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="99" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblFelmeddelandeProjektID" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblFelmeddelandeLand" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblFelmeddelandeProjektchef" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblFelmeddelandeKostnad" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblFelmeddelandeSlutdatum" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblFelmeddelandeStartdatum" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <Component id="tfRedigeraProjektID" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="166" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblFelmeddelandeProjektID" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblFelmeddelandeLand" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblFelmeddelandeProjektchef" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblFelmeddelandePrioritet" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblFelmeddelandeStatus" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblFelmeddelandeKostnad" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblFelmeddelandeSlutdatum" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblFelmeddelandeStartdatum" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="ComboValjProjektID" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jComboBox1" max="32767" attributes="0"/>
+                                  <Component id="jComboBox2" pref="175" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <Component id="btnSpara" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="lblFelmeddelande" max="32767" attributes="0"/>
+                  <Component id="lblLyckat" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+              <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -87,13 +96,11 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Component id="lblAllaAnstallda" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-              <Component id="ComboValjProjektID" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblProjektID" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfRedigeraProjektID" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblFelmeddelandeProjektID" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ComboValjProjektID" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="42" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -125,15 +132,13 @@
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="tfRedigeraStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblStatus" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblFelmeddelandeStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblFelmeddelandePrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfRedigeraPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblPrioritet" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -147,10 +152,13 @@
                   <Component id="lblFelmeddelandeLand" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblLand" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+              <Component id="lblFelmeddelande" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnTillbaka" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSpara" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblLyckat" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
           </Group>
@@ -160,7 +168,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="lblProjektID">
       <Properties>
-        <Property name="text" type="java.lang.String" value="ID"/>
+        <Property name="text" type="java.lang.String" value="V&#xe4;lj projekt att redigera"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblProjektNamn">
@@ -216,12 +224,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tfRedigeraKostnad">
     </Component>
-    <Component class="javax.swing.JTextField" name="tfRedigeraStatus">
-    </Component>
-    <Component class="javax.swing.JTextField" name="tfRedigeraPrioritet">
-    </Component>
-    <Component class="javax.swing.JTextField" name="tfRedigeraProjektID">
-    </Component>
     <Component class="javax.swing.JTextField" name="tfRedigeraBeskrivning">
     </Component>
     <Component class="javax.swing.JTextField" name="tfRedigeraProjektchef">
@@ -264,16 +266,6 @@
         <Property name="text" type="java.lang.String" value="Felaktigt format p&#xe5; kostnad"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblFelmeddelandeStatus">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Felaktigt format p&#xe5; status"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblFelmeddelandePrioritet">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Felaktigt format p&#xe5; prioritet"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="lblFelmeddelandeProjektchef">
       <Properties>
         <Property name="text" type="java.lang.String" value="V&#xe4;nligen fyll i giltigt ID f&#xf6;r projektchef"/>
@@ -303,9 +295,50 @@
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ComboValjProjektIDActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblLyckat">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Projektet har &#xe4;ndrats! "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBox1">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="3">
+            <StringItem index="0" value="H&#xf6;g"/>
+            <StringItem index="1" value="Medel"/>
+            <StringItem index="2" value="L&#xe5;g"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="jComboBox2">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="3">
+            <StringItem index="0" value="P&#xe5;g&#xe5;ende"/>
+            <StringItem index="1" value="Planerat"/>
+            <StringItem index="2" value="Avslutad"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelmeddelande">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Alla f&#xe4;lt m&#xe5;ste fyllas i"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

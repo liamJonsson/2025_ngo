@@ -130,8 +130,6 @@ public class MinaProjekt extends javax.swing.JFrame {
             
                 //slår samman båda resultaten till en enda tabell och tar automatiskt bort dubbletter
                 String baseQuery = handlaggareQuery + " UNION " + projektchefQuery; 
-                System.out.println("Base query: " + baseQuery);
-
               
                 // Om en status är vald, filtrera resultaten
             if (valdStatus != null && !valdStatus.isEmpty()) {
@@ -150,8 +148,6 @@ public class MinaProjekt extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Kunde inte fylla tabellen: " + e.getMessage());
         }
 }
-
-
 
     private void uppdateraTabell(ArrayList<HashMap<String, String>> projektLista) {
         String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "kostnad", "status", "prioritet", "projektchef", "land", "partner_namn"};
