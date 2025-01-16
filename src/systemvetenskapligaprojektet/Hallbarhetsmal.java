@@ -41,8 +41,10 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
         jLabel1.setText("Hållbarhetsmål");
 
+        tblHallbarhetsmal.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         tblHallbarhetsmal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -56,6 +58,7 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblHallbarhetsmal);
 
+        btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -68,27 +71,27 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnTillbaka)))
-                .addContainerGap())
+                .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 121, Short.MAX_VALUE)
                 .addComponent(btnTillbaka)
-                .addGap(15, 15, 15))
+                .addGap(35, 35, 35))
         );
 
         pack();
@@ -121,6 +124,18 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
                 }
                 tblHallbarhetsmal.setModel(allaHallbarhetsmal);
             }
+            tblHallbarhetsmal.setAutoResizeMode(tblHallbarhetsmal.AUTO_RESIZE_OFF);
+            TableColumn col = tblHallbarhetsmal.getColumnModel().getColumn(0); //ID
+            col.setPreferredWidth(75);
+            col = tblHallbarhetsmal.getColumnModel().getColumn(1); //Namn
+            col.setPreferredWidth(250);
+            col = tblHallbarhetsmal.getColumnModel().getColumn(2); //Målnummer
+            col.setPreferredWidth(75);
+            col = tblHallbarhetsmal.getColumnModel().getColumn(3); //Beskrivning
+            col.setPreferredWidth(300);
+            col = tblHallbarhetsmal.getColumnModel().getColumn(4); //Prioritet
+            col.setPreferredWidth(75);
+            
         }
         catch(InfException ex){
             System.out.println(ex);
