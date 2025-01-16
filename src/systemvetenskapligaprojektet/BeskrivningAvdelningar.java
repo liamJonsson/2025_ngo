@@ -28,27 +28,39 @@ public class BeskrivningAvdelningar extends javax.swing.JFrame {
     
     public void fyllTabell(){
         try{
+            
+          //Skapar en array som lagrar kolumnnamnen.   
         String[] kolumnNamn = {"avdid", "beskrivning"};
+        
+        //Skapar en DefaultTableModel som håller kolumnnamnen samt sätter antalet rader till noll.
         DefaultTableModel allaAvdelningar = new DefaultTableModel(kolumnNamn, 0);
         
+        //Hämtar alla avdelnings ID från avdelning och lägger dessa i en ArrayList(avdid).
         String selectAvdid = "select avdid from avdelning order by(avdid);";
         ArrayList<String> avdid = idb.fetchColumn(selectAvdid);
+        //Om avdid inte är null.
             if(avdid != null){
+                //Loopar igenom "avdid" och för varje avdelnings ID hämtas id och beskrivning om avdelningen och läggs in i "info".
                 for(String ettID:avdid){
                     String selectInfo = "select avdid,beskrivning from avdelning where avdid = " + ettID + ";";
                     HashMap<String,String> info = idb.fetchRow(selectInfo);
             
+                    //Skapar en array som håller data för en rad i tabellen.
                     Object[] enRad = new Object[kolumnNamn.length];
                     int index = 0;
             
+                    //En for-each loop som går igenom varje kolumn i "kolumnNamn" där värdet för "enKolumn" läggs till i "enRad".
                     for(String enKolumn:kolumnNamn){
                         enRad[index++] = info.get(enKolumn);
                     }
+                     //EnRad läggs till i DefaultTableModel.
                     allaAvdelningar.addRow(enRad);
                 }
+                //Jtable sätts med data från DefaultTableModel.
                 tblBeskrivningAvdelningar.setModel(allaAvdelningar);
             }
             tblBeskrivningAvdelningar.setAutoResizeMode(tblBeskrivningAvdelningar.AUTO_RESIZE_OFF);
+            //Sätter storleken på tabellen.
             TableColumn col = tblBeskrivningAvdelningar.getColumnModel().getColumn(0);
             col.setPreferredWidth(100);
             col = tblBeskrivningAvdelningar.getColumnModel().getColumn(1);

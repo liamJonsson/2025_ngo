@@ -29,27 +29,37 @@ public class BeskrivningProjekt extends javax.swing.JFrame {
     
     public void fyllTabell(){
         try{
+        //Skapar en array som lagrar kolumnnamnen.  
         String[] kolumnNamn = {"pid", "beskrivning"};
+        
+        //Skapar en DefaultTableModel som håller kolumnnamnen samt sätter antalet rader till noll.
         DefaultTableModel allaProjekt = new DefaultTableModel(kolumnNamn, 0);
         
+        //Hämtar alla projekt ID från projekt och lägger in det i ArrayListan "pid".
         String selectPID = "select pid from projekt order by(pid);";
         ArrayList<String> pid = idb.fetchColumn(selectPID);
             if(pid != null){
+                //Går igenom "pid" och för varje projekt ID hämtas pid och beskrivning som läggs in i HashMapen "info".
                 for(String ettID:pid){
                     String selectInfo = "select pid,beskrivning from projekt where pid = " + ettID + ";";
                     HashMap<String,String> info = idb.fetchRow(selectInfo);
             
+                     //Skapar en array som håller data för en rad i tabellen.
                     Object[] enRad = new Object[kolumnNamn.length];
                     int index = 0;
             
+                     //En for-each loop som går igenom varje kolumn i "kolumnNamn" där värdet för "enKolumn" läggs till i "enRad".
                     for(String enKolumn:kolumnNamn){
                         enRad[index++] = info.get(enKolumn);
                     }
+                    //EnRad läggs till i DefaultTableModel.
                     allaProjekt.addRow(enRad);
                 }
+                //Jtable sätts med data från DefaultTableModel.
                 tblBeskrivning.setModel(allaProjekt);
             }
             tblBeskrivning.setAutoResizeMode(tblBeskrivning.AUTO_RESIZE_OFF);
+            //Sätter storleken på tabellen.
             TableColumn col = tblBeskrivning.getColumnModel().getColumn(0);
             col.setPreferredWidth(100);
             col = tblBeskrivning.getColumnModel().getColumn(1);

@@ -30,28 +30,39 @@ public class AnsvarProjektStatistik extends javax.swing.JFrame {
     
     public void fyllTabell(){
         try{
+            //Skapar en array som lagrar kolumnnamnen.
             String[] kolumnNamn = {"pid", "projektnamn", "kostnad"};
+            
+             //Skapar en DefaultTableModel som håller kolumnnamnen samt sätter antalet rader till noll.
             DefaultTableModel allaKostnader = new DefaultTableModel(kolumnNamn, 0);
             
+            //Hämtar projekt ID från projekt där projektchefen är den inloggade användaren. Dessa projekt ID läggs sedan in i "pidLista".
             String selectPid = "SELECT pid FROM projekt where projektchef in (select aid from anstalld where epost = '" + inloggadAnvandare + "');";
             ArrayList<String> pidLista = idb.fetchColumn(selectPid);
             
+            //Om "pisLista" inte är null.
             if(pidLista != null){
+                //Skapar en for-each loop som går igenom "pidLista". För varje projekt ID hämtas data om projektet och läggs i en ArrayList av HashMap "Info".
                 for (String ettPID : pidLista) {
                 String selectInfo = "select pid, projektnamn, kostnad FROM projekt where pid = " + ettPID + ";";
                 ArrayList<HashMap<String, String>> info = idb.fetchRows(selectInfo);
                 
+                //Skapar en array som håller data för en rad i tabellen.
                 Object[] enRad = new Object[kolumnNamn.length];
                 int index = 0;
                 
+                //En for-each loop som går igenom varje kolumn i "kolumnNamn" där värdet för "enKolumn" läggs till i "enRad".
                 for (String enKolumn : kolumnNamn) {
                         enRad[index++] = info.get(0).get(enKolumn);
                     }
+                 //EnRad läggs till i DefaultTableModel.
                 allaKostnader.addRow(enRad);
             }
+                 //Jtable sätts med data från DefaultTableModel.
                 tblStatistik.setModel(allaKostnader);
             }
             tblStatistik.setAutoResizeMode(tblStatistik.AUTO_RESIZE_OFF);
+            //Sätter storleken på tabellen.
             TableColumn col = tblStatistik.getColumnModel().getColumn(0);
             col.setPreferredWidth(50);
             col = tblStatistik.getColumnModel().getColumn(1);

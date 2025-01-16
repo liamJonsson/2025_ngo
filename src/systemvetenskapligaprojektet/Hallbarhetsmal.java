@@ -24,6 +24,55 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
         initComponents();
         fyllTabell();
     }
+        public void fyllTabell(){
+        try{
+            //Skapar en array som lagrar kolumnnamnen. 
+            String kolumnNamn[] = {"hid", "namn", "malnummer", "beskrivning", "prioritet"};
+            
+            //Skapar en DefaultTableModel som håller kolumnnamnen samt sätter antalet rader till noll.
+            DefaultTableModel allaHallbarhetsmal = new DefaultTableModel(kolumnNamn, 0);
+            
+            //Hämtar alla hid från hallbarhetsmal och lägger dessa i ArrayListan "hid".
+            String selectHID = "select hid from hallbarhetsmal order by(hid);";
+            ArrayList<String> hid = idb.fetchColumn(selectHID);
+            if(hid != null){
+                //Går igenom "hid" och för varje hållbarhetsmålsid hämtas allt om hållbarhetsmålet som sedan läggs in i HashMapen "info".
+                for(String ettID:hid){
+                    String selectInfo = "select * from hallbarhetsmal where hid = " + ettID + ";";
+                    HashMap<String, String> info = idb.fetchRow(selectInfo);
+                    
+                    //Skapar en array som håller data för en rad i tabellen.
+                    Object[] enRad = new Object[kolumnNamn.length];
+                    int index = 0;
+                    
+                    //En for-each loop som går igenom varje kolumn i "kolumnNamn" där värdet för "enKolumn" läggs till i "enRad".
+                    for(String enKolumn:kolumnNamn){
+                        enRad[index++] = info.get(enKolumn);
+                    }
+                    //EnRad läggs till i DefaultTableModel.
+                    allaHallbarhetsmal.addRow(enRad);
+                }
+                //Jtable sätts med data från DefaultTableModel.
+                tblHallbarhetsmal.setModel(allaHallbarhetsmal);
+            }
+            tblHallbarhetsmal.setAutoResizeMode(tblHallbarhetsmal.AUTO_RESIZE_OFF);
+            //Sätter storleken på tabellen.
+            TableColumn col = tblHallbarhetsmal.getColumnModel().getColumn(0); //ID
+            col.setPreferredWidth(75);
+            col = tblHallbarhetsmal.getColumnModel().getColumn(1); //Namn
+            col.setPreferredWidth(250);
+            col = tblHallbarhetsmal.getColumnModel().getColumn(2); //Målnummer
+            col.setPreferredWidth(75);
+            col = tblHallbarhetsmal.getColumnModel().getColumn(3); //Beskrivning
+            col.setPreferredWidth(300);
+            col = tblHallbarhetsmal.getColumnModel().getColumn(4); //Prioritet
+            col.setPreferredWidth(75);
+            
+        }
+        catch(InfException ex){
+            System.out.println(ex);
+    }
+} 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -102,53 +151,7 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
         new MenyHandlaggare(idb,inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
-
-    public void fyllTabell(){
-        try{
-            String kolumnNamn[] = {"hid", "namn", "malnummer", "beskrivning", "prioritet"};
-            DefaultTableModel allaHallbarhetsmal = new DefaultTableModel(kolumnNamn, 0);
-            
-            String selectHID = "select hid from hallbarhetsmal order by(hid);";
-            ArrayList<String> hid = idb.fetchColumn(selectHID);
-            if(hid != null){
-                for(String ettID:hid){
-                    String selectInfo = "select * from hallbarhetsmal where hid = " + ettID + ";";
-                    HashMap<String, String> info = idb.fetchRow(selectInfo);
-                    
-                    Object[] enRad = new Object[kolumnNamn.length];
-                    int index = 0;
-                    
-                    for(String enKolumn:kolumnNamn){
-                        enRad[index++] = info.get(enKolumn);
-                    }
-                    allaHallbarhetsmal.addRow(enRad);
-                }
-                tblHallbarhetsmal.setModel(allaHallbarhetsmal);
-            }
-            tblHallbarhetsmal.setAutoResizeMode(tblHallbarhetsmal.AUTO_RESIZE_OFF);
-            TableColumn col = tblHallbarhetsmal.getColumnModel().getColumn(0); //ID
-            col.setPreferredWidth(75);
-            col = tblHallbarhetsmal.getColumnModel().getColumn(1); //Namn
-            col.setPreferredWidth(250);
-            col = tblHallbarhetsmal.getColumnModel().getColumn(2); //Målnummer
-            col.setPreferredWidth(75);
-            col = tblHallbarhetsmal.getColumnModel().getColumn(3); //Beskrivning
-            col.setPreferredWidth(300);
-            col = tblHallbarhetsmal.getColumnModel().getColumn(4); //Prioritet
-            col.setPreferredWidth(75);
-            
-        }
-        catch(InfException ex){
-            System.out.println(ex);
-    }
-}    
-    
-    
-    
-    
-    
-    
-    
+   
     /**
      * @param args the command line arguments
      */
