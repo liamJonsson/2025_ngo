@@ -72,7 +72,7 @@ public class AnsvarProjektHandlaggare extends javax.swing.JFrame {
                 }   
                 
             }
-                //"allaHandlaggare" läggs sedan in i jTable.
+                //"allaHandlaggare" läggs in i jTable.
                 tblHandlaggare.setModel(allaHandlaggare);
 
             
@@ -86,9 +86,7 @@ public class AnsvarProjektHandlaggare extends javax.swing.JFrame {
         }
  
         catch(InfException ex){
-
             System.out.println(ex);
-
         }      
     }
     
@@ -111,6 +109,8 @@ public class AnsvarProjektHandlaggare extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jScrollPane1.setEnabled(false);
 
         tblHandlaggare.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         tblHandlaggare.setModel(new javax.swing.table.DefaultTableModel(
@@ -191,15 +191,15 @@ public class AnsvarProjektHandlaggare extends javax.swing.JFrame {
 
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
     try {
-        // Hämta det aktuella projektet där användaren är projektchef
+        //Hämta det aktuella projektet där användaren är projektchef
         String selectProjekt = "SELECT pid FROM projekt WHERE projektchef = (SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare + "');";
         ArrayList<String> projektIDs = idb.fetchColumn(selectProjekt);
 
         if (!projektIDs.isEmpty()) {
-            // Använd första projektet från listan
+            //Använd första projektet från listan
             String projektID = projektIDs.get(0);
 
-            // Skapa och visa den nya vyn för att ta bort handläggare med det hämtade projektID
+            //Skapa och visa den nya vyn för att ta bort handläggare med det hämtade projektID
             new AnsvarProjektHandlaggareTaBort(idb, inloggadAnvandare, projektID).setVisible(true);
             this.setVisible(false); // Döljer nuvarande fönster
         } else {

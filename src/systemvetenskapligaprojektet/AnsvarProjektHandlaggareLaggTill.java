@@ -17,21 +17,21 @@ public class AnsvarProjektHandlaggareLaggTill extends javax.swing.JFrame {
 
     private static InfDB idb;
     private String inloggadAnvandare;
-    private String valProjektID; // Deklarera global variabel för valprojekt ID
+    private String valProjektID; //Deklarera global variabel för valprojekt ID
 
-    // Skapande av komponenter och initialisering
+    //Skapande av komponenter och initialisering
 public AnsvarProjektHandlaggareLaggTill(InfDB idb, String inloggadAnvandare) {
     this.idb = idb;
     this.inloggadAnvandare = inloggadAnvandare;  
-    initComponents(); // Initialisera GUI-komponenter
-    fyllDropdownProjekt(); // Fyll dropdown med projekt
-    fyllDropdownEjKoppladeHandlaggare(); // Fyll dropdown med handläggare
+    initComponents(); //Initialisera GUI-komponenter
+    fyllDropdownProjekt(); //Fyll dropdown med projekt
+    fyllDropdownEjKoppladeHandlaggare(); //Fyll dropdown med handläggare
     lblLyckat.setVisible(false);
-    // Lägg till lyssnare för ComboBoxen
+    //Lägg till lyssnare för ComboBoxen
     setupComboBoxListeners();
 }
 
-// Metod för att lägga till lyssnare till ComboBox-komponenterna
+//Metod för att lägga till lyssnare till ComboBox-komponenterna
 private void setupComboBoxListeners() {
     ComboValjProjekt.addItemListener(new java.awt.event.ItemListener() {
         public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -40,60 +40,58 @@ private void setupComboBoxListeners() {
     });
 }
 
-// Existerande metod för att hantera ItemStateChange på ComboValjProjekt
+//Existerande metod för att hantera ItemStateChange på ComboValjProjekt
 private void ComboValjProjektItemStateChanged(java.awt.event.ItemEvent evt) {
     if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
         String selectedProjekt = (String) ComboValjProjekt.getSelectedItem();
         if (!selectedProjekt.equals("Välj projekt")) {
-            // Extrahera projektID och spara i global variabel
+            //Extrahera projektID och spara i global variabel
             valProjektID = selectedProjekt.split(" - ")[0];
-            // Anropa fyllDropdownEjKoppladeHandlaggare för att uppdatera handläggarlistan
+            //Anropa fyllDropdownEjKoppladeHandlaggare för att uppdatera handläggarlistan
             fyllDropdownEjKoppladeHandlaggare();
         }
     }
 }
-    // Fyll projekt dropdown (ComboValjProjekt) metod
+    //Fyll projekt dropdown (ComboValjProjekt) metod
     private void fyllDropdownProjekt() {
         try {
-            // Hämta den inloggade användarens aid (anställd ID)
+            //Hämta den inloggade användarens aid (anställd ID)
             String aidQuery = "SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare + "';";
             String aid = idb.fetchSingle(aidQuery);
 
             if (aid != null) {
-                // Hämta alla projekt som den inloggade användaren är projektchef för
+                //Hämta alla projekt som den inloggade användaren är projektchef för
                 String selectProjekt = "SELECT pid, projektnamn FROM projekt WHERE projektchef = '" + aid + "';";
                 ArrayList<HashMap<String, String>> projektResult = idb.fetchRows(selectProjekt);
 
                 if (projektResult != null && !projektResult.isEmpty()) {
-                    // Rensa och fyll projekt ComboBox
+                    //Rensa och fyll projekt ComboBox
                     ComboValjProjekt.removeAllItems();
                     ComboValjProjekt.addItem("Välj projekt");
 
-                    // Lägg till varje projekt i ComboBoxen
+                    //Lägg till varje projekt i ComboBoxen
                     for (HashMap<String, String> projekt : projektResult) {
                         String projektInfo = projekt.get("pid") + " - " + projekt.get("projektnamn");
                         ComboValjProjekt.addItem(projektInfo);
                     }
 
-                    // Lämna det första neutrala alternativet valt
+                    //Lämna det första neutrala alternativet valt
                     ComboValjProjekt.setSelectedIndex(0);
-                } else {
-                    JOptionPane.showMessageDialog(this, "Du har inga projekt som projektchef.");
+                    }
                 }
-            }
-        } catch (InfException ex) {
-            JOptionPane.showMessageDialog(this, "Ett fel inträffade vid hämtning av projekt: " + ex.getMessage());
-        }
+            }catch(InfException ex){
+            System.out.println(ex);
+        }      
     }
 
     //Fyll handläggare dropdown (ComboValjHandlaggare) metod
     private void fyllDropdownEjKoppladeHandlaggare() {
         try {
-            // Hämta projektchefens aid (användarens aid)
+            //Hämta projektchefens aid (användarens aid)
             String projektChefAidQuery = "SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare + "';";
             String projektChefAid = idb.fetchSingle(projektChefAidQuery);
 
-            // SQL-fråga för att hämta handläggare som inte är kopplade till det valda projektet och inte är projektchef
+            //SQL-fråga för att hämta handläggare som inte är kopplade till det valda projektet och inte är projektchef
             String selectHandlaggare = "SELECT anstalld.aid, anstalld.fornamn, anstalld.efternamn " +
                                        "FROM anstalld " +
                                        "WHERE anstalld.aid NOT IN (SELECT aid FROM ans_proj WHERE pid = '" + valProjektID + "') " +
@@ -101,7 +99,7 @@ private void ComboValjProjektItemStateChanged(java.awt.event.ItemEvent evt) {
                                        "AND anstalld.aid IN (SELECT aid FROM handlaggare) " +
                                        "ORDER BY anstalld.aid ASC;";  // Sortera handläggare efter aid i stigande ordning
 
-            // Hämta handläggare som inte är kopplade till det valda projektet och inte är projektchef
+            //Hämta handläggare som inte är kopplade till det valda projektet och inte är projektchef
             ArrayList<HashMap<String, String>> handlaggare = idb.fetchRows(selectHandlaggare);
 
             if (handlaggare != null && !handlaggare.isEmpty()) {
@@ -109,26 +107,19 @@ private void ComboValjProjektItemStateChanged(java.awt.event.ItemEvent evt) {
                 ComboValjHandlaggare.removeAllItems();
                 ComboValjHandlaggare.addItem("Välj handläggare");
 
-                // Lägg till varje handläggare i ComboBoxen
+                //Lägg till varje handläggare i ComboBoxen
                 for (HashMap<String, String> handlaggareInfo : handlaggare) {
                     String handlaggareText = handlaggareInfo.get("aid") + " - " + handlaggareInfo.get("fornamn") + " " + handlaggareInfo.get("efternamn");
                     ComboValjHandlaggare.addItem(handlaggareText);
                 }
 
-                // Lämna det första neutrala alternativet valt
+                //Lämna det första neutrala alternativet valt
                 ComboValjHandlaggare.setSelectedIndex(0);
-            } else {
-                JOptionPane.showMessageDialog(this, "Inga handläggare hittades för detta projekt.");
-            }
-        } catch (InfException ex) {
-            JOptionPane.showMessageDialog(this, "Ett fel inträffade vid hämtning av handläggare: " + ex.getMessage());
-        }
-    }
-
-
-
-
-
+                }
+            }catch(InfException ex){
+            System.out.println(ex);
+        }      
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -256,27 +247,27 @@ private void ComboValjProjektItemStateChanged(java.awt.event.ItemEvent evt) {
                 return;
             }
 
-            // Extrahera handläggarID från den valda dropdown-texten (format: "aid - fornamn efternamn")
+            //Extrahera handläggarID från den valda dropdown-texten (format: "aid - fornamn efternamn")
             String handlaggareID = selectedHandlaggare.split(" - ")[0];
 
-            // Hämta det valda projektet från ComboValjProjekt
+            //Hämta det valda projektet från ComboValjProjekt
             String selectedProjekt = (String) ComboValjProjekt.getSelectedItem();
             if (selectedProjekt == null || selectedProjekt.equals("Välj projekt")) {
                 JOptionPane.showMessageDialog(this, "Välj ett projekt.");
                 return;
             }
 
-            // Extrahera projektID från den valda texten i ComboBox (t.ex., "1 - Projekt A")
+            //Extrahera projektID från den valda texten i ComboBox (t.ex., "1 - Projekt A")
             String projektID = selectedProjekt.split(" - ")[0];
 
-            // Lägg till handläggare i projektet
+            //Lägg till handläggare i projektet
             String insertHandlaggareInProject = "INSERT INTO ans_proj (pid, aid) VALUES (" + projektID + ", " + handlaggareID + ");";
             idb.insert(insertHandlaggareInProject);
             lblLyckat.setVisible(true);
             
-        } catch (InfException e){
-            JOptionPane.showMessageDialog(this, "Kunde inte lägga till handläggare: " + e.getMessage());
-        }
+            }catch(InfException ex){
+            System.out.println(ex);
+            }  
     }//GEN-LAST:event_btnSparaActionPerformed
 
     /**

@@ -50,7 +50,6 @@
                                       <Component id="ComboValjHandlaggare" pref="178" max="32767" attributes="0"/>
                                       <Component id="ComboValjProjekt" max="32767" attributes="0"/>
                                   </Group>
-                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>

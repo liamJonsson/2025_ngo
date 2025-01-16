@@ -28,14 +28,15 @@ public class AnsvarProjekt extends javax.swing.JFrame {
     }
     
     public void fyllTabell() {
-        try {
+        try { //Kolumnnamn för tabellen 
             String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "kostnad", "status", "prioritet", "projektchef", "land"};
             DefaultTableModel allaAnsvarProjekt = new DefaultTableModel(kolumnNamn, 0);
 
-            // Hämta alla projekt-ID
+            //Hämta alla projekt där den inloggade användaren är projektchef
             String selectPid = "SELECT pid FROM projekt WHERE projektchef IN (SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare + "');";
             ArrayList<String> pidLista = idb.fetchColumn(selectPid);
 
+            //Kontrollera om några projekt hittades
             if (pidLista != null) {
                 for (String ettPID : pidLista) {
                     String selectInfo = "SELECT pid, projektnamn, beskrivning, startdatum, slutdatum, kostnad, status, prioritet, " +
@@ -45,15 +46,16 @@ public class AnsvarProjekt extends javax.swing.JFrame {
                     ArrayList<HashMap<String, String>> info = idb.fetchRows(selectInfo);
 
                     Object[] enRad = new Object[kolumnNamn.length];
-                    int index = 0;
-
+                    int index = 0;                   
+                    //Loopa genom varje kolumn och mappa informationen från SQL-resultatet till rätt kolumn i tabellen
                     for (String enKolumn : kolumnNamn) {
                         enRad[index++] = info.get(0).get(enKolumn);
                     }
 
                     allaAnsvarProjekt.addRow(enRad);
                 }
-
+                
+                //Uppdatera tabellen 
                 tblAnsvarProjekt.setModel(allaAnsvarProjekt);
             }
 
@@ -113,6 +115,8 @@ public class AnsvarProjekt extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jScrollPane1.setEnabled(false);
+
         tblAnsvarProjekt.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null},
@@ -124,6 +128,7 @@ public class AnsvarProjekt extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9", "Title 10"
             }
         ));
+        tblAnsvarProjekt.setEnabled(false);
         jScrollPane1.setViewportView(tblAnsvarProjekt);
 
         btnTillbaka.setText("Tillbaka");

@@ -31,7 +31,7 @@ public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
         lblLyckat.setVisible(false);
 
         
-        // Lägg till lyssnare för ComboValjProjekt
+        //Lägg till lyssnare för ComboValjProjekt
         ComboValjProjekt.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 ComboValjProjektItemStateChanged(evt);
@@ -39,15 +39,15 @@ public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
         });
     }
     
-    // Fyll ComboBox med projekt där den inloggade användaren är projektchef
+    //Fyll ComboBox med projekt där den inloggade användaren är projektchef
     private void fyllDropdownProjekt() {
         try {
-            // Hämta den inloggade användarens aid (anställd ID)
+            //Hämta den inloggade användarens aid (anställd ID)
             String aidQuery = "SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare + "';";
             String aid = idb.fetchSingle(aidQuery);
 
             if (aid != null) {
-                // Hämta alla projekt som den inloggade användaren är projektchef för
+                //Hämta alla projekt som den inloggade användaren är projektchef för
                 String selectProjekt = "SELECT pid, projektnamn FROM projekt WHERE projektchef = '" + aid + "';";
                 ArrayList<HashMap<String, String>> projektResult = idb.fetchRows(selectProjekt);
 
@@ -56,13 +56,13 @@ public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
                     ComboValjProjekt.removeAllItems();
                     ComboValjProjekt.addItem("Välj projekt");
 
-                    // Lägg till varje projekt i ComboBoxen
+                    //Lägg till varje projekt i ComboBoxen
                     for (HashMap<String, String> projekt : projektResult) {
                         String projektInfo = projekt.get("pid") + " - " + projekt.get("projektnamn");
                         ComboValjProjekt.addItem(projektInfo);
                     }
 
-                    // Lämna det första neutrala alternativet valt
+                    //Lämna det första neutrala alternativet valt
                     ComboValjProjekt.setSelectedIndex(0);
                 } else {
                     JOptionPane.showMessageDialog(this, "Du har inga projekt som projektchef.");
@@ -73,10 +73,10 @@ public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
         }
     }
     
-    // Fyll ComboBox med kopplade partners för det valda projektet
+    //Fyll ComboBox med kopplade partners för det valda projektet
     private void fyllDropdownKoppladePartners(String projektID) {
         try {
-            // SQL-fråga som hämtar partners kopplade till projektet
+            //SQL-fråga som hämtar partners kopplade till projektet
             String query = "SELECT partner.pid, partner.namn " +
                            "FROM projekt_partner " +
                            "JOIN partner ON projekt_partner.partner_pid = partner.pid " +
@@ -84,11 +84,11 @@ public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
 
             ArrayList<HashMap<String, String>> koppladePartners = idb.fetchRows(query);
 
-            // Rensa och fyll ComboBox
+            //Rensa och fyll ComboBox
             ComboTaBortPartner.removeAllItems();
             ComboTaBortPartner.addItem("Välj partner");
 
-            // Lägg till varje partner i comboboxen
+            //Lägg till varje partner i comboboxen
             for (HashMap<String, String> partner : koppladePartners) {
                 String partnerInfo = partner.get("pid") + " - " + partner.get("namn");
                 ComboTaBortPartner.addItem(partnerInfo);
@@ -98,35 +98,34 @@ public class AnsvarProjektPartnerTaBort extends javax.swing.JFrame {
         }
     }
 
-    // Metod för att ta bort en partner från det valda projektet
+    //Metod för att ta bort en partner från det valda projektet
     private void taBortPartnerFrånProjekt(String projektID) {
         try {
-            // Hämta den valda partnern från ComboBoxen
+            //Hämta den valda partnern från ComboBoxen
             String valdPartner = (String) ComboTaBortPartner.getSelectedItem();
             if (valdPartner == null || valdPartner.equals("Välj partner")) {
                 JOptionPane.showMessageDialog(this, "Välj en partner att ta bort.");
                 return;
             }
 
-            // Extrahera partnerID från den valda partnern
+            //Extrahera partnerID från den valda partnern
             String partnerID = valdPartner.split(" - ")[0]; // Hämta partnerID
 
-            // SQL-fråga för att ta bort den valda partnern från projektet
+            //SQL-fråga för att ta bort den valda partnern från projektet
             String deleteQuery = "DELETE FROM projekt_partner " +
                                  "WHERE pid = " + projektID + " AND partner_pid = " + partnerID;
 
-            // Exekvera delete-frågan
+            //Exekvera delete-frågan
             idb.delete(deleteQuery);
-
             lblLyckat.setVisible(true);
             fyllDropdownKoppladePartners(projektID); // Uppdatera ComboBoxen efter borttagning
 
-        } catch (InfException e) {
-            JOptionPane.showMessageDialog(this, "Kunde inte ta bort partner: " + e.getMessage());
-        }
+            }catch(InfException ex){
+            System.out.println(ex);
+            }      
     }
 
-    // Hantera val av projekt i ComboValjProjekt
+    //Hantera val av projekt i ComboValjProjekt
     private void ComboValjProjektItemStateChanged(java.awt.event.ItemEvent evt) {
         if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
             String selectedProjekt = (String) ComboValjProjekt.getSelectedItem();

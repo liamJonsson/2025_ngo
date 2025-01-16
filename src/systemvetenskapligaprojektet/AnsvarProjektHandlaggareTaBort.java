@@ -27,34 +27,34 @@ public class AnsvarProjektHandlaggareTaBort extends javax.swing.JFrame {
         fyllDropdownKoppladeHandlaggare(projektID);
         lblLyckat.setVisible(false);
         
-        // Lägg till lyssnare för ComboValjProjekt
+        //Lägg till lyssnare för ComboValjProjekt
         ComboValjProjekt.addItemListener(evt -> ComboValjProjektItemStateChanged(evt));
     }
 
-    // Fyll ComboBox med projekt där den inloggade användaren är projektchef
+    //Fyll ComboBox med projekt där den inloggade användaren är projektchef
     private void fyllDropdownProjekt() {
         try {
-            // Hämta den inloggade användarens aid (anställd ID)
+            //Hämta den inloggade användarens aid (anställd ID)
             String aidQuery = "SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare + "';";
             String aid = idb.fetchSingle(aidQuery);
 
             if (aid != null) {
-                // Hämta alla projekt som den inloggade användaren är projektchef för
+                //Hämta alla projekt som den inloggade användaren är projektchef för
                 String selectProjekt = "SELECT pid, projektnamn FROM projekt WHERE projektchef = '" + aid + "';";
                 ArrayList<HashMap<String, String>> projektResult = idb.fetchRows(selectProjekt);
 
                 if (projektResult != null && !projektResult.isEmpty()) {
-                    // Rensa och fyll projekt ComboBox
+                    //Rensa och fyll projekt ComboBox
                     ComboValjProjekt.removeAllItems();
                     ComboValjProjekt.addItem("Välj projekt");
 
-                    // Lägg till varje projekt i ComboBoxen
+                    //Lägg till varje projekt i ComboBoxen
                     for (HashMap<String, String> projekt : projektResult) {
                         String projektInfo = projekt.get("pid") + " - " + projekt.get("projektnamn");
                         ComboValjProjekt.addItem(projektInfo);
                     }
 
-                    // Lämna det första neutrala alternativet valt
+                    //Lämna det första neutrala alternativet valt
                     ComboValjProjekt.setSelectedIndex(0);
                 } else {
                     JOptionPane.showMessageDialog(this, "Du har inga projekt som projektchef.");
@@ -65,23 +65,23 @@ public class AnsvarProjektHandlaggareTaBort extends javax.swing.JFrame {
         }
     }
 
-    // Fyll ComboBox med kopplade handläggare för det valda projektet
+    //Fyll ComboBox med kopplade handläggare för det valda projektet
     private void fyllDropdownKoppladeHandlaggare(String projektID) {
         try {
-            // SQL-fråga som hämtar handläggare kopplade till projektet
+            //SQL-fråga som hämtar handläggare kopplade till projektet
             String query = "SELECT anstalld.aid, anstalld.fornamn, anstalld.efternamn " +
                            "FROM anstalld " +
                            "JOIN ans_proj ON anstalld.aid = ans_proj.aid " +
                            "WHERE ans_proj.pid = " + projektID;
 
-            // Hämtar resultaten från databasen
+            //Hämtar resultaten från databasen
             ArrayList<HashMap<String, String>> koppladeHandlaggare = idb.fetchRows(query);
 
-            // Rensa och fyll ComboBox
+            //Rensa och fyll ComboBox
             ComboValjHandlaggare.removeAllItems();
             ComboValjHandlaggare.addItem("Välj handläggare");
 
-            // Lägg till varje handläggare i ComboBoxen
+            //Lägg till varje handläggare i ComboBoxen
             for (HashMap<String, String> handlaggare : koppladeHandlaggare) {
                 String handlaggareInfo = handlaggare.get("aid") + " - " + handlaggare.get("fornamn") + " " + handlaggare.get("efternamn");
                 ComboValjHandlaggare.addItem(handlaggareInfo);
@@ -95,7 +95,7 @@ public class AnsvarProjektHandlaggareTaBort extends javax.swing.JFrame {
     //Metod för att ta bort en handläggare från det valda projektet
     private void taBortHandlaggareFrånProjekt(String projektID) {
         try {
-            // Hämta den valda handläggaren från ComboBoxen
+            //Hämta den valda handläggaren från ComboBoxen
             String valdHandlaggare = (String) ComboValjHandlaggare.getSelectedItem();
             if (valdHandlaggare == null || valdHandlaggare.equals("Välj handläggare")) {
                 JOptionPane.showMessageDialog(this, "Välj en handläggare att ta bort.");
@@ -105,31 +105,27 @@ public class AnsvarProjektHandlaggareTaBort extends javax.swing.JFrame {
             // Extrahera handläggareID (aid) från den valda handläggaren
             String handlaggareID = valdHandlaggare.split(" - ")[0]; // Hämta aid
 
-            // SQL-fråga för att ta bort den valda handläggaren från projektet
+            //SQL-fråga för att ta bort den valda handläggaren från projektet
             String deleteQuery = "DELETE FROM ans_proj " +
                                  "WHERE pid = " + projektID + " AND aid = " + handlaggareID;
 
-            // Exekvera delete-frågan
+            //Exekvera delete-frågan
             idb.delete(deleteQuery);
-
-            // Uppdatera ComboBoxen och visa meddelande
-            JOptionPane.showMessageDialog(this, "Handläggaren har tagits bort från projektet.");
-            fyllDropdownKoppladeHandlaggare(projektID); // Uppdatera listan av handläggare
-
-        } catch (InfException e) {
-            JOptionPane.showMessageDialog(this, "Kunde inte ta bort handläggare: " + e.getMessage());
-        }
+            lblLyckat.setVisible(true);
+            
+            }catch(InfException ex){
+            System.out.println(ex);
+            }      
     }
-
-
+    
     //Hantera val av projekt i ComboValjProjekt
     private void ComboValjProjektItemStateChanged(java.awt.event.ItemEvent evt) {
         if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
             String selectedProjekt = (String) ComboValjProjekt.getSelectedItem();
             if (!selectedProjekt.equals("Välj projekt")) {
-                // Extrahera projektID och spara i global variabel
+                //Extrahera projektID och spara i global variabel
                 projektID = selectedProjekt.split(" - ")[0];
-                // Anropa fyllDropdownKoppladeHandlaggare för att uppdatera handläggarlistan
+                //Anropa fyllDropdownKoppladeHandlaggare för att uppdatera handläggarlistan
                 fyllDropdownKoppladeHandlaggare(projektID);
             }
         }

@@ -32,28 +32,26 @@ public class AnsvarProjektPartner extends javax.swing.JFrame {
     
 public void fyllTabell() {
     try {
-        // Hämta den inloggade användarens aid (anställd ID)
+        //Hämta den inloggade användarens aid (anställd ID)
         String aidQuery = "SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare + "';";
         String aid = idb.fetchSingle(aidQuery);
 
-        // Kontrollera om aid hittades
+        //Kontrollera om aid hittades
         if (aid != null) {
 
-            // Kolumnnamn för tabellen
+            //Kolumnnamn för tabellen
             String[] kolumnNamn = {"ProjektID", "PartnerID", "namn", "kontaktperson", "kontaktepost", "telefon", "adress", "branch", "stad"};
             DefaultTableModel allaPartners = new DefaultTableModel(kolumnNamn, 0);
 
-            // Hämta alla projekt där den inloggade användaren är projektchef
+            //Hämta alla projekt där den inloggade användaren är projektchef
             String selectProjekt = "SELECT pid FROM projekt WHERE projektchef = '" + aid + "';";
             ArrayList<String> projektIDs = idb.fetchColumn(selectProjekt);
 
-            // Kontrollera om några projekt hittades
+            //Kontrollera om några projekt hittades
             if (projektIDs != null && !projektIDs.isEmpty()) {
-
-                // Hämta partners för varje projekt som den inloggade användaren är projektchef för
+                //Hämta partners för varje projekt som den inloggade användaren är projektchef för
                 for (String projektID : projektIDs) {
-
-                    // Korrigerad SQL-fråga för att hämta partners för det aktuella projektet
+                    //Korrigerad SQL-fråga för att hämta partners för det aktuella projektet
                     String selectPartners = "SELECT " +
                                              "pp.pid AS ProjektID, " +
                                              "partner.pid AS PartnerID, " +
@@ -68,10 +66,10 @@ public void fyllTabell() {
                                              "JOIN partner ON pp.partner_pid = partner.pid " +
                                              "WHERE pp.pid = '" + projektID + "';"; // Använd projektID för varje projekt
 
-                    // Hämta partners kopplade till det aktuella projektet
+                    //Hämta partners kopplade till det aktuella projektet
                     ArrayList<HashMap<String, String>> partners = idb.fetchRows(selectPartners);
 
-                    // Kontrollera om partners hittades
+                    //Kontrollera om partners hittades
                     if (partners != null && !partners.isEmpty()) {
                         // Lägg till partnerinformation i tabellen
                         for (HashMap<String, String> partner : partners) {
@@ -79,24 +77,19 @@ public void fyllTabell() {
 
         for (int i = 0; i < kolumnNamn.length; i++) {
             if (kolumnNamn[i].equals("ProjektID")) {
-                // ProjektID från loopen
+                //ProjektID från loopen
                 enRad[i] = projektID;
             } else if (kolumnNamn[i].equals("PartnerID")) {
-                // PartnerID från SQL-resultat mappat till "pid"
+                //PartnerID från SQL-resultat mappat till "pid"
                 enRad[i] = partner.getOrDefault("PartnerID", partner.getOrDefault("pid", "Ingen data"));
-            } else {
-                // Dynamisk mappning av övriga kolumner
-                enRad[i] = partner.getOrDefault(kolumnNamn[i], "Ingen data");
             }
         }
-
         allaPartners.addRow(enRad);
-
-                        }
+        }
                     }
                 }
 
-                // Uppdatera tabellen med de filtrerade partners
+                //Uppdatera tabellen med de filtrerade partners
                 tblAnsvarProjektPartner.setModel(allaPartners);
                 
                 tblAnsvarProjektPartner.setAutoResizeMode(tblAnsvarProjektPartner.AUTO_RESIZE_OFF);
@@ -118,21 +111,11 @@ public void fyllTabell() {
             col.setPreferredWidth(150);
             col = tblAnsvarProjektPartner.getColumnModel().getColumn(8); //Stad
             col.setPreferredWidth(75);
-
             } 
-            
-
-            else{
-                System.out.println("Inga projekt hittades för projektchef med aid: " + aid);
-            }
-
-        } 
-        else{
-            System.out.println("Ingen användare hittades för e-post: " + inloggadAnvandare);
         }
     } 
     catch (InfException ex) {
-        System.out.println("Fel: " + ex);
+        System.out.println(ex);
     }
 }
 
@@ -156,6 +139,8 @@ public void fyllTabell() {
         btnTillbaka = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jScrollPane1.setEnabled(false);
 
         tblAnsvarProjektPartner.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         tblAnsvarProjektPartner.setModel(new javax.swing.table.DefaultTableModel(

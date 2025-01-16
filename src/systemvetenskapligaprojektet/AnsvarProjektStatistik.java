@@ -87,6 +87,8 @@ public class AnsvarProjektStatistik extends javax.swing.JFrame {
         lblKostnader.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
         lblKostnader.setText("KOSTNADER FÖR MINA PROJEKT");
 
+        jScrollPane1.setEnabled(false);
+
         tblStatistik.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         tblStatistik.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -99,6 +101,7 @@ public class AnsvarProjektStatistik extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3"
             }
         ));
+        tblStatistik.setEnabled(false);
         jScrollPane1.setViewportView(tblStatistik);
 
         btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
