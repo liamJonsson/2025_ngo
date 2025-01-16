@@ -43,7 +43,7 @@ public class AllaAvdelningar extends javax.swing.JFrame {
             
                     for(String enKolumn:kolumnNamn){
                         if(enKolumn.equals("beskrivning")){
-                            enRad[index++] = "Se beskrivning";
+                            enRad[index++] = "Klicka här för att se beskrivning!";
                         }
                         else if(enKolumn.equals("stad")){
                             String selectStad = 
