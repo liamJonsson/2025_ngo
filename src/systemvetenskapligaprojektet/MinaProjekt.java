@@ -124,8 +124,8 @@ public class MinaProjekt extends javax.swing.JFrame {
             String baseQuery = handlaggareQuery + " UNION " + projektchefQuery;
 
             // Om en status är vald, filtrera resultaten
-            if (valdStatus == null || valdStatus.isEmpty() || "Välj status".equals(valdStatus)) {
-                valdStatus = null; // Visa alla projekt
+            if (valdStatus != null && !valdStatus.isEmpty()) {
+                baseQuery = "SELECT * FROM (" + baseQuery + ") AS filtrerad WHERE status = '" + valdStatus + "'";
             }
 
             // Hämta data
@@ -138,13 +138,14 @@ public class MinaProjekt extends javax.swing.JFrame {
 
             // Uppdatera tabellen med hämtad data
             uppdateraTabell(projektLista);
-            
+
             // Kontrollera roll och visa/göm kostnadskolumnen
-           visaKostnadsKolumn(arProjektchef);
-           } catch (InfException e) {
+            visaKostnadsKolumn(arProjektchef);
+        } catch (InfException e) {
             JOptionPane.showMessageDialog(this, "Kunde inte fylla tabellen: " + e.getMessage());
         }
     }
+
 
     private void uppdateraTabell(ArrayList<HashMap<String, String>> projektLista) {
         String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "kostnad", "status", "prioritet", "projektchef", "land", "partners"};
@@ -205,25 +206,17 @@ public class MinaProjekt extends javax.swing.JFrame {
                 // Lägg till varje status som finns i databasen
                 for (String status : resultatLista) {
                     ComboStatusFilter.addItem(status);
-                }
+             }
 
                 // Lämna det första neutrala alternativet valt
                 ComboStatusFilter.setSelectedIndex(0); // Sätt "Välj status" som valt
-            } else {
+             } else {
                 JOptionPane.showMessageDialog(this, "Inga statusvärden hittades i databasen.");
-            }
-
-            // Kontrollera om användaren valt "Välj status"
-            String valdStatus = (String) ComboStatusFilter.getSelectedItem();
-            if ("Välj status".equals(valdStatus)) {
-                valdStatus = null; // Visa alla projekt om "Välj status" är valt
-            }
-
-        } catch (InfException e) {
+             }
+            } catch (InfException e) {
             JOptionPane.showMessageDialog(this, "Ett fel uppstod vid hämtning av statusvärden: " + e.getMessage());
-        }
+             }
     }
-
 
     
     private void initStatusFilterListener() {
@@ -231,10 +224,17 @@ public class MinaProjekt extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String valdStatus = (String) ComboStatusFilter.getSelectedItem();
-                skapaOchFyllTabell(valdStatus);  // Uppdatera tabellen baserat på det valda statusvärdet
+
+                // Om "Välj status" är valt, visa alla projekt genom att passera null
+                if ("Välj status".equals(valdStatus)) {
+                    skapaOchFyllTabell(null);  // Visa alla projekt utan statusfilter
+                } else {
+                    skapaOchFyllTabell(valdStatus);  // Visa projekt för den valda statusen
+                }
             }
         });
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
