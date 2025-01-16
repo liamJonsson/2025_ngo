@@ -29,8 +29,9 @@ public class AllaProjekt extends javax.swing.JFrame {
         hanteraSearchListener(); //separat metod för sök
         fyllTabell();
     }        
-/**
-     */
+
+    //Se AllaAnstallda för kommenterad kod
+    
 public void fyllTabell() {
     try {
         String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "status", "prioritet", "projektchef", "land"};

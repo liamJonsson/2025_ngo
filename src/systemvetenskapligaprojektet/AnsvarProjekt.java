@@ -58,7 +58,7 @@ public class AnsvarProjekt extends javax.swing.JFrame {
                 //Uppdatera tabellen 
                 tblAnsvarProjekt.setModel(allaAnsvarProjekt);
             }
-
+            //Anpassa bredden på kolumnerna    
             tblAnsvarProjekt.setAutoResizeMode(tblAnsvarProjekt.AUTO_RESIZE_OFF);
 
             TableColumn col = tblAnsvarProjekt.getColumnModel().getColumn(0);

@@ -27,6 +27,8 @@ public class AllaLander extends javax.swing.JFrame {
         fyllTabell();
     }
 
+    //Se AllaAnstallda för kommenterad kod
+    
     public void fyllTabell(){
         try{
             String[] kolumnNamn = {"lid", "namn", "sprak", "valuta", "tidszon", "politisk_struktur", "ekonomi"};

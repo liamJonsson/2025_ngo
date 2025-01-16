@@ -26,6 +26,8 @@ public class AllaAvdelningar extends javax.swing.JFrame {
         fyllTabell();
     }
     
+    //Se AllaAnstallda för kommenterad kod
+    
     public void fyllTabell(){
         try{
         String[] kolumnNamn = {"avdid", "namn", "beskrivning", "adress", "epost", "telefon", "stad", "chef"};

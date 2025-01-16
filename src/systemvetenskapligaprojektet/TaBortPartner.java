@@ -131,28 +131,28 @@ public class TaBortPartner extends javax.swing.JFrame {
         try{
             lblFelIDTaBort.setVisible(false);
             lblTaBortPartnerLyckad.setVisible(false);
-            String taBortPid = tfTaBortID.getText();
+            String taBortPid = tfTaBortID.getText(); //Hämta texten från textfield
             try{
-                pid = Integer.parseInt(taBortPid);
+                pid = Integer.parseInt(taBortPid); //Gör om från String till int
             }
             catch(NumberFormatException ex){
                 System.out.println(ex);
             }
-            String selectPid = "select pid from partner where pid = " + pid + ";";
-            String pidFinns = idb.fetchSingle(selectPid);
+            String selectPid = "select pid from partner where pid = " + pid + ";"; 
+            String pidFinns = idb.fetchSingle(selectPid); //Hämta pid där det matchar det vi skrivit in och lägger den i pidFinns
         
-            if(pidFinns != null){
+            if(pidFinns != null){ //Om pidFinns inte är null hämtar vi pid från projekt_partner där det matchar och lägger det i projekt_partner
                 String selectProjekt_partner = "select pid from projekt_partner where partner_pid = " + pid + ";";
                 String projekt_partner = idb.fetchSingle(selectProjekt_partner);
-                if(projekt_partner != null){
+                if(projekt_partner != null){ //Om projekt_partner inte är null tar vi bort partnern från projekt_partner
                     String taBortProjekt_partner = "delete from projekt_partner where partner_pid = " + pid + ";";
                     idb.delete(taBortProjekt_partner);
                 }
-                String taBort = "delete from partner where pid = " + pid + ";";
+                String taBort = "delete from partner where pid = " + pid + ";"; //Tar även bort partnern från partner
                 idb.delete(taBort);
                 lblTaBortPartnerLyckad.setVisible(true);
             }              
-            else{
+            else{ //Om något är null visar vi felmeddelande
                 lblFelIDTaBort.setVisible(true);
             }
         }

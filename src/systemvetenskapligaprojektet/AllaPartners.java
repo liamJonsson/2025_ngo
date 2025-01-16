@@ -26,6 +26,8 @@ public class AllaPartners extends javax.swing.JFrame {
         fyllTabell();
     }
     
+    //Se AllaAnstallda för kommenterad kod
+    
     public void fyllTabell(){
         try{
             String[] kolumnNamn = {"pid", "namn", "kontaktperson", "kontaktepost", "telefon", "adress", "branch", "stad"};
@@ -102,7 +104,7 @@ public class AllaPartners extends javax.swing.JFrame {
         });
 
         btnRedigera.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
-        btnRedigera.setText("Redigera en parter");
+        btnRedigera.setText("Redigera en partner");
         btnRedigera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRedigeraActionPerformed(evt);
