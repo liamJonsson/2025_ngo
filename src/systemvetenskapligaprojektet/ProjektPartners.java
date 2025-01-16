@@ -300,6 +300,7 @@ public class ProjektPartners extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblPartners.setEnabled(false);
         jScrollPane1.setViewportView(tblPartners);
 
         comboBoxProjekt.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N

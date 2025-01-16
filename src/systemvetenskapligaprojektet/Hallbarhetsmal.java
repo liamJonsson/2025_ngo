@@ -56,6 +56,7 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
+        tblHallbarhetsmal.setEnabled(false);
         jScrollPane1.setViewportView(tblHallbarhetsmal);
 
         btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N

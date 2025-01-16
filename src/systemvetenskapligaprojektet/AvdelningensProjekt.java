@@ -393,6 +393,7 @@ private void hanteraDatumSpannSok(String sokTerm) {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblProjekt.setEnabled(false);
         scrollPane.setViewportView(tblProjekt);
 
         jLabel1.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N

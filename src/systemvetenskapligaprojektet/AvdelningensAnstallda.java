@@ -197,6 +197,8 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jScrollPane1.setEnabled(false);
+
         tblAnstallda.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         tblAnstallda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -209,6 +211,7 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
                 "ID", "Förnamn", "Efternamn", "Epost", "Telefonnummer"
             }
         ));
+        tblAnstallda.setEnabled(false);
         jScrollPane1.setViewportView(tblAnstallda);
 
         jLabel1.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
