@@ -47,7 +47,12 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
                     
                     //En for-each loop som går igenom varje kolumn i "kolumnNamn" där värdet för "enKolumn" läggs till i "enRad".
                     for(String enKolumn:kolumnNamn){
-                        enRad[index++] = info.get(enKolumn);
+                        if(enKolumn.equals("beskrivning")){
+                            enRad[index++] = "Klicka här för att se beskrivning!";
+                        }
+                        else{
+                            enRad[index++] = info.get(enKolumn);
+                        }
                     }
                     //EnRad läggs till i DefaultTableModel.
                     allaHallbarhetsmal.addRow(enRad);
@@ -106,6 +111,11 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
             }
         ));
         tblHallbarhetsmal.setEnabled(false);
+        tblHallbarhetsmal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblHallbarhetsmalMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblHallbarhetsmal);
 
         btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
@@ -151,6 +161,14 @@ public class Hallbarhetsmal extends javax.swing.JFrame {
         new MenyHandlaggare(idb,inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
+
+    private void tblHallbarhetsmalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHallbarhetsmalMouseClicked
+        int column = tblHallbarhetsmal.columnAtPoint(evt.getPoint());
+        if(column == 3){
+            new BeskrivningHallbarhetsmal(idb,inloggadAnvandare).setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_tblHallbarhetsmalMouseClicked
    
     /**
      * @param args the command line arguments
