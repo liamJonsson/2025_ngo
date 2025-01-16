@@ -22,6 +22,7 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
     private int chefsID;
     private String stad;
     private String chef;
+    private Validering validera;
     
     /**
      * Creates new form RedigeraAvdelning
@@ -326,55 +327,70 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
                 String telefon = tfTelefon.getText();
                 String selectEnAvdelning = "select * from avdelning where avdid = " + avdid + ";";
                 HashMap<String,String> enAvdelning = idb.fetchRow(selectEnAvdelning);
-                String[] enRad = new String[enAvdelning.size()];
-                    for(String ettAttribut:enAvdelning.keySet()){
-                        switch (ettAttribut){
-                            case "avdid":
-                                enRad[0] = enAvdelning.get("avdid");
-                            case "namn":
-                                enRad[1] = enAvdelning.get("namn");
-                            case "beskrivning":
-                                enRad[2] = enAvdelning.get("beskrivning");
-                            case "adress":
-                                enRad[3] = enAvdelning.get("adress");
-                            case "epost":
-                                enRad[4] = enAvdelning.get("epost");
-                            case "telefon":
-                                enRad[5] = enAvdelning.get("telefon");
-                            case "stad":
-                                enRad[6] = enAvdelning.get("stad");
-                            case "chef":
-                                enRad[7] = enAvdelning.get("chef");
+                
+                if(validera.valideringEmail(epost) && validera.valideringTelefonAvdelning(telefon)){
+                    String[] enRad = new String[enAvdelning.size()];
+                        for(String ettAttribut:enAvdelning.keySet()){
+                            switch (ettAttribut){
+                                case "avdid":
+                                    enRad[0] = enAvdelning.get("avdid");
+                                case "namn":
+                                    enRad[1] = enAvdelning.get("namn");
+                                case "beskrivning":
+                                    enRad[2] = enAvdelning.get("beskrivning");
+                                case "adress":
+                                    enRad[3] = enAvdelning.get("adress");
+                                case "epost":
+                                    enRad[4] = enAvdelning.get("epost");
+                                case "telefon":
+                                    enRad[5] = enAvdelning.get("telefon");
+                                case "stad":
+                                    enRad[6] = enAvdelning.get("stad");
+                                case "chef":
+                                    enRad[7] = enAvdelning.get("chef");
+                            }
                         }
-                    }
-                    if(namn.isEmpty()){
-                        namn = enRad[1];
-                    }
-                    if(beskrivning.isEmpty()){
-                        beskrivning = enRad[2];
-                    }
-                    if(adress.isEmpty()){
-                        adress = enRad[3];
-                    }
-                    if(epost.isEmpty()){
-                        epost = enRad[4];
-                    }
-                    if(telefon.isEmpty()){
-                        telefon = enRad[5];
-                    }   
-                    if(stad.isEmpty()){
-                        stad = enRad[6];
-                        stadsID = Integer.parseInt(stad);
-                    }
-                    if(chef.isEmpty()){
-                        chef = enRad[7];
-                        chefsID = Integer.parseInt(chef);
-                    }
-                //Hämta från databasen och tilldela variablerna värden från den så de inte är tomma när de uppdateras!!
-                String updateAvdelning = "update avdelning set namn = '" + namn + "', beskrivning = '" + beskrivning + "', adress = '" + adress + "', epost = '" 
+                        if(namn.isEmpty()){
+                            namn = enRad[1];
+                        }
+                        if(beskrivning.isEmpty()){
+                            beskrivning = enRad[2];
+                        }
+                        if(adress.isEmpty()){
+                            adress = enRad[3];
+                        }
+                        if(epost.isEmpty()){
+                            epost = enRad[4];
+                        }
+                        if(telefon.isEmpty()){
+                            telefon = enRad[5];
+                        }   
+                        if(stad.isEmpty()){
+                            stad = enRad[6];
+                            stadsID = Integer.parseInt(stad);
+                        }
+                        if(chef.isEmpty()){
+                            chef = enRad[7];
+                            chefsID = Integer.parseInt(chef);
+                        }
+                        //Hämta från databasen och tilldela variablerna värden från den så de inte är tomma när de uppdateras!!
+                        String updateAvdelning = "update avdelning set namn = '" + namn + "', beskrivning = '" + beskrivning + "', adress = '" + adress + "', epost = '" 
                         + epost + "', telefon = '" + telefon + "', stad = " + stadsID + ", chef = " + chefsID + " where avdid = " + avdid + ";";
-                idb.update(updateAvdelning);
-                lblLyckat.setVisible(true);
+                        idb.update(updateAvdelning);
+                        lblLyckat.setVisible(true);
+                }
+                else{
+                    if(!validera.valideringEmail(epost)){
+                        lblFelmeddelandeEpost.setVisible(true);
+                    }
+                    else if(!validera.valideringTelefonAvdelning(telefon)){
+                        lblFelmeddelandeTel.setVisible(true);
+                    }
+                    else{
+                        lblFelmeddelandeEpost.setVisible(true);
+                        lblFelmeddelandeTel.setVisible(true);
+                    }
+                }
             }
         }
         catch(InfException ex){ //Catch InfExceptions?

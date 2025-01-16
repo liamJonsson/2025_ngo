@@ -21,6 +21,7 @@ public class RedigeraProjekt extends javax.swing.JFrame {
     private String inloggadAnvandare;
     private int valtProjektID;
     private double enKostnad;
+    private Validering validera;
 
     /**
      * Creates new form RedigeraProjekt
@@ -236,7 +237,7 @@ public class RedigeraProjekt extends javax.swing.JFrame {
 
         lblFelmeddelandeKostnad.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblFelmeddelandeKostnad.setForeground(new java.awt.Color(255, 0, 0));
-        lblFelmeddelandeKostnad.setText("Använd korrekt format: XXXX.XX");
+        lblFelmeddelandeKostnad.setText("Använd korrekt format: Max 10 siffror");
 
         lblFelmeddelandeProjektchef.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblFelmeddelandeProjektchef.setForeground(new java.awt.Color(255, 0, 0));
@@ -293,14 +294,13 @@ public class RedigeraProjekt extends javax.swing.JFrame {
                             .addComponent(lblSlutdatum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblProjektID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblFelmeddelandeStartdatum, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(tfRedigeraSlutdatum)
-                                .addComponent(tfRedigeraKostnad)
-                                .addComponent(ComboValjProjektID, 0, 258, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblFelmeddelandeStartdatum, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+                            .addComponent(tfRedigeraSlutdatum)
+                            .addComponent(tfRedigeraKostnad)
+                            .addComponent(ComboValjProjektID, 0, 258, Short.MAX_VALUE)
                             .addComponent(lblFelmeddelandeSlutdatum, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblFelmeddelandeKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblFelmeddelandeKostnad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -414,33 +414,45 @@ public class RedigeraProjekt extends javax.swing.JFrame {
         String projektchef = tfRedigeraProjektchef.getText();
         String land = tfRedigeraLand.getText();
         
-        BigDecimal kostnad;
-                        try{
-                            kostnad = new BigDecimal(textKostnad);
-                
-                            //Kontrollera (12, 2)
-                            if(kostnad.precision() > 12 || kostnad.scale() > 2){
-                                throw new NumberFormatException();
-                            }
-                        }
-                        catch(NumberFormatException ex){
-                            lblFelmeddelandeKostnad.setVisible(true);
-                            return;
-                        }
+        if(validera.valideringDatum(startdatum) && validera.valideringDatum(slutdatum)){
+            BigDecimal kostnad;
+            try{
+            kostnad = new BigDecimal(textKostnad);
+                //Kontrollera (12, 2)
+                if (kostnad.precision() - kostnad.scale() > 10 || kostnad.scale() > 2) {
+                    lblFelmeddelandeKostnad.setVisible(true);
+                    return;
+                }
+            }
+            catch(NumberFormatException ex){
+                lblFelmeddelandeKostnad.setVisible(true);
+                return;
+            }
+            if (projektnamn.isEmpty() || startdatum.isEmpty() || slutdatum.isEmpty() || textKostnad.isEmpty() || projektchef.isEmpty() || land.isEmpty()) {
+                lblFelmeddelande.setText("Alla fält måste fyllas i.");
+                lblFelmeddelande.setVisible(true);
+                hasError = true;
+            }
 
-        if (projektnamn.isEmpty() || startdatum.isEmpty() || slutdatum.isEmpty() || textKostnad.isEmpty() || projektchef.isEmpty() || land.isEmpty()) {
-            lblFelmeddelande.setText("Alla fält måste fyllas i.");
-            lblFelmeddelande.setVisible(true);
-            hasError = true;
+            if (!hasError) {
+                String updateQuery = String.format(
+                "UPDATE projekt SET projektnamn = '%s', beskrivning = '%s', startdatum = '%s', slutdatum = '%s', kostnad = %s, projektchef = %s, land = '%s' WHERE pid = %d",
+                projektnamn, beskrivning, startdatum, slutdatum, kostnad, projektchef, land, valtProjektID);
+                idb.update(updateQuery);
+                lblLyckat.setVisible(true);
+            }
         }
-
-        if (!hasError) {
-            String updateQuery = String.format(
-                    "UPDATE projekt SET projektnamn = '%s', beskrivning = '%s', startdatum = '%s', slutdatum = '%s', kostnad = %s, projektchef = %s, land = '%s' WHERE pid = %d",
-                    projektnamn, beskrivning, startdatum, slutdatum, kostnad, projektchef, land, valtProjektID);
-
-            idb.update(updateQuery);
-            lblLyckat.setVisible(true);
+        else{
+            if(!validera.valideringDatum(startdatum)){
+                lblFelmeddelandeStartdatum.setVisible(true);
+            }
+            else if(!validera.valideringDatum(slutdatum)){
+                lblFelmeddelandeSlutdatum.setVisible(true);
+            }
+            else{
+                lblFelmeddelandeStartdatum.setVisible(true);
+                lblFelmeddelandeSlutdatum.setVisible(true);
+            }
         }
     }
          catch(InfException ex){

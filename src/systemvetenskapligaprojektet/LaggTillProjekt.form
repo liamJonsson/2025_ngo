@@ -48,19 +48,27 @@
                           <Component id="comboPrioritet" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfLand" alignment="0" max="32767" attributes="0"/>
                           <Component id="comboStatus" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblFelmeddelandeProjektID" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblFelmeddelandeProjektchef" alignment="0" min="-2" pref="186" max="-2" attributes="0"/>
-                          <Component id="lblFelmeddelandeLand" alignment="0" min="-2" pref="154" max="-2" attributes="0"/>
-                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                              <Component id="lblLyckat" min="-2" pref="149" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="btnSpara" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblLyckat" min="-2" pref="149" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="btnSpara" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
-                          <Component id="lblFelmeddelandeKostnad" alignment="0" min="-2" pref="204" max="-2" attributes="0"/>
-                          <Component id="tfSlutdatum" min="-2" pref="261" max="-2" attributes="0"/>
+                          <Component id="tfSlutdatum" pref="261" max="32767" attributes="0"/>
+                          <Component id="lblFelmeddelandeKostnad" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblFelmeddelandeProjektID" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblFelmeddelandeProjektchef" alignment="0" min="-2" pref="186" max="-2" attributes="0"/>
+                                  <Component id="lblFelmeddelandeLand" alignment="0" min="-2" pref="154" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -69,7 +77,7 @@
                   <Component id="lblProjektNamn" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="lblSlutdatum" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="35" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
