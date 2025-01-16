@@ -70,21 +70,21 @@ public class AllaAvdelningar extends javax.swing.JFrame {
             }
             tblTest.setAutoResizeMode(tblTest.AUTO_RESIZE_OFF);
             TableColumn col = tblTest.getColumnModel().getColumn(0);
-            col.setPreferredWidth(100);
+            col.setPreferredWidth(75); //ID
             col = tblTest.getColumnModel().getColumn(1);
-            col.setPreferredWidth(400);
+            col.setPreferredWidth(400); //Namn
             col = tblTest.getColumnModel().getColumn(2);
-            col.setPreferredWidth(150);
+            col.setPreferredWidth(200); //Beskrivning
             col = tblTest.getColumnModel().getColumn(3);
-            col.setPreferredWidth(150);
+            col.setPreferredWidth(100); //Adress
             col = tblTest.getColumnModel().getColumn(4);
-            col.setPreferredWidth(150);
+            col.setPreferredWidth(150); //Epost
             col = tblTest.getColumnModel().getColumn(5);
-            col.setPreferredWidth(150);
+            col.setPreferredWidth(100); // Telefon
             col = tblTest.getColumnModel().getColumn(6);
-            col.setPreferredWidth(150);
+            col.setPreferredWidth(100); //Stad
             col = tblTest.getColumnModel().getColumn(7);
-            col.setPreferredWidth(150);
+            col.setPreferredWidth(150); //Chef
         }
         catch(InfException ex){
             System.out.println(ex);

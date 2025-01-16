@@ -13,6 +13,7 @@ import oru.inf.InfDB;
 import oru.inf.InfException;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.table.TableColumnModel;
 
 
 /**
@@ -36,7 +37,7 @@ public class AvdelningensProjekt extends javax.swing.JFrame {
         hamtaAvdelning();
         statusFilter(); 
         initStatusFilterListener();
-        skapaOchFyllTabell(null);
+        //skapaOchFyllTabell(null);
         hanteraSearchListener();              
     }
     
@@ -70,7 +71,10 @@ private void fyllTabell() {
 
                 // För varje kolumnnamn, hämta motsvarande data
                 for (String enKolumn : kolumnNamn) {
-                    if (enKolumn.equals("projektchef")) {
+                    if(enKolumn.equals("beskrivning")){
+                        enRad[index++] = "Klicka här för att se beskrivning!";
+                    }
+                    else if (enKolumn.equals("projektchef")) {
                         // Hämta projektchefens förnamn och efternamn
                         String selectFornamn = "SELECT fornamn FROM anstalld WHERE aid = (SELECT projektchef FROM projekt WHERE pid = '" + ettID + "');";
                         String fornamn = idb.fetchSingle(selectFornamn);
@@ -78,12 +82,14 @@ private void fyllTabell() {
                         String efternamn = idb.fetchSingle(selectEfternamn);
                         String namn = fornamn + " " + efternamn;
                         enRad[index++] = namn;
-                    } else if (enKolumn.equals("land")) {
+                    } 
+                    else if (enKolumn.equals("land")) {
                         // Hämta landets namn
                         String selectLand = "SELECT namn FROM land WHERE lid = (SELECT land FROM projekt WHERE pid = '" + ettID + "');";
                         String land = idb.fetchSingle(selectLand);
                         enRad[index++] = land;
-                    } else {
+                    } 
+                    else {
                         // För övriga kolumner, hämta information från info
                         enRad[index++] = info.get(enKolumn);
                     }
@@ -95,39 +101,28 @@ private void fyllTabell() {
 
             // Sätt den uppdaterade modellen till tabellen
             tblProjekt.setModel(avdelningensProjekt);
-
-            // Anpassa kolumnbredder
-            tblProjekt.setAutoResizeMode(tblProjekt.AUTO_RESIZE_OFF);
-
-            TableColumn col = tblProjekt.getColumnModel().getColumn(0);
-            col.setPreferredWidth(50);
-
-            col = tblProjekt.getColumnModel().getColumn(1);
-            col.setPreferredWidth(100);
-
-            col = tblProjekt.getColumnModel().getColumn(2);
-            col.setPreferredWidth(250);
-
-            col = tblProjekt.getColumnModel().getColumn(3);
-            col.setPreferredWidth(100);
-
-            col = tblProjekt.getColumnModel().getColumn(4);
-            col.setPreferredWidth(100);
-
-            col = tblProjekt.getColumnModel().getColumn(5);
-            col.setPreferredWidth(100);
-
-            col = tblProjekt.getColumnModel().getColumn(6);
-            col.setPreferredWidth(100);
-
-            col = tblProjekt.getColumnModel().getColumn(7);
-            col.setPreferredWidth(150);
-
-            col = tblProjekt.getColumnModel().getColumn(8);
-            col.setPreferredWidth(50);
         }
-
-    } catch (InfException ex) {
+            // Anpassa kolumnbredder
+            TableColumn col = tblProjekt.getColumnModel().getColumn(0); //ID
+                col.setPreferredWidth(75);
+                col = tblProjekt.getColumnModel().getColumn(1); //Namn
+                col.setPreferredWidth(275);
+                col = tblProjekt.getColumnModel().getColumn(2); //Beskrivning
+                col.setPreferredWidth(750);
+                col = tblProjekt.getColumnModel().getColumn(3); //Startdatum
+                col.setPreferredWidth(250);
+                col = tblProjekt.getColumnModel().getColumn(4); //Slutdatum
+                col.setPreferredWidth(250);
+                col = tblProjekt.getColumnModel().getColumn(5); //status
+                col.setPreferredWidth(200);
+                col = tblProjekt.getColumnModel().getColumn(6); //Prioritet
+                col.setPreferredWidth(150);
+                col = tblProjekt.getColumnModel().getColumn(7); //Projektchef
+                col.setPreferredWidth(350);
+                col = tblProjekt.getColumnModel().getColumn(8); //Land
+                col.setPreferredWidth(225);      
+    } 
+    catch (InfException ex) {
         System.out.println(ex);
     }
 }
@@ -209,7 +204,8 @@ private void uppdateraTabell(ArrayList<HashMap<String, String>> projektLista) {
                     String efternamn = idb.fetchSingle(selectEfternamn);  // Använd rätt metod här
                     
                     rad[i] = fornamn + " " + efternamn;
-                } else if (kolumnNamn[i].equals("land")) {
+                } 
+                else if (kolumnNamn[i].equals("land")) {
                     // Hämta landets namn
                     String landId = projekt.get("land");
                     
@@ -218,7 +214,8 @@ private void uppdateraTabell(ArrayList<HashMap<String, String>> projektLista) {
                     String land = idb.fetchSingle(selectLand);  // Använd rätt metod här
                     
                     rad[i] = land;
-                } else {
+                } 
+                else {
                     rad[i] = kolumnVarde;
                 }
             }
@@ -371,30 +368,15 @@ private void hanteraDatumSpannSok(String sokTerm) {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        scrollPane = new javax.swing.JScrollPane();
-        tblProjekt = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         lblAvdelning = new javax.swing.JLabel();
         btnTillbaka = new javax.swing.JButton();
         comboBoxAvdelning = new javax.swing.JComboBox<>();
         btnSok = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProjekt = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        tblProjekt.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
-        tblProjekt.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tblProjekt.setEnabled(false);
-        scrollPane.setViewportView(tblProjekt);
 
         jLabel1.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
         jLabel1.setText("Projekt på");
@@ -416,6 +398,24 @@ private void hanteraDatumSpannSok(String sokTerm) {
         btnSok.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnSok.setText("Sök projekt");
 
+        tblProjekt.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblProjekt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProjektMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblProjekt);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -429,12 +429,13 @@ private void hanteraDatumSpannSok(String sokTerm) {
                         .addComponent(lblAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(125, 125, 125))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(503, 503, 503)
                                 .addComponent(btnSok)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnTillbaka))
-                            .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 694, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1))
                         .addGap(18, 18, Short.MAX_VALUE)
                         .addComponent(comboBoxAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35))))
@@ -449,8 +450,8 @@ private void hanteraDatumSpannSok(String sokTerm) {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(comboBoxAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(scrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSok)
                     .addComponent(btnTillbaka))
@@ -464,6 +465,14 @@ private void hanteraDatumSpannSok(String sokTerm) {
         new MinAvdelning(idb, inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
+
+    private void tblProjektMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProjektMouseClicked
+        int column = tblProjekt.columnAtPoint(evt.getPoint());
+        if(column == 2){
+            new BeskrivningAvdelningensProjekt(idb,inloggadAnvandare).setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_tblProjektMouseClicked
 
     /**
      * @param args the command line arguments
@@ -505,8 +514,8 @@ private void hanteraDatumSpannSok(String sokTerm) {
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JComboBox<String> comboBoxAvdelning;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAvdelning;
-    private javax.swing.JScrollPane scrollPane;
     private javax.swing.JTable tblProjekt;
     // End of variables declaration//GEN-END:variables
 }

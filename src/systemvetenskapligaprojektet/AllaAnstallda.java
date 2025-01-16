@@ -49,8 +49,7 @@ public class AllaAnstallda extends javax.swing.JFrame {
                     
                     //For-each loop som går igenom varje kolumn i "kolumnNamn" där värdet för "enKolumn" läggs till i "enRad".
                     for(String enKolumn:kolumnNamn){
-                        enRad[index++] = info.get(enKolumn);
-                        
+                        enRad[index++] = info.get(enKolumn);                    
                     }
                      //EnRad läggs till i DefaultTableModel.
                     allaAnstallda.addRow(enRad);
