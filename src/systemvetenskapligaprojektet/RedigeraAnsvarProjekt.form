@@ -301,7 +301,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Anv&#xe4;nd korrekt format:  Max 12 siffror varav 2 decimaler"/>
+        <Property name="text" type="java.lang.String" value="Anv&#xe4;nd korrekt format: Max 12 siffror varav 2 decimaler"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblFelProjektchef">

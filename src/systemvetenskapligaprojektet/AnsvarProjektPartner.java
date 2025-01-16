@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -97,15 +98,40 @@ public void fyllTabell() {
 
                 // Uppdatera tabellen med de filtrerade partners
                 tblAnsvarProjektPartner.setModel(allaPartners);
+                
+                tblAnsvarProjektPartner.setAutoResizeMode(tblAnsvarProjektPartner.AUTO_RESIZE_OFF);
+            TableColumn col = tblAnsvarProjektPartner.getColumnModel().getColumn(0); //ProjektID
+            col.setPreferredWidth(75);
+            col = tblAnsvarProjektPartner.getColumnModel().getColumn(1); //PartnerID
+            col.setPreferredWidth(75);
+            col = tblAnsvarProjektPartner.getColumnModel().getColumn(2); //Namn
+            col.setPreferredWidth(200);
+            col = tblAnsvarProjektPartner.getColumnModel().getColumn(3); //Kontaktperson
+            col.setPreferredWidth(125);
+            col = tblAnsvarProjektPartner.getColumnModel().getColumn(4); //Kontaktepost
+            col.setPreferredWidth(175);
+            col = tblAnsvarProjektPartner.getColumnModel().getColumn(5); //Telefon
+            col.setPreferredWidth(100);
+            col = tblAnsvarProjektPartner.getColumnModel().getColumn(6); //Adres
+            col.setPreferredWidth(150);
+            col = tblAnsvarProjektPartner.getColumnModel().getColumn(7); //Bransch
+            col.setPreferredWidth(150);
+            col = tblAnsvarProjektPartner.getColumnModel().getColumn(8); //Stad
+            col.setPreferredWidth(75);
 
-            } else {
+            } 
+            
+
+            else{
                 System.out.println("Inga projekt hittades för projektchef med aid: " + aid);
             }
 
-        } else {
+        } 
+        else{
             System.out.println("Ingen användare hittades för e-post: " + inloggadAnvandare);
         }
-    } catch (InfException ex) {
+    } 
+    catch (InfException ex) {
         System.out.println("Fel: " + ex);
     }
 }
@@ -131,6 +157,7 @@ public void fyllTabell() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        tblAnsvarProjektPartner.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         tblAnsvarProjektPartner.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -144,23 +171,26 @@ public void fyllTabell() {
         ));
         jScrollPane1.setViewportView(tblAnsvarProjektPartner);
 
-        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
-        jLabel1.setText("Partner");
+        jLabel1.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
+        jLabel1.setText("PARTNERS");
 
-        btnLaggTill.setText("Lägg till");
+        btnLaggTill.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
+        btnLaggTill.setText("Lägg till en partner");
         btnLaggTill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLaggTillActionPerformed(evt);
             }
         });
 
-        btnTaBort.setText("Ta bort");
+        btnTaBort.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
+        btnTaBort.setText("Ta bort en partner");
         btnTaBort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTaBortActionPerformed(evt);
             }
         });
 
+        btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,36 +203,32 @@ public void fyllTabell() {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(btnLaggTill)
-                .addGap(198, 198, 198)
-                .addComponent(btnTaBort)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnTillbaka)
-                .addGap(39, 39, 39))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
+                        .addComponent(btnLaggTill)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnTaBort)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTillbaka))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLaggTill)
                     .addComponent(btnTaBort)
                     .addComponent(btnTillbaka))
-                .addGap(28, 28, 28))
+                .addGap(35, 35, 35))
         );
 
         pack();

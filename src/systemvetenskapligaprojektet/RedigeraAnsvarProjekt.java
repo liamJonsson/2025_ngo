@@ -160,7 +160,7 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
 
         lblFelKostnad.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblFelKostnad.setForeground(new java.awt.Color(255, 0, 0));
-        lblFelKostnad.setText("Använd korrekt format:  Max 12 siffror varav 2 decimaler");
+        lblFelKostnad.setText("Använd korrekt format: Max 12 siffror varav 2 decimaler");
 
         lblFelProjektchef.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblFelProjektchef.setForeground(new java.awt.Color(255, 0, 0));

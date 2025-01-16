@@ -154,10 +154,10 @@ private void ComboValjProjektItemStateChanged(java.awt.event.ItemEvent evt) {
         lblLaggTillHandlaggare.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
         lblLaggTillHandlaggare.setText("LÄGG TILL EN HANDLÄGGARE");
 
-        lblHandlaggareInfo.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
+        lblHandlaggareInfo.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblHandlaggareInfo.setText("Handläggare");
 
-        lblProjektInfo.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
+        lblProjektInfo.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblProjektInfo.setText("Projekt");
 
         btnTillbaka.setText("Tillbaka");
@@ -169,7 +169,7 @@ private void ComboValjProjektItemStateChanged(java.awt.event.ItemEvent evt) {
 
         lblLyckat.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblLyckat.setForeground(new java.awt.Color(0, 153, 0));
-        lblLyckat.setText("Den anställda har lagts till!");
+        lblLyckat.setText("Handläggaren har lagts till!");
 
         ComboValjProjekt.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         ComboValjProjekt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -193,31 +193,34 @@ private void ComboValjProjektItemStateChanged(java.awt.event.ItemEvent evt) {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblLyckat, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnSpara)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnTillbaka)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblLaggTillHandlaggare1)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblHandlaggareInfo)
-                                .addComponent(lblProjektInfo))
-                            .addGap(35, 35, 35)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(ComboValjProjekt, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(ComboValjHandlaggare, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(lblLaggTillHandlaggare)))
-                .addGap(35, 35, 35))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblLaggTillHandlaggare1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblHandlaggareInfo)
+                                    .addComponent(lblProjektInfo))
+                                .addGap(35, 35, 35)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(ComboValjHandlaggare, 0, 178, Short.MAX_VALUE)
+                                    .addComponent(ComboValjProjekt, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(lblLaggTillHandlaggare))
+                        .addContainerGap(34, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblLyckat, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnSpara)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnTillbaka)))
+                        .addGap(35, 35, 35))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addComponent(lblLaggTillHandlaggare, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblLaggTillHandlaggare, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(lblLaggTillHandlaggare1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
