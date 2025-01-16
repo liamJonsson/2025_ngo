@@ -38,7 +38,7 @@ public class RedigeraPartner extends javax.swing.JFrame {
         fyllComboBoxPartner();
     }
     
-    // Fyll ComboBox med alla partners
+    //Fyll ComboBox med alla partners
     private void fyllComboBoxPartner() {
         try {
             String query = "SELECT partner.pid, partner.namn FROM partner";
@@ -59,46 +59,31 @@ public class RedigeraPartner extends javax.swing.JFrame {
     }
 
 
-    // När en partner väljs från ComboBoxen
-    private void ComboPartnerActionPerformed(java.awt.event.ActionEvent evt) {
-        String valtPartner = (String) ComboValjPartner.getSelectedItem();
-
-        // Kontrollera om valtPartner är null eller "Välj partner"
-        if (valtPartner == null || valtPartner.equals("Välj partner")) {
-            return;
-        }
-
-        String[] delar = valtPartner.split(" - ");
-        pid = Integer.parseInt(delar[0]);
-
-        fyllTextfields();
-    }
-
-    // Fyll textfälten med partnerdata
+    //Fyll textfälten med partnerdata
     private void fyllTextfields() {
         ComboValjPartner.addActionListener(evt -> {
             String valtPartner = ComboValjPartner.getSelectedItem().toString();
 
             if (!valtPartner.equals("Välj partner")) {
-                // Regex för att extrahera partner-ID
+                //Regex för att extrahera partner-ID
                 Pattern pattern = Pattern.compile("(\\d+) - ");
                 Matcher matcher = pattern.matcher(valtPartner);
 
                 if (matcher.find()) {
-                    // Extrahera partner-ID
+                    //Extrahera partner-ID
                     int valtPartnerID = Integer.parseInt(matcher.group(1));
 
                     try {
-                        // SQL-fråga för att hämta partnerdata
+                        //SQL-fråga för att hämta partnerdata
                         String query = "SELECT * FROM partner WHERE pid = " + valtPartnerID + ";";
 
                         ArrayList<HashMap<String, String>> partnerInfo = idb.fetchRows(query);
 
                         if (partnerInfo != null && !partnerInfo.isEmpty()) {
-                            // Hämta första raden (det är en rad per partner)
+                            //Hämta första raden (det är en rad per partner)
                             HashMap<String, String> rad = partnerInfo.get(0);
 
-                            // Använd switch-case för att fylla textfälten
+                            //Använd switch-case för att fylla textfälten
                             for (String attribut : rad.keySet()) {
                                 switch (attribut) {
                                     case "namn":

@@ -36,6 +36,7 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
         lblFelKostnad.setVisible(false);
         lblFelProjektchef.setVisible(false);
         lblFelLand.setVisible(false);
+        lblFelmeddelande.setVisible(false);        
         lblLyckat.setVisible(false);
         fyllComboBox();
     }
@@ -61,8 +62,63 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
         }
     }
     
+        private void fyllTextfields(){
+        ComboRedigeraProjekt.addActionListener(evt -> {
+            //Hämtar datan i comboboxen som valdes
+            String projekt = ComboRedigeraProjekt.getSelectedItem().toString();
+            //Om comboboxen inte är vald på "Välj projekt"
+            if (!projekt.equals("Välj projekt")) {
+                // Regex för att matcha siffran direkt efter
+                Pattern pattern = Pattern.compile("(\\d+)");
+                Matcher matcher = pattern.matcher(projekt);
+                // Kontrollera om mönstret hittades
+                if (matcher.find()) {
+                    // Extrahera den första matchade gruppen
+                    String ettProjekt = matcher.group(1);
+                    ettProjektID = Integer.parseInt(ettProjekt);
+                    } 
+                else{
+                    System.out.println("Ingen match hittades."); 
+                }
+            } 
+        });
+        try{
+            String selectInfo = "select * from projekt where pid = " + ettProjektID + ";";
+            ArrayList<HashMap<String, String>> info = idb.fetchRows(selectInfo);
+            
+            for(HashMap<String, String> enRad:info){
+                for(String ettAttribut:enRad.keySet()){
+                    switch(ettAttribut){
+                        case "projektnamn":
+                            tfProjektnamn.setText(enRad.get(ettAttribut)); 
+                            break;
+                        case "beskrivning":
+                            tfBeskrivning.setText(enRad.get(ettAttribut));
+                            break;
+                        case "startdatum":
+                            tfStartdatum.setText(enRad.get(ettAttribut));
+                            break;
+                        case "slutdatum":
+                            tfSlutdatum.setText(enRad.get(ettAttribut));
+                            break;
+                        case "kostnad":
+                            tfKostnad.setText(enRad.get(ettAttribut));
+                            break;
+                        case "projektchef":
+                            tfProjektchef.setText(enRad.get(ettAttribut));
+                            break;
+                        case "land":
+                            tfLand.setText(enRad.get(ettAttribut));
+                            break;
+                    }
+                }
+            }
+        }
+        catch(InfException ex){
+            System.out.println(ex);
+        }
+    }
     
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -101,6 +157,7 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
         comboPrioritet = new javax.swing.JComboBox<>();
         lblProjektID = new javax.swing.JLabel();
         lblLyckat = new javax.swing.JLabel();
+        lblFelmeddelande = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -193,6 +250,8 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
         lblLyckat.setForeground(new java.awt.Color(0, 153, 0));
         lblLyckat.setText("Ändringarna har sparats!");
 
+        lblFelmeddelande.setText("Alla fält måste fyllas i");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -233,12 +292,15 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblRedigeraProjektet)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblLyckat, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnSpara)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnTillbaka))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblFelmeddelande)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblLyckat, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnSpara)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnTillbaka)))))
                 .addGap(26, 26, 26))
         );
         layout.setVerticalGroup(
@@ -299,7 +361,8 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSpara)
-                    .addComponent(btnTillbaka))
+                    .addComponent(btnTillbaka)
+                    .addComponent(lblFelmeddelande))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblLyckat)
                 .addGap(28, 28, 28))
@@ -314,241 +377,160 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
-        boolean hasError = false;
-        boolean hittad = false;
-        lblFelStartdatum.setVisible(false);
-        lblFelSlutdatum.setVisible(false);
-        lblFelKostnad.setVisible(false);
-        lblFelProjektchef.setVisible(false);
-        lblFelLand.setVisible(false);
+    boolean hasError = false;
+    lblFelStartdatum.setVisible(false);
+    lblFelSlutdatum.setVisible(false);
+    lblFelKostnad.setVisible(false);
+    lblFelProjektchef.setVisible(false);
+    lblFelLand.setVisible(false);
+    lblFelmeddelande.setVisible(false);
 
-        try{
-            if(!hasError){
-                try{
-                    String projektnamn = tfProjektnamn.getText();
-                    String beskrivning = tfBeskrivning.getText();
-                    String startdatum = tfStartdatum.getText();
-                    String slutdatum = tfSlutdatum.getText();
-                    String textKostnad = tfKostnad.getText();
-                    String textProjektchef = tfProjektchef.getText();
-                    String textLand = tfLand.getText();
-                    String status = (String) comboStatus.getSelectedItem();
-                    String prioritet = (String) comboPrioritet.getSelectedItem();
-                    
-                    if(validera.valideringDatum(startdatum) && validera.valideringDatum(slutdatum)){
-                        if(!hasError){
-                            try{
-                                textProjektchef = tfProjektchef.getText();
-                                projektchef = Integer.parseInt(textProjektchef);
-                            }
-                            catch(NumberFormatException ex){
-                                lblFelProjektchef.setVisible(true);
-                                hasError = true;
-                            } 
-                        }                 
-                        if(!hasError){
-                            try{
-                                textLand = tfLand.getText();
-                                land = Integer.parseInt(textLand);
-                            }
+    try {
+        String projektnamn = tfProjektnamn.getText();
+        String beskrivning = tfBeskrivning.getText();
+        String startdatum = tfStartdatum.getText();
+        String slutdatum = tfSlutdatum.getText();
+        String textKostnad = tfKostnad.getText();
+        String textProjektchef = tfProjektchef.getText();
+        String textLand = tfLand.getText();
+        String status = (String) comboStatus.getSelectedItem();
+        String prioritet = (String) comboPrioritet.getSelectedItem();
 
-                            catch(NumberFormatException ex){
-                                lblFelLand.setVisible(true);
-                                hasError = true;
-                            }
-                        } 
-                        if(!hasError){
-                            String selectProjektchef = "select aid from handlaggare where aid = " + projektchef + ";";
-                            String enProjektchef = idb.fetchSingle(selectProjektchef);
-                            String selectLand = "select lid from land where lid = " + land + ";";
-                            String ettLand = idb.fetchSingle(selectLand);
-                            
-                            if(enProjektchef == null){
-                                lblFelProjektchef.setVisible(true);
-                            }
-                            if(ettLand == null){
-                                lblFelLand.setVisible(true);
-                            }
-                            BigDecimal kostnad;
-                                try{
-                                    kostnad = new BigDecimal(textKostnad);
+        // Validering av projektnamn och beskrivning
+        if (projektnamn.isEmpty()) {
+            lblFelmeddelande.setVisible(true); // Fel: projektnamn kan inte vara tomt
+            hasError = true;
+        }
+        if (beskrivning.isEmpty()) {
+            lblFelmeddelande.setVisible(true); // Fel: beskrivning kan inte vara tomt
+            hasError = true;
+        }
 
-                                    //Kontrollera (12, 2)
-                                    if (kostnad.precision() - kostnad.scale() > 10 || kostnad.scale() > 2) {
-                                        lblFelKostnad.setVisible(true);
-                                        return;
-                                    }
-                                }
-                                catch (NumberFormatException ex) {
-                                    lblFelKostnad.setVisible(true);
-                                    return;
-                                }
-                                String selectAnsvarProjekt = "select * from projekt where pid = " + ettProjektID + ";";
-                                HashMap<String, String> ettAnsvarProjekt = idb.fetchRow(selectAnsvarProjekt);
-                                String enRad[] = new String[ettAnsvarProjekt.size()];
-                                for(String ettAttribut:ettAnsvarProjekt.keySet()){
-                                    switch(ettAttribut){
-                                        case "pid":
-                                            enRad[0] = ettAnsvarProjekt.get("pid");
-                                            break;
-                                        case "projektnamn":
-                                            enRad[1] = ettAnsvarProjekt.get("projektnamn");
-                                            break;
-                                        case "beskrivning":
-                                            enRad[2] = ettAnsvarProjekt.get("beskrivning");
-                                            break;
-                                        case "startdatum":
-                                            enRad[3] = ettAnsvarProjekt.get("startdatum");
-                                            break;
-                                        case "slutdatum":
-                                            enRad[4] = ettAnsvarProjekt.get("slutdatum");
-                                            break;
-                                        case "kostnad":
-                                            enRad[5] = ettAnsvarProjekt.get("kostnad");
-                                            break;
-                                        case "projektchef":
-                                            enRad[8] = ettAnsvarProjekt.get("projektchef");
-                                            break;
-                                        case "land":
-                                            enRad[9] = ettAnsvarProjekt.get("land");
-                                            break;
-                                    }
-                                }
-                                if(projektnamn.isEmpty()){
-                                    projektnamn = enRad[1];
-                                }
-                                if(beskrivning.isEmpty()){
-                                   beskrivning = enRad[2];
-                                }
-                                if(startdatum.isEmpty()){
-                                   startdatum = enRad[3];
-                                }
-                                if(slutdatum.isEmpty()){
-                                   slutdatum = enRad[4];
-                                }
-                                if(textKostnad.isEmpty()){
-                                   textKostnad = enRad[5];
-                                }
-                                if(textProjektchef.isEmpty()){
-                                   textProjektchef = enRad[8];     
-                                }  
-                                if(textLand.isEmpty()){
-                                   textLand = enRad[9];     
-                                } 
-                                try{
-                                    String updateAnsvarProjekt = "update projekt set projektnamn = '" + projektnamn + "', beskrivning = '" + beskrivning + "', startdatum = '" + startdatum + "', slutdatum = '" + slutdatum + "', kostnad = " + kostnad + ", status = '" + status + "', prioritet = '" + prioritet + "', projektchef = " + projektchef + ", land = " + land + " where pid = " + ettProjektID + ";";
-                                    System.out.println(updateAnsvarProjekt);
-                                    idb.update(updateAnsvarProjekt);
-                                    lblLyckat.setVisible(true);
-                                }
-                                catch(InfException ex){
-                                    System.out.println(ex);
-                                }
-                        }
-                    }
-                    else{
-                        if(!validera.valideringDatum(startdatum)){
-                            lblFelStartdatum.setVisible(true);
-                        }
-                        else if(!validera.valideringDatum(slutdatum)){
-                            lblFelSlutdatum.setVisible(true);
-                        }
-                        else{
-                            lblFelStartdatum.setVisible(true);
-                            lblFelSlutdatum.setVisible(true);
-                        }
-                    }
+        // Kostnad (validering om det inte är tomt och om formatet är korrekt)
+        if (textKostnad.isEmpty()) {
+            lblFelmeddelande.setVisible(true); // Fel: kostnad kan inte vara tomt
+            hasError = true;
+        } else {
+            try {
+                BigDecimal kostnad = new BigDecimal(textKostnad);
+                // Kontrollera format (12, 2)
+                if (kostnad.precision() - kostnad.scale() > 10 || kostnad.scale() > 2) {
+                    lblFelKostnad.setVisible(true); // Fel: ogiltig kostnad
+                    hasError = true;
                 }
-                catch(InfException ex){ 
+            } catch (NumberFormatException ex) {
+                lblFelKostnad.setVisible(true); // Fel: ogiltig kostnad
+                hasError = true;
+            }
+        }
+
+        // Datumvalidering (startdatum och slutdatum)
+        if (startdatum.isEmpty()) {
+            lblFelmeddelande.setVisible(true); // Fel: startdatum kan inte vara tomt
+            hasError = true;
+        } else if (!validera.valideringDatum(startdatum)) {
+            lblFelStartdatum.setVisible(true); // Fel: ogiltigt startdatum
+            hasError = true;
+        }
+
+        if (slutdatum.isEmpty()) {
+            lblFelmeddelande.setVisible(true); // Fel: slutdatum kan inte vara tomt
+            hasError = true;
+        } else if (!validera.valideringDatum(slutdatum)) {
+            lblFelSlutdatum.setVisible(true); // Fel: ogiltigt slutdatum
+            hasError = true;
+        }
+
+        // Projektchef (validering)
+        if (textProjektchef.isEmpty()) {
+            lblFelmeddelande.setVisible(true); // Fel: projektchef kan inte vara tomt
+            hasError = true;
+        } else {
+            try {
+                projektchef = Integer.parseInt(textProjektchef); // Försök omvandla till heltal
+            } catch (NumberFormatException ex) {
+                lblFelProjektchef.setVisible(true); // Fel: projektchef måste vara ett heltal
+                hasError = true;
+            }
+        }
+
+        // Land (validering)
+        if (textLand.isEmpty()) {
+            lblFelmeddelande.setVisible(true); // Fel: land kan inte vara tomt
+            hasError = true;
+        } else {
+            try {
+                land = Integer.parseInt(textLand); // Försök omvandla till heltal
+            } catch (NumberFormatException ex) {
+                lblFelLand.setVisible(true); // Fel: land måste vara ett heltal
+                hasError = true;
+            }
+        }
+
+        // Kontrollera om projektchef och land existerar i databasen (om de inte är tomma)
+        if (!hasError) {
+            // Kontrollera Projektchef
+            if (!textProjektchef.isEmpty()) {
+                try {
+                    String selectProjektchef = "select aid from handlaggare where aid = " + projektchef + ";";
+                    String enProjektchef = idb.fetchSingle(selectProjektchef);
+
+                    if (enProjektchef == null) {
+                        lblFelProjektchef.setVisible(true); // Fel: projektchef finns inte i databasen
+                        hasError = true;
+                    }
+                } catch (InfException ex) {
                     System.out.println(ex);
+                    hasError = true;
+                }
+            }
+
+            // Kontrollera Land
+            if (!textLand.isEmpty()) {
+                try {
+                    String selectLand = "select lid from land where lid = " + land + ";";
+                    String ettLand = idb.fetchSingle(selectLand);
+
+                    if (ettLand == null) {
+                        lblFelLand.setVisible(true); // Fel: land finns inte i databasen
+                        hasError = true;
+                    }
+                } catch (InfException ex) {
+                    System.out.println(ex);
+                    hasError = true;
                 }
             }
         }
-        catch(NumberFormatException ex){ 
-            System.out.println(ex);
+
+        // Om inga fel, uppdatera projekt
+        if (!hasError) {
+            try {
+                String updateAnsvarProjekt = "update projekt set projektnamn = '" + projektnamn + "', beskrivning = '" + beskrivning +
+                                             "', startdatum = '" + startdatum + "', slutdatum = '" + slutdatum + "', kostnad = " + textKostnad +
+                                             ", status = '" + status + "', prioritet = '" + prioritet + "', projektchef = " + projektchef +
+                                             ", land = " + land + " where pid = " + ettProjektID + ";";
+                System.out.println(updateAnsvarProjekt);
+                idb.update(updateAnsvarProjekt);
+                lblLyckat.setVisible(true);
+            } catch (InfException ex) {
+                System.out.println(ex);
+            }
         }
+    } catch (NumberFormatException ex) {
+        System.out.println(ex);
+    }
     }//GEN-LAST:event_btnSparaActionPerformed
 
-
-    
-    private void fyllTextfields(){
-        ComboRedigeraProjekt.addActionListener(evt -> {
-            //Hämtar datan i comboboxen som valdes
-            String projekt = ComboRedigeraProjekt.getSelectedItem().toString();
-            System.out.println(projekt);
-            //Om comboboxen inte är vald på "Välj projekt"
-            if (!projekt.equals("Välj projekt")) {
-                // Regex för att matcha siffran direkt efter
-                Pattern pattern = Pattern.compile("(\\d+)");
-                Matcher matcher = pattern.matcher(projekt);
-                // Kontrollera om mönstret hittades
-                if (matcher.find()) {
-                    // Extrahera den första matchade gruppen
-                    String ettProjekt = matcher.group(1);
-                    ettProjektID = Integer.parseInt(ettProjekt);
-                    
-                    System.out.println("Numret är: " + ettProjektID);
-                } 
-                else{
-                    System.out.println("Ingen match hittades."); 
-                }
-            } 
-        });
-        try{
-            String selectInfo = "select * from projekt where pid = " + ettProjektID + ";";
-            System.out.println(selectInfo);
-            ArrayList<HashMap<String, String>> info = idb.fetchRows(selectInfo);
-            
-            for(HashMap<String, String> enRad:info){
-                for(String ettAttribut:enRad.keySet()){
-                    switch(ettAttribut){
-                        case "projektnamn":
-                            tfProjektnamn.setText(enRad.get(ettAttribut)); 
-                            break;
-                        case "beskrivning":
-                            tfBeskrivning.setText(enRad.get(ettAttribut));
-                            break;
-                        case "startdatum":
-                            tfStartdatum.setText(enRad.get(ettAttribut));
-                            break;
-                        case "slutdatum":
-                            tfSlutdatum.setText(enRad.get(ettAttribut));
-                            break;
-                        case "kostnad":
-                            tfKostnad.setText(enRad.get(ettAttribut));
-                            break;
-                        case "projektchef":
-                            tfProjektchef.setText(enRad.get(ettAttribut));
-                            break;
-                        case "land":
-                            tfLand.setText(enRad.get(ettAttribut));
-                            break;
-                    }
-                }
-            }
-        }
-        catch(InfException ex){
-            System.out.println(ex);
-        }
-    }
     
     private void ComboRedigeraProjektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboRedigeraProjektActionPerformed
          fyllTextfields();
     }//GEN-LAST:event_ComboRedigeraProjektActionPerformed
 
     private void ComboRedigeraProjektMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ComboRedigeraProjektMouseClicked
-        
-
-        
-        //int valtProjekt = Integer.parseInt(valtPid[0]);
+         //int valtProjekt = Integer.parseInt(valtPid[0]);
         //return valtProjekt;
     }//GEN-LAST:event_ComboRedigeraProjektMouseClicked
- 
- 
-    
-    
-    
-    
+
     /**
      * @param args the command line arguments
      */
@@ -596,6 +578,7 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
     private javax.swing.JLabel lblFelProjektchef;
     private javax.swing.JLabel lblFelSlutdatum;
     private javax.swing.JLabel lblFelStartdatum;
+    private javax.swing.JLabel lblFelmeddelande;
     private javax.swing.JLabel lblKostnad;
     private javax.swing.JLabel lblLand;
     private javax.swing.JLabel lblLyckat;

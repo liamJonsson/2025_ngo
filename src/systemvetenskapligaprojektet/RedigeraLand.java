@@ -29,7 +29,81 @@ public class RedigeraLand extends javax.swing.JFrame {
         initComponents();
         lblValutaFel.setVisible(false);
         lblLyckat1.setVisible(false);
+        lblFelmeddelande.setVisible(false);
         fyllComboBox();
+    }
+    
+       public void fyllComboBox(){
+        try{
+            String selectLid = "select lid, namn from land order by (lid);";
+            
+            ArrayList<HashMap<String, String>> allaLid = idb.fetchRows(selectLid);
+            
+            ComboValjLandID.removeAllItems();
+            ComboValjLandID.addItem("Välj land");
+            
+            for (HashMap<String, String> land : allaLid) {
+                String landsInfo = land.get("lid") + " - " + land.get("namn");
+                ComboValjLandID.addItem(landsInfo);
+            }
+        }
+        catch (InfException e) {
+            JOptionPane.showMessageDialog(this, "Kunde inte fylla länder: " + e.getMessage());
+        }
+    }
+    
+    //Fyll textfälten med landdata
+    private void fyllTextfields(){
+        ComboValjLandID.addActionListener(evt -> {
+            String land = ComboValjLandID.getSelectedItem().toString();
+            
+            if (!land.equals("Välj land")) {
+                String textValtLand = "Välj land: " + land;
+                // Regex för att matcha siffran direkt efter "Välj avdelning: "
+                Pattern pattern = Pattern.compile("Välj land: (\\d+)");
+                Matcher matcher = pattern.matcher(textValtLand);
+                
+                if (matcher.find()) {
+                    // Extrahera den första matchade gruppen
+                    String enAvdelning = matcher.group(1);
+                    lid = Integer.parseInt(enAvdelning);
+                } else {
+                    System.out.println("Ingen match hittades."); 
+                }
+            } 
+        });
+        try{
+            String selectInfo = "select * from land where lid = " + lid + ";";
+            ArrayList<HashMap<String, String>> info = idb.fetchRows(selectInfo);
+            
+            for(HashMap<String, String> enRad:info){
+                for(String ettAttribut:enRad.keySet()){
+                    switch(ettAttribut){
+                        case "namn":
+                            tfRedigeraNamn.setText(enRad.get(ettAttribut)); 
+                            break;
+                        case "sprak":
+                            tfRedigeraSprak.setText(enRad.get(ettAttribut));
+                            break;
+                        case "valuta":
+                            tfRedigeraValuta.setText(enRad.get(ettAttribut));
+                            break;
+                        case "tidszon":
+                            tfRedigeraTidszon.setText(enRad.get(ettAttribut));
+                            break;
+                        case "politisk_struktur":
+                            tfRedigeraPolitiskStruktur.setText(enRad.get(ettAttribut));
+                            break;
+                        case "ekonomi":
+                            tfRedigeraEkonomi.setText(enRad.get(ettAttribut));
+                            break;
+                    }
+                }
+            }
+        }
+        catch(InfException ex){
+            System.out.println(ex); 
+        }
     }
     
     /**
@@ -62,6 +136,7 @@ public class RedigeraLand extends javax.swing.JFrame {
         lblLaggTillEttLand1 = new javax.swing.JLabel();
         ComboValjLandID = new javax.swing.JComboBox<>();
         lblLyckat1 = new javax.swing.JLabel();
+        lblFelmeddelande = new javax.swing.JLabel();
 
         lblLaggTillEttLand.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblLaggTillEttLand.setText("Redigera landets uppgifter");
@@ -127,6 +202,8 @@ public class RedigeraLand extends javax.swing.JFrame {
         lblLyckat1.setForeground(new java.awt.Color(0, 153, 0));
         lblLyckat1.setText("Ändringarna har sparats!");
 
+        lblFelmeddelande.setText("Alla fält måste fyllas i");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -146,6 +223,7 @@ public class RedigeraLand extends javax.swing.JFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
+                            .addComponent(lblFelmeddelande)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -207,7 +285,8 @@ public class RedigeraLand extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
-                    .addComponent(btnSpara))
+                    .addComponent(btnSpara)
+                    .addComponent(lblFelmeddelande))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblLyckat1)
                 .addGap(35, 35, 35))
@@ -222,160 +301,74 @@ public class RedigeraLand extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
-        boolean hasError = false;
-        boolean hittad = false;
-        lblValutaFel.setVisible(false);
-        lblLyckat1.setVisible(false);
-        try{
-            if(!hasError){
-                try{
-                    String namn = tfRedigeraNamn.getText();
-                    String sprak = tfRedigeraSprak.getText();
-                    String textValuta = tfRedigeraValuta.getText();
-                    String tidszon = tfRedigeraTidszon.getText();
-                    String politiskStruktur = tfRedigeraPolitiskStruktur.getText();
-                    String ekonomi = tfRedigeraEkonomi.getText();
-                    
-                    try{
-                        if(!textValuta.isEmpty()){
-                            enValuta = Double.parseDouble(textValuta);
-                        }
-                    }
-                    catch(NumberFormatException ex){
-                    lblValutaFel.setVisible(true);
-                    }
-                    String valuta = String.valueOf(enValuta);
-                    
-                    String selectLand = "select * from land where lid = " + lid + ";";
-                    HashMap<String, String> ettLand = idb.fetchRow(selectLand);
-                    String enRad[] = new String[ettLand.size()];
-                    for(String ettAttribut:ettLand.keySet()){
-                        switch(ettAttribut){
-                            case "lid":
-                                enRad[0] = ettLand.get("lid");
-                            case "namn":
-                                enRad[1] = ettLand.get("namn"); 
-                            case "sprak":
-                                enRad[2] = ettLand.get("sprak");
-                            case "valuta":
-                                enRad[3] = ettLand.get("valuta");
-                            case "tidszon":
-                                enRad[4] = ettLand.get("tidszon");
-                            case "politisk_struktur":
-                                enRad[5] = ettLand.get("politisk_struktur");                   
-                            case "ekonomi":
-                                enRad[6] = ettLand.get("ekonomi");
-                        }
-                    }
-                    if(namn.isEmpty()){
-                        namn = enRad[1];
-                    }
-                    if(sprak.isEmpty()){
-                       sprak = enRad[2];
-                    }
-                    if(textValuta.isEmpty()){
-                       valuta = enRad[3];
-                    }
-                    if(tidszon.isEmpty()){
-                       tidszon = enRad[4];
-                    }
-                    if(politiskStruktur.isEmpty()){
-                       politiskStruktur = enRad[5];
-                    }
-                    if(ekonomi.isEmpty()){
-                       ekonomi = enRad[6];     
-                    }
-                    
-                String updateLand = "update land set namn = '" + namn + "', sprak = '" + sprak + "', valuta = " + valuta + ", tidszon = '" + tidszon + "', politisk_struktur = '" + politiskStruktur + "', ekonomi = '" + ekonomi + "' where lid = " + lid + ";";
-                idb.update(updateLand);
-                lblLyckat1.setVisible(true);
-                }
-                catch(InfException ex){ 
-                System.out.println(ex);
+    boolean hasError = false;
+    boolean hittad = false;
+    lblValutaFel.setVisible(false);
+    lblLyckat1.setVisible(false);
+    lblFelmeddelande.setVisible(false);
+
+    try {
+        String namn = tfRedigeraNamn.getText();
+        String sprak = tfRedigeraSprak.getText();
+        String textValuta = tfRedigeraValuta.getText();
+        String tidszon = tfRedigeraTidszon.getText();
+        String politiskStruktur = tfRedigeraPolitiskStruktur.getText();
+        String ekonomi = tfRedigeraEkonomi.getText();
+
+        //Kontrollera om textfält är tomma
+        if (namn.isEmpty()) {
+            lblFelmeddelande.setVisible(true); //Fel: namn kan inte vara tomt
+            hasError = true;
+        }
+        if (sprak.isEmpty()) {
+            lblFelmeddelande.setVisible(true); //Fel: språk kan inte vara tomt
+            hasError = true;
+        }
+        if (tidszon.isEmpty()) {
+            lblFelmeddelande.setVisible(true); //Fel: tidszon kan inte vara tomt
+            hasError = true;
+        }
+        if (politiskStruktur.isEmpty()) {
+            lblFelmeddelande.setVisible(true); //Fel: politisk struktur kan inte vara tomt
+            hasError = true;
+        }
+        if (ekonomi.isEmpty()) {
+            lblFelmeddelande.setVisible(true); //Fel: ekonomi kan inte vara tomt
+            hasError = true;
+        }
+
+        //Kontrollera och hantera valuta
+        try {
+            if (!textValuta.isEmpty()) {
+                enValuta = Double.parseDouble(textValuta);
             }
-        }        
-    }//GEN-LAST:event_btnSparaActionPerformed
-    catch(NumberFormatException ex){ //Catch InfExceptions?
+        } catch (NumberFormatException ex) {
+            lblValutaFel.setVisible(true);
+            hasError = true; 
+        }
+
+        //Om det finns fel - avbryt
+        if (hasError) {
+            return; //Hoppa över resten av koden om det finns fel
+        }
+
+        //Utför uppdatering om inga fel finns
+        String valuta = String.valueOf(enValuta);
+        String updateLand = "update land set namn = '" + namn + "', sprak = '" + sprak + "', valuta = " + valuta +
+                            ", tidszon = '" + tidszon + "', politisk_struktur = '" + politiskStruktur + "', ekonomi = '" + ekonomi + "' where lid = " + lid + ";";
+        idb.update(updateLand);
+        lblLyckat1.setVisible(true);
+    } catch (InfException ex) { 
         System.out.println(ex);
-    }
-}   
- 
+    } catch (NumberFormatException ex) {
+        System.out.println(ex);
+    }       
+    }//GEN-LAST:event_btnSparaActionPerformed
+  
     private void ComboValjLandIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboValjLandIDActionPerformed
         fyllTextfields();
     }//GEN-LAST:event_ComboValjLandIDActionPerformed
- 
-    public void fyllComboBox(){
-        try{
-            String selectLid = "select lid, namn from land order by (lid);";
-            
-            ArrayList<HashMap<String, String>> allaLid = idb.fetchRows(selectLid);
-            
-            ComboValjLandID.removeAllItems();
-            ComboValjLandID.addItem("Välj land");
-            
-            for (HashMap<String, String> land : allaLid) {
-                String landsInfo = land.get("lid") + " - " + land.get("namn");
-                ComboValjLandID.addItem(landsInfo);
-            }
-        }
-        catch (InfException e) {
-            JOptionPane.showMessageDialog(this, "Kunde inte fylla länder: " + e.getMessage());
-        }
-    }
-    
-    
-    private void fyllTextfields(){
-        ComboValjLandID.addActionListener(evt -> {
-            String land = ComboValjLandID.getSelectedItem().toString();
-            
-            if (!land.equals("Välj land")) {
-                String textValtLand = "Välj land: " + land;
-                // Regex för att matcha siffran direkt efter "Välj avdelning: "
-                Pattern pattern = Pattern.compile("Välj land: (\\d+)");
-                Matcher matcher = pattern.matcher(textValtLand);
-                
-                if (matcher.find()) {
-                    // Extrahera den första matchade gruppen
-                    String enAvdelning = matcher.group(1);
-                    lid = Integer.parseInt(enAvdelning);
-                } else {
-                    System.out.println("Ingen match hittades."); 
-                }
-            } 
-        });
-        try{
-            String selectInfo = "select * from land where lid = " + lid + ";";
-            ArrayList<HashMap<String, String>> info = idb.fetchRows(selectInfo);
-            
-            for(HashMap<String, String> enRad:info){
-                for(String ettAttribut:enRad.keySet()){
-                    switch(ettAttribut){
-                        case "namn":
-                            tfRedigeraNamn.setText(enRad.get(ettAttribut)); 
-                            break;
-                        case "sprak":
-                            tfRedigeraSprak.setText(enRad.get(ettAttribut));
-                            break;
-                        case "valuta":
-                            tfRedigeraValuta.setText(enRad.get(ettAttribut));
-                            break;
-                        case "tidszon":
-                            tfRedigeraTidszon.setText(enRad.get(ettAttribut));
-                            break;
-                        case "politisk_struktur":
-                            tfRedigeraPolitiskStruktur.setText(enRad.get(ettAttribut));
-                            break;
-                        case "ekonomi":
-                            tfRedigeraEkonomi.setText(enRad.get(ettAttribut));
-                            break;
-                    }
-                }
-            }
-        }
-        catch(InfException ex){
-            System.out.println(ex); 
-        }
-    }
+
         
     /**
      * @param args the command line arguments
@@ -423,6 +416,7 @@ public class RedigeraLand extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel lblFelmeddelande;
     private javax.swing.JLabel lblLaggTillEttLand;
     private javax.swing.JLabel lblLaggTillEttLand1;
     private javax.swing.JLabel lblLyckat;

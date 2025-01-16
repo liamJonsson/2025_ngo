@@ -60,7 +60,8 @@
                           <Component id="jLabel4" min="-2" pref="37" max="-2" attributes="0"/>
                           <Component id="jLabel5" min="-2" pref="54" max="-2" attributes="0"/>
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel7" min="-2" pref="63" max="-2" attributes="0"/>
+                          <Component id="lblFelmeddelande" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel7" alignment="0" min="-2" pref="63" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
@@ -140,6 +141,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnTillbaka" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSpara" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblFelmeddelande" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lblLyckat1" min="-2" max="-2" attributes="0"/>
@@ -285,6 +287,11 @@
           <Color blue="0" green="99" red="0" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="&#xc4;ndringarna har sparats!"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblFelmeddelande">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Alla f&#xe4;lt m&#xe5;ste fyllas i"/>
       </Properties>
     </Component>
   </SubComponents>

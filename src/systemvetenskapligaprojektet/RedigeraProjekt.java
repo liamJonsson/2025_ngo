@@ -43,7 +43,7 @@ public class RedigeraProjekt extends javax.swing.JFrame {
         fyllComboBoxProjekt();
     }
 
-    // Fyll combobox med projekt
+    //Fyll combobox med projekt
     private void fyllComboBoxProjekt() {
         try {
             String query = "SELECT pid, projektnamn FROM projekt";
@@ -63,35 +63,22 @@ public class RedigeraProjekt extends javax.swing.JFrame {
         }
     }
 
-    // När ett projekt väljs från comboboxen
-    private void ComboProjektActionPerformed(java.awt.event.ActionEvent evt) {
-        String valtProjekt = (String) ComboValjProjektID.getSelectedItem();
-        System.out.println("Valt projekt: " + valtProjekt); // Kontrollera valt värde
-
-    if (!valtProjekt.equals("Välj projekt")) {
-        String[] delar = valtProjekt.split(" - ");
-        valtProjektID = Integer.parseInt(delar[0]);
-        System.out.println("Valt projekt-ID: " + valtProjektID); // Kontrollera projekt-ID
-        fyllTextfields();
-        }
-    }
-
-    // Fyll textfälten med projektets data
+    //Fyll textfälten med projektets data
     private void fyllTextfields() {
     ComboValjProjektID.addActionListener(evt -> {
         String valtProjekt = ComboValjProjektID.getSelectedItem().toString();
 
         if (!valtProjekt.equals("Välj projekt")) {
-            // Regex för att extrahera projekt-ID
+            //Regex för att extrahera projekt-ID
             Pattern pattern = Pattern.compile("(\\d+) - ");
             Matcher matcher = pattern.matcher(valtProjekt);
 
             if (matcher.find()) {
-                // Extrahera projekt-ID
+                //Extrahera projekt-ID
                 valtProjektID = Integer.parseInt(matcher.group(1));
 
                 try {
-                    // SQL-fråga för att hämta projektdata
+                    //SQL-fråga för att hämta projektdata
                     String query = "SELECT * FROM projekt WHERE pid = " + valtProjektID + ";";
 
                     ArrayList<HashMap<String, String>> projektInfo = idb.fetchRows(query);
