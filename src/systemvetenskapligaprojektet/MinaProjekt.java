@@ -36,26 +36,22 @@ public class MinaProjekt extends javax.swing.JFrame {
         kontrollIfProjektchef();
     }
     
-    private void kontrollIfProjektchef(){
-        try{
-            ArrayList<String> projektchef = new ArrayList<>();
-        
-            String selectProjektchef = "select projektchef from projekt;";
-            projektchef = idb.fetchColumn(selectProjektchef);
-        
-            String selectAid = "select aid from anstalld where epost = '" + inloggadAnvandare + "';";
+    private void kontrollIfProjektchef() {
+        try {
+            String selectAid = "SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare + "'";
             String anstalldsID = idb.fetchSingle(selectAid);
-        
-        for(String ettProjektchefsID:projektchef){
-            if(ettProjektchefsID.equals(anstalldsID)){
+
+            String checkProjektchef = "SELECT COUNT(*) FROM projekt WHERE projektchef = '" + anstalldsID + "'";
+            String resultat = idb.fetchSingle(checkProjektchef);
+
+            if (resultat != null && Integer.parseInt(resultat) > 0) {
                 btnAnsvarProjekt.setVisible(true);
             }
-        }
-        }
-        catch (InfException ex) {
-            System.out.println(ex);
+        } catch (InfException ex) {
+            System.out.println("Fel vid kontroll av projektchef: " + ex.getMessage());
         }
     }
+
 
     private void kontrolleraRollOchHanteraKnappar() {
     try {
@@ -87,111 +83,111 @@ public class MinaProjekt extends javax.swing.JFrame {
         // Kontrollera om resultatet är större än 0, vilket innebär att användaren är projektchef
         return resultat != null && Integer.parseInt(resultat) > 0;
         }
-    
-    private void visaKostnadsKolumn(boolean visa) {
-        int kolumnIndex = 5; // Kostnadskolumn
-
-        if (tblMinaprojekt.getColumnModel().getColumnCount() > kolumnIndex) {
-            int minWidth = visa ? 75 : 0;
-            int maxWidth = visa ? 200 : 0;
-            int preferredWidth = visa ? 100 : 0;
-
-        tblMinaprojekt.getColumnModel().getColumn(kolumnIndex).setMinWidth(minWidth);
-        tblMinaprojekt.getColumnModel().getColumn(kolumnIndex).setMaxWidth(maxWidth);
-        tblMinaprojekt.getColumnModel().getColumn(kolumnIndex).setPreferredWidth(preferredWidth);
-    }
-}
-    
+      
     private void skapaOchFyllTabell(String valdStatus) {
         try {
-             String aid = hamtaAnvandareID();
+            String aid = hamtaAnvandareID();
             if (aid == null) return;
-        
-                //Query för att ta fram projekt som en användare är kopplad till via tabellen ans_proj
-                String handlaggareQuery = 
-                    "SELECT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, p.projektchef, p.land, " +
-                    "GROUP_CONCAT(partner.namn separator ',') as partners "+
-                    "FROM projekt p " +
-                    "LEFT JOIN projekt_partner pt ON p.pid = pt.pid " +
-                    "LEFT JOIN partner ON pt.partner_pid = partner.pid " +
-                    "JOIN ans_proj ON p.pid = ans_proj.pid " +
-                    "WHERE ans_proj.aid = '" + aid + "' " +
-                    "GROUP BY p.pid";
 
-                //Query för att ta fram projekt där användaren är projektchef
-                String projektchefQuery = 
-                    "SELECT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, p.projektchef, p.land, " +
-                    "GROUP_CONCAT(partner.namn separator ',') as partners " +
-                    "FROM projekt p " +
-                    "LEFT JOIN projekt_partner pt ON p.pid = pt.pid " +
-                    "LEFT JOIN partner ON pt.partner_pid = partner.pid " +
-                    "WHERE p.projektchef = '" + aid + "' " +
-                    "GROUP BY p.pid";
-            
-                //slår samman båda resultaten till en enda tabell och tar automatiskt bort dubbletter
-                String baseQuery = handlaggareQuery + " UNION " + projektchefQuery; 
-              
-                // Om en status är vald, filtrera resultaten
-            if (valdStatus != null && !valdStatus.isEmpty()) {
-                 baseQuery = "SELECT * FROM (" + baseQuery + ") AS filtrerad WHERE status = '" + valdStatus + "'";
-                }
+            // Kontrollera om användaren är projektchef
+            boolean arProjektchef = isProjektchef(aid);
 
-                ArrayList<HashMap<String, String>> projektLista = idb.fetchRows(baseQuery);
+            // Göm kostnadskolumnen om användaren inte är projektchef
+            visaKostnadsKolumn(arProjektchef);
+
+            // Query för att ta fram projekt som en användare är kopplad till via tabellen ans_proj
+            String handlaggareQuery = 
+                "SELECT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, " +
+                "(SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld WHERE aid = p.projektchef) AS projektchef, " +
+                "(SELECT namn FROM land WHERE lid = p.land) AS land, " +
+                "GROUP_CONCAT(partner.namn SEPARATOR ',') AS partners " +
+                "FROM projekt p " +
+                "LEFT JOIN projekt_partner pt ON p.pid = pt.pid " +
+                "LEFT JOIN partner ON pt.partner_pid = partner.pid " +
+                "JOIN ans_proj ON p.pid = ans_proj.pid " +
+                "WHERE ans_proj.aid = '" + aid + "' " +
+                "GROUP BY p.pid";
+
+            // Query för att ta fram projekt där användaren är projektchef
+            String projektchefQuery = 
+                "SELECT p.pid, p.projektnamn, p.beskrivning, p.startdatum, p.slutdatum, p.kostnad, p.status, p.prioritet, " +
+                "(SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld WHERE aid = p.projektchef) AS projektchef, " +
+                "(SELECT namn FROM land WHERE lid = p.land) AS land, " +
+                "GROUP_CONCAT(partner.namn SEPARATOR ',') AS partners " +
+                "FROM projekt p " +
+                "LEFT JOIN projekt_partner pt ON p.pid = pt.pid " +
+                "LEFT JOIN partner ON pt.partner_pid = partner.pid " +
+                "WHERE p.projektchef = '" + aid + "' " +
+                "GROUP BY p.pid";
+
+            // Slå samman båda resultaten till en enda tabell och ta bort dubbletter
+            String baseQuery = handlaggareQuery + " UNION " + projektchefQuery;
+
+            // Om en status är vald, filtrera resultaten
+            if (valdStatus == null || valdStatus.isEmpty() || "Välj status".equals(valdStatus)) {
+                valdStatus = null; // Visa alla projekt
+            }
+
+            // Hämta data
+            ArrayList<HashMap<String, String>> projektLista = idb.fetchRows(baseQuery);
 
             if (projektLista == null || projektLista.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Inga projekt hittades.");
                 return;
             }
 
-        uppdateraTabell(projektLista);
-        } catch (InfException e) {
-        JOptionPane.showMessageDialog(this, "Kunde inte fylla tabellen: " + e.getMessage());
+            // Uppdatera tabellen med hämtad data
+            uppdateraTabell(projektLista);
+            
+            // Kontrollera roll och visa/göm kostnadskolumnen
+           visaKostnadsKolumn(arProjektchef);
+           } catch (InfException e) {
+            JOptionPane.showMessageDialog(this, "Kunde inte fylla tabellen: " + e.getMessage());
         }
-}
+    }
 
     private void uppdateraTabell(ArrayList<HashMap<String, String>> projektLista) {
-        String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "kostnad", "status", "prioritet", "projektchef", "land", "partner_namn"};
+        String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "kostnad", "status", "prioritet", "projektchef", "land", "partners"};
         DefaultTableModel modell = new DefaultTableModel(kolumnNamn, 0);
 
         for (HashMap<String, String> projekt : projektLista) {
             Object[] rad = new Object[kolumnNamn.length];
             for (int i = 0; i < kolumnNamn.length; i++) {
                 String kolumnVarde = projekt.getOrDefault(kolumnNamn[i], "Ingen data");
-                    if("partner_namn".equals(kolumnNamn[i])){
+
+                // Om kolumnen är "partners", lägg till klickbar text
+                if ("partners".equals(kolumnNamn[i])) {
                     kolumnVarde = "Klicka här för att se info om partner/partners!";
                 }
+
                 rad[i] = kolumnVarde;
             }
             modell.addRow(rad);
         }
 
         tblMinaprojekt.setModel(modell);
-        
-         //Sätter storleken på kolumnerna.
-        tblMinaprojekt.setAutoResizeMode(tblMinaprojekt.AUTO_RESIZE_OFF);
-            TableColumn col = tblMinaprojekt.getColumnModel().getColumn(0);
-            col.setPreferredWidth(50);
-            col = tblMinaprojekt.getColumnModel().getColumn(1);
-            col.setPreferredWidth(100);
-            col = tblMinaprojekt.getColumnModel().getColumn(2);
-            col.setPreferredWidth(150);
-            col = tblMinaprojekt.getColumnModel().getColumn(3);
-            col.setPreferredWidth(100);
-            col = tblMinaprojekt.getColumnModel().getColumn(4);
-            col.setPreferredWidth(100);
-            col = tblMinaprojekt.getColumnModel().getColumn(5);
-            col.setPreferredWidth(100);
-            col = tblMinaprojekt.getColumnModel().getColumn(6);
-            col.setPreferredWidth(100);
-            col = tblMinaprojekt.getColumnModel().getColumn(7);
-            col.setPreferredWidth(75);
-            col = tblMinaprojekt.getColumnModel().getColumn(8);
-            col.setPreferredWidth(75);
-            col = tblMinaprojekt.getColumnModel().getColumn(9);
-            col.setPreferredWidth(75);
-            col = tblMinaprojekt.getColumnModel().getColumn(10);
-            col.setPreferredWidth(250);
-}
+
+        // Sätt storleken på kolumnerna
+        tblMinaprojekt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        int[] kolumnBredd = {50, 100, 150, 100, 100, 100, 100, 75, 150, 100, 250};
+        for (int i = 0; i < kolumnBredd.length; i++) {
+        if (i == 5) continue; // Hoppa över kostnadskolumnen
+        TableColumn col = tblMinaprojekt.getColumnModel().getColumn(i);
+        col.setPreferredWidth(kolumnBredd[i]);
+        }
+    }
+
+        private void visaKostnadsKolumn(boolean visa) {
+            int kolumnIndex = 5; // Kostnadskolumnens index
+
+            if (tblMinaprojekt.getColumnModel().getColumnCount() > kolumnIndex) {
+                TableColumn kolumn = tblMinaprojekt.getColumnModel().getColumn(kolumnIndex);
+                kolumn.setMinWidth(visa ? 75 : 0);
+                kolumn.setMaxWidth(visa ? 200 : 0);
+                kolumn.setPreferredWidth(visa ? 100 : 0);
+            }
+        }
+
     
     private void statusFilter() {
         try {
@@ -209,17 +205,25 @@ public class MinaProjekt extends javax.swing.JFrame {
                 // Lägg till varje status som finns i databasen
                 for (String status : resultatLista) {
                     ComboStatusFilter.addItem(status);
-             }
+                }
 
                 // Lämna det första neutrala alternativet valt
                 ComboStatusFilter.setSelectedIndex(0); // Sätt "Välj status" som valt
-             } else {
+            } else {
                 JOptionPane.showMessageDialog(this, "Inga statusvärden hittades i databasen.");
-             }
-            } catch (InfException e) {
+            }
+
+            // Kontrollera om användaren valt "Välj status"
+            String valdStatus = (String) ComboStatusFilter.getSelectedItem();
+            if ("Välj status".equals(valdStatus)) {
+                valdStatus = null; // Visa alla projekt om "Välj status" är valt
+            }
+
+        } catch (InfException e) {
             JOptionPane.showMessageDialog(this, "Ett fel uppstod vid hämtning av statusvärden: " + e.getMessage());
-             }
+        }
     }
+
 
     
     private void initStatusFilterListener() {
@@ -353,7 +357,8 @@ public class MinaProjekt extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAnsvarProjektActionPerformed
 
     private void tblMinaprojektMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblMinaprojektMouseClicked
-            int column = tblMinaprojekt.columnAtPoint(evt.getPoint());
+        //ActionListener för att hantera klick på "partners"-kolumnen
+        int column = tblMinaprojekt.columnAtPoint(evt.getPoint());
         if(column == 10){
             new ProjektPartners(idb,inloggadAnvandare).setVisible(true);
             this.setVisible(false);

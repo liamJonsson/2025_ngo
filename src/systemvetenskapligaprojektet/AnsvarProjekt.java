@@ -28,83 +28,71 @@ public class AnsvarProjekt extends javax.swing.JFrame {
     }
     
     public void fyllTabell() {
-    try {
-        String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "kostnad", "status", "prioritet", "projektchef", "land"};
-        DefaultTableModel allaAnsvarProjekt = new DefaultTableModel(kolumnNamn, 0);
+        try {
+            String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "kostnad", "status", "prioritet", "projektchef", "land"};
+            DefaultTableModel allaAnsvarProjekt = new DefaultTableModel(kolumnNamn, 0);
 
-        // Hämta alla projekt-ID
-        String selectPid = "SELECT pid FROM projekt where projektchef in (select aid from anstalld where epost = '" + inloggadAnvandare + "');";
+            // Hämta alla projekt-ID
+            String selectPid = "SELECT pid FROM projekt WHERE projektchef IN (SELECT aid FROM anstalld WHERE epost = '" + inloggadAnvandare + "');";
+            ArrayList<String> pidLista = idb.fetchColumn(selectPid);
 
-        ArrayList<String> pidLista = idb.fetchColumn(selectPid);
+            if (pidLista != null) {
+                for (String ettPID : pidLista) {
+                    String selectInfo = "SELECT pid, projektnamn, beskrivning, startdatum, slutdatum, kostnad, status, prioritet, " +
+                            "(SELECT CONCAT(fornamn, ' ', efternamn) FROM anstalld WHERE aid = projektchef) AS projektchef, " +
+                            "(SELECT namn FROM land WHERE lid = land) AS land " +
+                            "FROM projekt WHERE pid = " + ettPID + ";";
+                    ArrayList<HashMap<String, String>> info = idb.fetchRows(selectInfo);
 
-        if (pidLista != null) {
-            for (String ettPID : pidLista) {
-                String selectInfo = "select pid, projektnamn, beskrivning, startdatum, slutdatum, kostnad, status, prioritet, projektchef, land FROM projekt where pid = " + ettPID + ";";
-                ArrayList<HashMap<String, String>> info = idb.fetchRows(selectInfo);
+                    Object[] enRad = new Object[kolumnNamn.length];
+                    int index = 0;
 
-                Object[] enRad = new Object[kolumnNamn.length];
-                int index = 0;
-
-                for (String enKolumn : kolumnNamn) {
+                    for (String enKolumn : kolumnNamn) {
                         enRad[index++] = info.get(0).get(enKolumn);
                     }
-                
-                allaAnsvarProjekt.addRow(enRad);
-            }
+
+                    allaAnsvarProjekt.addRow(enRad);
+                }
+
                 tblAnsvarProjekt.setModel(allaAnsvarProjekt);
             }
+
             tblAnsvarProjekt.setAutoResizeMode(tblAnsvarProjekt.AUTO_RESIZE_OFF);
 
-        TableColumn col = tblAnsvarProjekt.getColumnModel().getColumn(0);
+            TableColumn col = tblAnsvarProjekt.getColumnModel().getColumn(0);
+            col.setPreferredWidth(50);
 
-        col.setPreferredWidth(50);
+            col = tblAnsvarProjekt.getColumnModel().getColumn(1);
+            col.setPreferredWidth(100);
 
-        col = tblAnsvarProjekt.getColumnModel().getColumn(1);
+            col = tblAnsvarProjekt.getColumnModel().getColumn(2);
+            col.setPreferredWidth(175);
 
-        col.setPreferredWidth(100);
+            col = tblAnsvarProjekt.getColumnModel().getColumn(3);
+            col.setPreferredWidth(100);
 
-        col = tblAnsvarProjekt.getColumnModel().getColumn(2);
+            col = tblAnsvarProjekt.getColumnModel().getColumn(4);
+            col.setPreferredWidth(100);
 
-        col.setPreferredWidth(175);
+            col = tblAnsvarProjekt.getColumnModel().getColumn(5);
+            col.setPreferredWidth(100);
 
-        col = tblAnsvarProjekt.getColumnModel().getColumn(3);
+            col = tblAnsvarProjekt.getColumnModel().getColumn(6);
+            col.setPreferredWidth(100);
 
-        col.setPreferredWidth(100);
+            col = tblAnsvarProjekt.getColumnModel().getColumn(7);
+            col.setPreferredWidth(75);
 
-        col = tblAnsvarProjekt.getColumnModel().getColumn(4);
+            col = tblAnsvarProjekt.getColumnModel().getColumn(8);
+            col.setPreferredWidth(75);
 
-        col.setPreferredWidth(100);
-        
-        col = tblAnsvarProjekt.getColumnModel().getColumn(5);
+            col = tblAnsvarProjekt.getColumnModel().getColumn(9);
+            col.setPreferredWidth(50);
 
-        col.setPreferredWidth(100);
-        
-        col = tblAnsvarProjekt.getColumnModel().getColumn(6);
-
-        col.setPreferredWidth(100);
-        
-        col = tblAnsvarProjekt.getColumnModel().getColumn(7);
-
-        col.setPreferredWidth(75);
-        
-        col = tblAnsvarProjekt.getColumnModel().getColumn(8);
-
-        col.setPreferredWidth(75);
-        
-        col = tblAnsvarProjekt.getColumnModel().getColumn(9);
-
-        col.setPreferredWidth(50);
-        
-            
-
-            
-        
         } catch (InfException ex) {
             System.out.println(ex);
         }
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
