@@ -37,7 +37,6 @@ public class AvdelningensProjekt extends javax.swing.JFrame {
         hamtaAvdelning();
         statusFilter(); 
         initStatusFilterListener();
-        //skapaOchFyllTabell(null);
         hanteraSearchListener();              
     }
     
@@ -62,7 +61,7 @@ private void fyllTabell() {
                 String selectInfo = "SELECT pid, projektnamn, beskrivning, startdatum, slutdatum, status, prioritet, projektchef, land " +
                                     "FROM projekt WHERE pid = '" + ettID + "';";
 
-                // Vi använder fetchRow här eftersom varje projekt är en enskild rad.
+                //fetchRow här eftersom varje projekt är en enskild rad.
                 HashMap<String, String> info = idb.fetchRow(selectInfo);
 
                 // Skapa en ny rad i tabellen
@@ -110,9 +109,9 @@ private void fyllTabell() {
                 col = tblProjekt.getColumnModel().getColumn(2); //Beskrivning
                 col.setPreferredWidth(750);
                 col = tblProjekt.getColumnModel().getColumn(3); //Startdatum
-                col.setPreferredWidth(250);
+                col.setPreferredWidth(300);
                 col = tblProjekt.getColumnModel().getColumn(4); //Slutdatum
-                col.setPreferredWidth(250);
+                col.setPreferredWidth(300);
                 col = tblProjekt.getColumnModel().getColumn(5); //status
                 col.setPreferredWidth(200);
                 col = tblProjekt.getColumnModel().getColumn(6); //Prioritet
@@ -191,30 +190,32 @@ private void uppdateraTabell(ArrayList<HashMap<String, String>> projektLista) {
             for (int i = 0; i < kolumnNamn.length; i++) {
                 String kolumnVarde = projekt.getOrDefault(kolumnNamn[i], "Ingen data");
 
+                // Om vi är på "projektchef"-kolumnen, hämta projektchefens namn
                 if (kolumnNamn[i].equals("projektchef")) {
-                    // Hämta projektchefens förnamn och efternamn
                     String projektchefAid = projekt.get("projektchef");
                     
-                    // Hämta projektchefens förnamn
+                    // Hämta projektchefens förnamn och efternamn
                     String selectFornamn = "SELECT fornamn FROM anstalld WHERE aid = '" + projektchefAid + "';";
-                    String fornamn = idb.fetchSingle(selectFornamn);  // Använd rätt metod här
+                    String fornamn = idb.fetchSingle(selectFornamn);  // Hämta förnamn
                    
-                    // Hämta projektchefens efternamn
                     String selectEfternamn = "SELECT efternamn FROM anstalld WHERE aid = '" + projektchefAid + "';";
-                    String efternamn = idb.fetchSingle(selectEfternamn);  // Använd rätt metod här
+                    String efternamn = idb.fetchSingle(selectEfternamn);  // Hämta efternamn
                     
                     rad[i] = fornamn + " " + efternamn;
                 } 
+                // Om vi är på "land"-kolumnen, hämta landets namn
                 else if (kolumnNamn[i].equals("land")) {
-                    // Hämta landets namn
                     String landId = projekt.get("land");
-                    
-                    // Hämta landets namn
                     String selectLand = "SELECT namn FROM land WHERE lid = '" + landId + "';";
-                    String land = idb.fetchSingle(selectLand);  // Använd rätt metod här
+                    String land = idb.fetchSingle(selectLand);  // Hämta landets namn
                     
                     rad[i] = land;
                 } 
+                // Om vi är på "beskrivning"-kolumnen, sätt en klickbar text
+                else if (kolumnNamn[i].equals("beskrivning")) {
+                    rad[i] = "Klicka här för att se beskrivning!";
+                } 
+                // För alla andra kolumner, sätt data från projektet
                 else {
                     rad[i] = kolumnVarde;
                 }
@@ -226,6 +227,27 @@ private void uppdateraTabell(ArrayList<HashMap<String, String>> projektLista) {
 
         // Sätt den uppdaterade modellen som tabellens modell
         tblProjekt.setModel(modell);
+              
+        // Anpassa kolumnbredder
+        TableColumn col = tblProjekt.getColumnModel().getColumn(0); //ID
+        col.setPreferredWidth(75);
+        col = tblProjekt.getColumnModel().getColumn(1); //Namn
+        col.setPreferredWidth(275);
+        col = tblProjekt.getColumnModel().getColumn(2); //Beskrivning
+        col.setPreferredWidth(750);
+        col = tblProjekt.getColumnModel().getColumn(3); //Startdatum
+        col.setPreferredWidth(250);
+        col = tblProjekt.getColumnModel().getColumn(4); //Slutdatum
+        col.setPreferredWidth(250);
+        col = tblProjekt.getColumnModel().getColumn(5); //status
+        col.setPreferredWidth(200);
+        col = tblProjekt.getColumnModel().getColumn(6); //Prioritet
+        col.setPreferredWidth(150);
+        col = tblProjekt.getColumnModel().getColumn(7); //Projektchef
+        col.setPreferredWidth(350);
+        col = tblProjekt.getColumnModel().getColumn(8); //Land
+        col.setPreferredWidth(225); 
+
     } catch (InfException ex) {
         // Hantera exception och visa ett meddelande till användaren
         JOptionPane.showMessageDialog(this, "Kunde inte uppdatera tabellen: " + ex.getMessage());
@@ -429,14 +451,16 @@ private void hanteraDatumSpannSok(String sokTerm) {
                         .addComponent(lblAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(125, 125, 125))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(503, 503, 503)
                                 .addComponent(btnSok)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnTillbaka))
-                            .addComponent(jScrollPane1))
-                        .addGap(18, 18, Short.MAX_VALUE)
+                                .addComponent(btnTillbaka)
+                                .addGap(18, 67, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addComponent(comboBoxAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35))))
         );
