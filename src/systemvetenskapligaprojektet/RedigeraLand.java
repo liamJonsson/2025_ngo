@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package systemvetenskapligaprojektet;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import oru.inf.InfDB;
@@ -19,7 +20,7 @@ public class RedigeraLand extends javax.swing.JFrame {
     private static InfDB idb;
     private String inloggadAnvandare;
     private int lid;
-    private double enValuta;
+    private BigDecimal valuta;
     /**
      * Creates new form RedigeraLand
      */
@@ -336,13 +337,17 @@ public class RedigeraLand extends javax.swing.JFrame {
         }
 
         //Kontrollera och hantera valuta
-        try {
-            if (!textValuta.isEmpty()) {
-                enValuta = Double.parseDouble(textValuta);
-            }
-        } catch (NumberFormatException ex) {
+        try{
+                valuta = new BigDecimal(textValuta);
+                
+                //Kontrollera (13, 4)
+                if(valuta.precision() > 13 || valuta.scale() > 4){
+                    throw new NumberFormatException();
+                }
+        }
+        catch(NumberFormatException ex){
             lblValutaFel.setVisible(true);
-            hasError = true; 
+            return;
         }
 
         //Om det finns fel - avbryt
@@ -351,7 +356,6 @@ public class RedigeraLand extends javax.swing.JFrame {
         }
 
         //Utför uppdatering om inga fel finns
-        String valuta = String.valueOf(enValuta);
         String updateLand = "update land set namn = '" + namn + "', sprak = '" + sprak + "', valuta = " + valuta +
                             ", tidszon = '" + tidszon + "', politisk_struktur = '" + politiskStruktur + "', ekonomi = '" + ekonomi + "' where lid = " + lid + ";";
         idb.update(updateLand);
