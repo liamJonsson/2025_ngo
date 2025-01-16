@@ -120,7 +120,7 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
     
     private void hanteraSearchListener() {
         btnSok.addActionListener((ActionEvent e) -> {
-            // Be användaren om sökterm
+            //Be användaren om sökterm
             String sokTerm = JOptionPane.showInputDialog("Ange både för- och efternamn, eller e-postadress, för att söka efter en anställd:");
 
             if (sokTerm == null || sokTerm.trim().isEmpty()) {
@@ -129,9 +129,14 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
             }
 
             try {
+                //Hämta avdelningens ID för den inloggade användaren
+                String selectAvdelning = "select avdelning from anstalld where epost = '" + inloggadAnvandare + "';";
+                String avdelningId = idb.fetchSingle(selectAvdelning);
+
+                //SQL-query baserat på om det är förnamn, efternamn eller e-postadress
                 String query = "";
                 if (sokTerm.contains(" ")) {
-                    // Om sökterm innehåller ett mellanslag så kommer den anta att det är för- och efternamn
+                    //Om sökterm innehåller ett mellanslag så kommer den anta att det är för- och efternamn
                     String[] namnDelar = sokTerm.split(" ", 2);
                     String fornamn = namnDelar[0].trim();
                     String efternamn = namnDelar[1].trim();
@@ -139,15 +144,17 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
                     query = "SELECT aid, fornamn, efternamn, epost, telefon " +
                             "FROM anstalld " +
                             "WHERE LOWER(fornamn) = '" + fornamn.toLowerCase() + "' " +
-                            "  AND LOWER(efternamn) = '" + efternamn.toLowerCase() + "';";
+                            "  AND LOWER(efternamn) = '" + efternamn.toLowerCase() + "' " +
+                            "  AND avdelning = " + avdelningId + ";"; //Kontrollera att den anställde är på samma avdelning
                 } else {
-                    // Annars så kommer den anta att söktermen är en e-postadress
+                    //Annars så kommer den anta att söktermen är en e-postadress
                     query = "SELECT aid, fornamn, efternamn, epost, telefon " +
                             "FROM anstalld " +
-                            "WHERE LOWER(epost) = '" + sokTerm.toLowerCase() + "';";
+                            "WHERE LOWER(epost) = '" + sokTerm.toLowerCase() + "' " +
+                            "  AND avdelning = " + avdelningId + ";"; //Kontrollera att den anställde är på samma avdelning
                 }
 
-                // Hämta resultat från databasen
+                //Hämta resultat från databasen
                 ArrayList<HashMap<String, String>> resultat = idb.fetchRows(query);
 
                 if (resultat == null || resultat.isEmpty()) {
@@ -155,11 +162,11 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
                     return;
                 }
 
-                // Skapa en ny tabellmodell för att visa resultatet
+                //Skapa en ny tabellmodell för att visa resultatet
                 String[] kolumnNamn = {"Anställnings-ID", "Förnamn", "Efternamn", "E-post", "Telefon"};
                 DefaultTableModel filtreradModell = new DefaultTableModel(kolumnNamn, 0);
 
-                // Lägg till rader i modellen baserat på resultatet
+                //Lägg till rader i modellen baserat på resultatet
                 for (HashMap<String, String> rad : resultat) {
                     filtreradModell.addRow(new Object[]{
                             rad.get("aid"),
@@ -170,15 +177,28 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
                     });
                 }
 
-                // Uppdatera tabellen med den filtrerade modellen
-                tblAnstallda.setModel(filtreradModell);
+                //Uppdatera tabellen med den filtrerade modellen
+                            tblAnstallda.setModel(filtreradModell);
 
-            } catch (InfException ex) {
-                JOptionPane.showMessageDialog(null, "Ett fel inträffade vid sökningen: " + ex.getMessage());
-            }
-        });
-    }
+                            //Sätt storleken på tabellen för att förhindra att den blir för liten
+                            tblAnstallda.setAutoResizeMode(tblAnstallda.AUTO_RESIZE_OFF);
 
+                            TableColumn col = tblAnstallda.getColumnModel().getColumn(0);
+                            col.setPreferredWidth(50);
+                            col = tblAnstallda.getColumnModel().getColumn(1);
+                            col.setPreferredWidth(125);
+                            col = tblAnstallda.getColumnModel().getColumn(2);
+                            col.setPreferredWidth(125);
+                            col = tblAnstallda.getColumnModel().getColumn(3);
+                            col.setPreferredWidth(250);
+                            col = tblAnstallda.getColumnModel().getColumn(4);
+                            col.setPreferredWidth(150);
+
+                        } catch (InfException ex) {
+                            JOptionPane.showMessageDialog(null, "Ett fel inträffade vid sökningen: " + ex.getMessage());
+                        }
+                    });
+                }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
