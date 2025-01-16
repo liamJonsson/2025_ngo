@@ -149,7 +149,7 @@ public class RedigeraLand extends javax.swing.JFrame {
 
         lblValutaFel.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblValutaFel.setForeground(new java.awt.Color(255, 0, 0));
-        lblValutaFel.setText("Använd korrekt format: XXXX.XX");
+        lblValutaFel.setText("Felaktigt format! Max nio siffror exklusive två decimaler");
 
         btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnTillbaka.setText("Tillbaka");
@@ -202,6 +202,8 @@ public class RedigeraLand extends javax.swing.JFrame {
         lblLyckat1.setForeground(new java.awt.Color(0, 153, 0));
         lblLyckat1.setText("Ändringarna har sparats!");
 
+        lblFelmeddelande.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
+        lblFelmeddelande.setForeground(new java.awt.Color(255, 0, 0));
         lblFelmeddelande.setText("Alla fält måste fyllas i");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -211,11 +213,8 @@ public class RedigeraLand extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblLaggTillEttLand1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblLaggTillEttLand1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -223,29 +222,28 @@ public class RedigeraLand extends javax.swing.JFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
-                            .addComponent(lblFelmeddelande)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFelmeddelande, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblValutaFel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tfRedigeraNamn)
-                                    .addComponent(tfRedigeraSprak)
-                                    .addComponent(tfRedigeraValuta)
-                                    .addComponent(tfRedigeraTidszon)
-                                    .addComponent(lblValutaFel, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfRedigeraPolitiskStruktur)
-                                    .addComponent(tfRedigeraEkonomi)
-                                    .addComponent(ComboValjLandID, 0, 192, Short.MAX_VALUE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblLyckat1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnSpara)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnTillbaka)))))
-                        .addGap(35, 35, 35))))
+                                    .addComponent(tfRedigeraValuta, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfRedigeraSprak, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfRedigeraNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ComboValjLandID, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfRedigeraTidszon, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfRedigeraPolitiskStruktur, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfRedigeraEkonomi, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblLyckat1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(btnSpara)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(btnTillbaka))))
+                                .addGap(0, 0, 0)))))
+                .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,7 +287,7 @@ public class RedigeraLand extends javax.swing.JFrame {
                     .addComponent(lblFelmeddelande))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblLyckat1)
-                .addGap(35, 35, 35))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();

@@ -26,6 +26,26 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="lblID" max="32767" attributes="0"/>
+                          <Component id="lblNamn" pref="80" max="32767" attributes="0"/>
+                          <Component id="lblSprak" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="tfID" pref="330" max="32767" attributes="0"/>
+                                  <Component id="lblIDFel" alignment="0" min="-2" pref="111" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                              <Component id="tfNamn" min="-2" pref="327" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblPolitiskStruktur" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -33,21 +53,14 @@
                           <Component id="lblTidszon" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="lblValuta" alignment="0" min="-2" pref="41" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <EmptySpace min="35" pref="35" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="lblValutaFel" min="-2" pref="216" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      <Component id="tfEkonomi" min="-2" pref="226" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="tfPolitiskStruktur" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="tfTidszon" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="tfValuta" max="32767" attributes="0"/>
+                          <Component id="lblValutaFel" min="-2" pref="304" max="-2" attributes="0"/>
+                          <Component id="tfValuta" min="-2" pref="327" max="-2" attributes="0"/>
+                          <Component id="tfSprak" alignment="0" min="-2" pref="327" max="-2" attributes="0"/>
+                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                              <Component id="tfEkonomi" alignment="0" min="-2" pref="327" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                       <Component id="lblLaggTillLandLyckat" min="-2" pref="119" max="-2" attributes="0"/>
                                       <Group type="102" attributes="0">
@@ -56,32 +69,15 @@
                                           <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                              </Group>
-                              <EmptySpace pref="35" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblLaggTillEttLand" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="lblID" max="32767" attributes="0"/>
-                                  <Component id="lblNamn" pref="80" max="32767" attributes="0"/>
-                                  <Component id="lblSprak" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="tfID" pref="229" max="32767" attributes="0"/>
-                                  <Component id="tfNamn" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="tfSprak" max="32767" attributes="0"/>
-                                  <Component id="lblIDFel" alignment="0" min="-2" pref="111" max="-2" attributes="0"/>
+                                  <Component id="tfTidszon" alignment="1" min="-2" pref="327" max="-2" attributes="0"/>
+                                  <Component id="tfPolitiskStruktur" alignment="1" min="-2" pref="327" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="35" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="lblLaggTillEttLand" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -90,12 +86,12 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Component id="lblLaggTillEttLand" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="tfID" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblID" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblID" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfID" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
               <Component id="lblIDFel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -264,7 +260,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Ange valutan korrekt format: XXXX.XX"/>
+        <Property name="text" type="java.lang.String" value="Felaktigt format! Max nio siffror exklusive tv&#xe5; decimaler"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblLaggTillEttLand">

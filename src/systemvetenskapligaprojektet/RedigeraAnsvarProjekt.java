@@ -86,6 +86,7 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
             String selectInfo = "select * from projekt where pid = " + ettProjektID + ";";
             ArrayList<HashMap<String, String>> info = idb.fetchRows(selectInfo);
             
+            //Lägger in datan vi hämtat i våra textfields
             for(HashMap<String, String> enRad:info){
                 for(String ettAttribut:enRad.keySet()){
                     switch(ettAttribut){
@@ -378,6 +379,7 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
 
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
     boolean hasError = false;
+    //Gör så alla felmeddelanden är osynliga vid ett nytt försök
     lblFelStartdatum.setVisible(false);
     lblFelSlutdatum.setVisible(false);
     lblFelKostnad.setVisible(false);
@@ -561,7 +563,7 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-            //    new RedigeraAnsvarProjekt().setVisible(true);
+            //new RedigeraAnsvarProjekt().setVisible(true);
             }
         });
     }

@@ -169,7 +169,7 @@ public class LaggTillProjekt extends javax.swing.JFrame {
 
         lblFelmeddelandeKostnad.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         lblFelmeddelandeKostnad.setForeground(new java.awt.Color(255, 0, 0));
-        lblFelmeddelandeKostnad.setText("Använd korrekt format: Max 10 siffror");
+        lblFelmeddelandeKostnad.setText("Felaktigt format! Max tio siffror exklusive två decimaler");
 
         comboStatus.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         comboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pågående", "Planerad", "Avslutad" }));
@@ -217,7 +217,7 @@ public class LaggTillProjekt extends javax.swing.JFrame {
                                         .addComponent(btnSpara)
                                         .addGap(18, 18, 18)
                                         .addComponent(btnTillbaka))))
-                            .addComponent(tfSlutdatum, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                            .addComponent(tfSlutdatum, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
                             .addComponent(lblFelmeddelandeKostnad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

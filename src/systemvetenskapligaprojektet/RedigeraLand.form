@@ -47,12 +47,8 @@
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblLaggTillEttLand1" min="-2" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="lblLaggTillEttLand1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" pref="37" max="-2" attributes="0"/>
@@ -60,38 +56,36 @@
                           <Component id="jLabel4" min="-2" pref="37" max="-2" attributes="0"/>
                           <Component id="jLabel5" min="-2" pref="54" max="-2" attributes="0"/>
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblFelmeddelande" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel7" alignment="0" min="-2" pref="63" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="tfRedigeraNamn" max="32767" attributes="0"/>
-                                  <Component id="tfRedigeraSprak" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="tfRedigeraValuta" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="tfRedigeraTidszon" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblValutaFel" alignment="0" min="-2" pref="182" max="-2" attributes="0"/>
-                                  <Component id="tfRedigeraPolitiskStruktur" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="tfRedigeraEkonomi" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="ComboValjLandID" alignment="0" pref="192" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblLyckat1" min="-2" pref="144" max="-2" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Component id="btnSpara" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                          </Group>
+                          <Component id="lblFelmeddelande" min="-2" pref="116" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblValutaFel" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="tfRedigeraValuta" min="-2" pref="301" max="-2" attributes="0"/>
+                                  <Component id="tfRedigeraSprak" min="-2" pref="301" max="-2" attributes="0"/>
+                                  <Component id="tfRedigeraNamn" min="-2" pref="301" max="-2" attributes="0"/>
+                                  <Component id="ComboValjLandID" min="-2" pref="301" max="-2" attributes="0"/>
+                                  <Component id="tfRedigeraTidszon" min="-2" pref="301" max="-2" attributes="0"/>
+                                  <Component id="tfRedigeraPolitiskStruktur" min="-2" pref="301" max="-2" attributes="0"/>
+                                  <Component id="tfRedigeraEkonomi" min="-2" pref="301" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                      <Component id="lblLyckat1" min="-2" pref="144" max="-2" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Component id="btnSpara" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Component id="btnTillbaka" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
               </Group>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -145,7 +139,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="lblLyckat1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+              <EmptySpace pref="35" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -171,7 +165,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="0" green="0" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Anv&#xe4;nd korrekt format: XXXX.XX"/>
+        <Property name="text" type="java.lang.String" value="Felaktigt format! Max nio siffror exklusive tv&#xe5; decimaler"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnTillbaka">
@@ -291,6 +285,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblFelmeddelande">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Microsoft JhengHei UI Light" size="12" style="2"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Alla f&#xe4;lt m&#xe5;ste fyllas i"/>
       </Properties>
     </Component>
