@@ -21,8 +21,8 @@ public class TaBortProjekt extends javax.swing.JFrame {
         initComponents();
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;
-        lblFelIDTaBort.setVisible(false);
-        lblTaBortProjektLyckad.setVisible(false);
+        lblFelIDTaBort.setVisible(false); //Sätter felmeddelandet till osynligt.
+        lblTaBortProjektLyckad.setVisible(false); //Sätter meddelandet till osynligt.
     }
 
     /**
@@ -126,6 +126,7 @@ public class TaBortProjekt extends javax.swing.JFrame {
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
         try{
             try{
+                //Hämtar det id som lagts in i textfältet "tfTaBortID" och gör om det till en int från String.
                 String taBortPid = tfTaBortID.getText();
                 pid = Integer.parseInt(taBortPid);
             }
@@ -160,10 +161,11 @@ public class TaBortProjekt extends javax.swing.JFrame {
                 }
                 String taBort = "delete from projekt where pid = " + pid + ";";
                 idb.delete(taBort);
-                lblTaBortProjektLyckad.setVisible(true);
-                lblFelIDTaBort.setVisible(false);
+                lblTaBortProjektLyckad.setVisible(true); //"lblTaBortProjektLyckad" blir synlig.
+                lblFelIDTaBort.setVisible(false); //"lblFelIDTaBort" blir osynlig.
             } 
             else {
+                //Om det inlagda id inte existerar syns ett felmeddelande.
                 lblFelIDTaBort.setVisible(true);
             }
         } 

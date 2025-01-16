@@ -19,8 +19,8 @@ public class TaBortAnstalld extends javax.swing.JFrame {
         initComponents();
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;
-        lblFelIDTaBort.setVisible(false);
-        lblTaBortAnstalldLyckad.setVisible(false);
+        lblFelIDTaBort.setVisible(false); //Sätter felmeddelande till osynligt.
+        lblTaBortAnstalldLyckad.setVisible(false); //Sätter felmeddelande till osynligt.
     }
 
 

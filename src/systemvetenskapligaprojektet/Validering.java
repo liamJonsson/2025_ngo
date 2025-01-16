@@ -15,8 +15,7 @@ public class Validering {
     //Email
     private static final String EMAIL_REGEX = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
     private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
-    /*private static final String NGO_EMAIL_REGEX = "^[\\w._%+-]+@[\\w.-]+\\.ngo\\.org$";
-    private static final Pattern NGO_EMAIL_PATTERN = Pattern.compile(NGO_EMAIL_REGEX);*/
+    
     //Telefon
     private static final String PHONE_REGEX = "^[0-9]{3}-[0-9]{3}-[0-9]{4}$";
     private static final Pattern PHONE_PATTERN = Pattern.compile(PHONE_REGEX);

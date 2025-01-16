@@ -21,8 +21,8 @@ public class TaBortPartner extends javax.swing.JFrame {
         initComponents();
         this.inloggadAnvandare = inloggadAnvandare;
         this.idb = idb;
-        lblFelIDTaBort.setVisible(false);
-        lblTaBortPartnerLyckad.setVisible(false);
+        lblFelIDTaBort.setVisible(false); //Sätter felmeddelandet till osynligt.
+        lblTaBortPartnerLyckad.setVisible(false); //Sätter meddelandet till osynligt.
     }
 
     /**
