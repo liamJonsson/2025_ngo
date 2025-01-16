@@ -386,6 +386,8 @@ public class RedigeraProjekt extends javax.swing.JFrame {
 
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
     boolean hasError = false;
+    
+    // Dölj alla felmeddelanden vid ett nytt försök
     lblFelmeddelandeStartdatum.setVisible(false);
     lblFelmeddelandeSlutdatum.setVisible(false);
     lblFelmeddelandeKostnad.setVisible(false);
@@ -393,60 +395,93 @@ public class RedigeraProjekt extends javax.swing.JFrame {
     lblFelmeddelandeLand.setVisible(false);
     lblLyckat.setVisible(false);
     lblFelmeddelande.setVisible(false);
-    
+
     try {
         String projektnamn = tfRedigeraProjektNamn.getText();
         String beskrivning = tfRedigeraBeskrivning.getText();
         String startdatum = tfRedigeraStartdatum.getText();
         String slutdatum = tfRedigeraSlutdatum.getText();
         String textKostnad = tfRedigeraKostnad.getText();
-        String projektchef = tfRedigeraProjektchef.getText();
-        String land = tfRedigeraLand.getText();
-        
-        if(validera.valideringDatum(startdatum) && validera.valideringDatum(slutdatum)){
-            BigDecimal kostnad;
-            try{
-            kostnad = new BigDecimal(textKostnad);
-                //Kontrollera (12, 2)
-                if (kostnad.precision() - kostnad.scale() > 10 || kostnad.scale() > 2) {
-                    lblFelmeddelandeKostnad.setVisible(true);
-                    return;
-                }
-            }
-            catch(NumberFormatException ex){
+        String textProjektchef = tfRedigeraProjektchef.getText();
+        String textLand = tfRedigeraLand.getText();
+
+        // Kontrollera att obligatoriska fält inte är tomma
+        if (projektnamn.isEmpty() || beskrivning.isEmpty() || startdatum.isEmpty() || slutdatum.isEmpty() ||
+            textKostnad.isEmpty() || textProjektchef.isEmpty() || textLand.isEmpty()) {
+            lblFelmeddelande.setText("Alla fält måste fyllas i.");
+            lblFelmeddelande.setVisible(true);
+            hasError = true;
+        }
+
+        // Validera datumformat
+        if (!validera.valideringDatum(startdatum)) {
+            lblFelmeddelandeStartdatum.setVisible(true);
+            hasError = true;
+        }
+        if (!validera.valideringDatum(slutdatum)) {
+            lblFelmeddelandeSlutdatum.setVisible(true);
+            hasError = true;
+        }
+
+        // Validera kostnad
+        try {
+            BigDecimal kostnad = new BigDecimal(textKostnad);
+            if (kostnad.precision() - kostnad.scale() > 10 || kostnad.scale() > 2) {
                 lblFelmeddelandeKostnad.setVisible(true);
-                return;
-            }
-            if (projektnamn.isEmpty() || startdatum.isEmpty() || slutdatum.isEmpty() || textKostnad.isEmpty() || projektchef.isEmpty() || land.isEmpty()) {
-                lblFelmeddelande.setText("Alla fält måste fyllas i.");
-                lblFelmeddelande.setVisible(true);
                 hasError = true;
             }
+        } catch (NumberFormatException ex) {
+            lblFelmeddelandeKostnad.setVisible(true);
+            hasError = true;
+        }
 
-            if (!hasError) {
-                String updateQuery = String.format(
-                "UPDATE projekt SET projektnamn = '%s', beskrivning = '%s', startdatum = '%s', slutdatum = '%s', kostnad = %s, projektchef = %s, land = '%s' WHERE pid = %d",
-                projektnamn, beskrivning, startdatum, slutdatum, kostnad, projektchef, land, valtProjektID);
-                idb.update(updateQuery);
-                lblLyckat.setVisible(true);
+        // Validera projektchef (heltal och existerande i databasen)
+        int projektchef = 0;
+        try {
+            projektchef = Integer.parseInt(textProjektchef);
+            String projektchefQuery = "SELECT aid FROM handlaggare WHERE aid = " + projektchef + ";";
+            String projektchefResult = idb.fetchSingle(projektchefQuery);
+
+            if (projektchefResult == null) {
+                lblFelmeddelandeProjektchef.setVisible(true);
+                hasError = true;
             }
+        } catch (NumberFormatException ex) {
+            lblFelmeddelandeProjektchef.setVisible(true);
+            hasError = true;
         }
-        else{
-            if(!validera.valideringDatum(startdatum)){
-                lblFelmeddelandeStartdatum.setVisible(true);
+
+        // Validera land (heltal och existerande i databasen)
+        int land = 0;
+        try {
+            land = Integer.parseInt(textLand);
+            String landQuery = "SELECT lid FROM land WHERE lid = " + land + ";";
+            String landResult = idb.fetchSingle(landQuery);
+
+            if (landResult == null) {
+                lblFelmeddelandeLand.setVisible(true);
+                hasError = true;
             }
-            else if(!validera.valideringDatum(slutdatum)){
-                lblFelmeddelandeSlutdatum.setVisible(true);
-            }
-            else{
-                lblFelmeddelandeStartdatum.setVisible(true);
-                lblFelmeddelandeSlutdatum.setVisible(true);
-            }
+        } catch (NumberFormatException ex) {
+            lblFelmeddelandeLand.setVisible(true);
+            hasError = true;
         }
+
+        // Om inga fel uppstod, uppdatera projektet
+        if (!hasError) {
+            String updateQuery = String.format(
+                "UPDATE projekt SET projektnamn = '%s', beskrivning = '%s', startdatum = '%s', slutdatum = '%s', kostnad = %s, projektchef = %d, land = %d WHERE pid = %d",
+                projektnamn, beskrivning, startdatum, slutdatum, textKostnad, projektchef, land, valtProjektID);
+
+            idb.update(updateQuery);
+            lblLyckat.setVisible(true);
+        }
+
+    } catch (InfException ex) {
+        System.out.println("Ett fel inträffade: " + ex.getMessage());
+        lblFelmeddelande.setText("Ett oväntat fel inträffade. Försök igen.");
+        lblFelmeddelande.setVisible(true);
     }
-         catch(InfException ex){
-            System.out.println(ex);
-        }
     }//GEN-LAST:event_btnSparaActionPerformed
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed

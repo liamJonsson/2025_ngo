@@ -356,8 +356,8 @@ public class RedigeraPartner extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
-    boolean hasError = false; // För att kontrollera om det finns några fel
-    boolean hittad = false;   // För att kolla om det valda partner-id:t finns
+    boolean hasError = false;
+    boolean hittad = false; 
 
     try {
         // Dölj felmeddelanden från början
@@ -371,7 +371,7 @@ public class RedigeraPartner extends javax.swing.JFrame {
         // Kontrollera om partner-ID finns i databasen
         try {
             // Hämta PID från ComboBox istället för textfält
-            String selectedPid = (String) ComboValjPartner.getSelectedItem(); // Antag att ComboValjPartner är din ComboBox
+            String selectedPid = (String) ComboValjPartner.getSelectedItem(); 
             if (selectedPid != null && !selectedPid.equals("Välj partner")) {
                 pid = Integer.parseInt(selectedPid.split(" - ")[0]); // Extrahera PID från ComboBox-värdet
             } else {
@@ -486,26 +486,7 @@ public class RedigeraPartner extends javax.swing.JFrame {
                                 enRad[7] = enPartner.get("stad");
                                 break;
                         }
-                    }
 
-                    // Om vissa fält är tomma, använd de befintliga värdena från databasen
-                    if (namn.isEmpty()) {
-                        namn = enRad[1];
-                    }
-                    if (kontaktPerson.isEmpty()) {
-                        kontaktPerson = enRad[2];
-                    }
-                    if (kontaktEpost.isEmpty()) {
-                        kontaktEpost = enRad[3];
-                    }
-                    if (telefon.isEmpty()) {
-                        telefon = enRad[4];
-                    }
-                    if (adress.isEmpty()) {
-                        adress = enRad[5];
-                    }
-                    if (branch.isEmpty()) {
-                        branch = enRad[6];
                     }
 
                     // Uppdatera partnerinformationen i databasen
