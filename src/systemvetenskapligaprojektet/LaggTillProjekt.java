@@ -32,6 +32,7 @@ public class LaggTillProjekt extends javax.swing.JFrame {
         lblFelmeddelandeKostnad.setVisible(false);
         lblFelmeddelandeProjektchef.setVisible(false);
         lblFelmeddelandeLand.setVisible(false);
+        lblLyckat.setVisible(false);
     }
 
     /**
@@ -72,9 +73,11 @@ public class LaggTillProjekt extends javax.swing.JFrame {
         lblFelmeddelandeKostnad = new javax.swing.JLabel();
         comboStatus = new javax.swing.JComboBox<>();
         comboPrioritet = new javax.swing.JComboBox<>();
+        lblLyckat = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        btnSpara.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnSpara.setText("Spara");
         btnSpara.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,6 +85,7 @@ public class LaggTillProjekt extends javax.swing.JFrame {
             }
         });
 
+        btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,138 +93,152 @@ public class LaggTillProjekt extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Lägg till ny Projekt");
+        jLabel1.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
+        jLabel1.setText("LÄGG TILL ETT PROJEKT");
 
+        lblProjektID.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblProjektID.setText("ID");
 
+        lblProjektNamn.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblProjektNamn.setText("Namn");
 
+        lblBeskrivning.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblBeskrivning.setText("Beskrivning");
 
+        lblStartdatum.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblStartdatum.setText("Startdatum");
 
+        lblSlutdatum.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblSlutdatum.setText("Slutdatum");
 
+        lblKostnad.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblKostnad.setText("Kostnad");
 
+        lblStatus.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblStatus.setText("Status");
 
+        lblPrioritet.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblPrioritet.setText("Prioritet");
 
+        lblProjektchef.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblProjektchef.setText("Projektchef");
 
+        lblLand.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblLand.setText("Land");
 
-        lblFelmeddelandeProjektID.setText("Ogiltigt ID");
+        lblFelmeddelandeProjektID.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
+        lblFelmeddelandeProjektID.setForeground(new java.awt.Color(255, 0, 0));
+        lblFelmeddelandeProjektID.setText("ID:t existerar redan");
 
+        tfProjektID.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         tfProjektID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfProjektIDActionPerformed(evt);
             }
         });
 
-        lblFelmeddelandeStartdatum.setText("Felaktigt format på startdatum");
+        tfProjektNamn.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
 
-        lblFelmeddelandeSlutdatum.setText("Felaktigt format på slutdatum");
+        tfBeskrivning.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
 
-        lblFelmeddelandeProjektchef.setText("Vänligen fyll i giltigt ID för projektchef");
+        tfStartdatum.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
 
-        lblFelmeddelandeLand.setText("Vänligen fyll i giltigt ID för land");
+        tfSlutdatum.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
 
-        lblFelmeddelandeKostnad.setText("Felaktigt format på kostnad");
+        tfKostnad.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
 
+        tfProjektchef.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
+
+        tfLand.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
+
+        lblFelmeddelandeStartdatum.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
+        lblFelmeddelandeStartdatum.setForeground(new java.awt.Color(255, 0, 0));
+        lblFelmeddelandeStartdatum.setText("Använd korrekt datumformat: YYYY-MM-DD");
+
+        lblFelmeddelandeSlutdatum.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
+        lblFelmeddelandeSlutdatum.setForeground(new java.awt.Color(255, 0, 0));
+        lblFelmeddelandeSlutdatum.setText("Använd korrekt datumformat: YYYY-MM-DD");
+
+        lblFelmeddelandeProjektchef.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
+        lblFelmeddelandeProjektchef.setForeground(new java.awt.Color(255, 0, 0));
+        lblFelmeddelandeProjektchef.setText("Välj ett existerande anställningsID");
+
+        lblFelmeddelandeLand.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
+        lblFelmeddelandeLand.setForeground(new java.awt.Color(255, 0, 0));
+        lblFelmeddelandeLand.setText("Välj ett existerande landsID");
+
+        lblFelmeddelandeKostnad.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
+        lblFelmeddelandeKostnad.setForeground(new java.awt.Color(255, 0, 0));
+        lblFelmeddelandeKostnad.setText("Använd korrekt format: Max 10 siffror");
+
+        comboStatus.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         comboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pågående", "Planerad", "Avslutad" }));
 
+        comboPrioritet.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         comboPrioritet.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hög", "Medel", "Låg" }));
+
+        lblLyckat.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
+        lblLyckat.setForeground(new java.awt.Color(0, 153, 0));
+        lblLyckat.setText("Den anställda har lagts till!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblSlutdatum)
-                                .addGap(18, 18, 18)
-                                .addComponent(tfSlutdatum)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblFelmeddelandeSlutdatum))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblStartdatum)
-                                .addGap(18, 18, 18)
-                                .addComponent(tfStartdatum, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblFelmeddelandeStartdatum))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblProjektchef)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(tfProjektchef))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblProjektID)
-                                        .addGap(63, 63, 63)
-                                        .addComponent(tfProjektID, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblLand)
-                                        .addGap(35, 35, 35)
-                                        .addComponent(tfLand)))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblFelmeddelandeLand)
-                                    .addComponent(lblFelmeddelandeProjektID)
-                                    .addComponent(lblFelmeddelandeProjektchef))))
-                        .addGap(286, 286, 286))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnSpara)
-                                .addGap(267, 267, 267)
-                                .addComponent(btnTillbaka))
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblBeskrivning)
-                                .addGap(18, 18, 18)
-                                .addComponent(tfBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblProjektNamn)
-                                .addGap(41, 41, 41)
-                                .addComponent(tfProjektNamn)
-                                .addGap(215, 215, 215))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblPrioritet)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(comboPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblStatus)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblKostnad)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(tfKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblFelmeddelandeKostnad)
-                                .addGap(2, 2, 2)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblBeskrivning)
+                            .addComponent(lblStartdatum)
+                            .addComponent(lblKostnad)
+                            .addComponent(lblStatus)
+                            .addComponent(lblPrioritet)
+                            .addComponent(lblProjektchef))
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfBeskrivning)
+                            .addComponent(lblFelmeddelandeStartdatum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfStartdatum)
+                            .addComponent(tfProjektID)
+                            .addComponent(tfKostnad)
+                            .addComponent(tfProjektNamn)
+                            .addComponent(lblFelmeddelandeSlutdatum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfProjektchef)
+                            .addComponent(comboPrioritet, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfLand)
+                            .addComponent(comboStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblFelmeddelandeProjektID)
+                            .addComponent(lblFelmeddelandeProjektchef, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblFelmeddelandeLand, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblLyckat, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btnSpara)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnTillbaka)))
+                            .addComponent(lblFelmeddelandeKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfSlutdatum, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel1)
+                    .addComponent(lblLand)
+                    .addComponent(lblProjektID)
+                    .addComponent(lblProjektNamn)
+                    .addComponent(lblSlutdatum))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblProjektID)
-                    .addComponent(lblFelmeddelandeProjektID)
-                    .addComponent(tfProjektID, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(tfProjektID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addComponent(lblFelmeddelandeProjektID)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblProjektNamn)
                     .addComponent(tfProjektNamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -228,44 +246,51 @@ public class LaggTillProjekt extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblBeskrivning)
                     .addComponent(tfBeskrivning, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblStartdatum)
-                    .addComponent(tfStartdatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandeStartdatum))
-                .addGap(6, 6, 6)
+                    .addComponent(tfStartdatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addComponent(lblFelmeddelandeStartdatum)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSlutdatum)
-                    .addComponent(tfSlutdatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandeSlutdatum))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(tfSlutdatum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addComponent(lblFelmeddelandeSlutdatum)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblKostnad)
-                    .addComponent(tfKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandeKostnad))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(tfKostnad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addComponent(lblFelmeddelandeKostnad)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblStatus)
                     .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblPrioritet)
-                    .addComponent(comboPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(comboPrioritet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPrioritet))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblProjektchef)
-                    .addComponent(tfProjektchef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandeProjektchef))
+                    .addComponent(tfProjektchef, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addComponent(lblFelmeddelandeProjektchef)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLand)
-                    .addComponent(tfLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFelmeddelandeLand))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                    .addComponent(tfLand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblFelmeddelandeLand)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSpara)
-                    .addComponent(btnTillbaka))
-                .addGap(16, 16, 16))
+                    .addComponent(btnTillbaka)
+                    .addComponent(btnSpara))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblLyckat)
+                .addGap(30, 30, 30))
         );
 
         pack();
@@ -288,6 +313,7 @@ public class LaggTillProjekt extends javax.swing.JFrame {
             lblFelmeddelandeKostnad.setVisible(false);
             lblFelmeddelandeProjektchef.setVisible(false);
             lblFelmeddelandeLand.setVisible(false);
+            lblLyckat.setVisible(false);
             
             String textProjektID = tfProjektID.getText();
             String projektNamn = tfProjektNamn.getText();
@@ -324,9 +350,10 @@ public class LaggTillProjekt extends javax.swing.JFrame {
                 try{
                     kostnad = new BigDecimal(textKostnad);
 
-                    //Kontrollera (13, 4)
-                    if(kostnad.precision() > 12 || kostnad.scale() > 2){
-                        throw new NumberFormatException();
+                    //Kontrollera (12, 2)
+                    if (kostnad.precision() - kostnad.scale() > 10 || kostnad.scale() > 2) {
+                        lblFelmeddelandeKostnad.setVisible(true);
+                        return;
                     }
                 }
                 catch(NumberFormatException ex){
@@ -360,10 +387,7 @@ public class LaggTillProjekt extends javax.swing.JFrame {
                             + slutDatum + "', " + kostnad + ", '" + status + "', '" + prioritet + "', " + projektchef + ", " 
                             + land + ");";
                         idb.insert(insertNyProjekt);
-
-                        // Navigera tillbaka till alla projekt
-                        new AllaProjekt(idb, inloggadAnvandare).setVisible(true);
-                        this.setVisible(false);
+                        lblLyckat.setVisible(true);    
                     }
                 
             }
@@ -408,6 +432,7 @@ public class LaggTillProjekt extends javax.swing.JFrame {
     private javax.swing.JLabel lblFelmeddelandeStartdatum;
     private javax.swing.JLabel lblKostnad;
     private javax.swing.JLabel lblLand;
+    private javax.swing.JLabel lblLyckat;
     private javax.swing.JLabel lblPrioritet;
     private javax.swing.JLabel lblProjektID;
     private javax.swing.JLabel lblProjektNamn;

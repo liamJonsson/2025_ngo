@@ -79,7 +79,7 @@ public class AvdelningsBeskrivning extends javax.swing.JFrame {
         });
 
         lblBeskrivningFor.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
-        lblBeskrivningFor.setText("Beskrivning för");
+        lblBeskrivningFor.setText("BESKRIVNING FÖR");
 
         lblAvdelning.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
         lblAvdelning.setText("jLabel1");
@@ -98,25 +98,23 @@ public class AvdelningsBeskrivning extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnTillbaka)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lblBeskrivningFor)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(lblAvdelning, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1)))
+                        .addComponent(lblBeskrivningFor)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
+                        .addComponent(lblAvdelning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblBeskrivningFor)
-                    .addComponent(lblAvdelning))
+                .addComponent(lblBeskrivningFor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblAvdelning)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
                 .addComponent(btnTillbaka)
-                .addGap(35, 35, 35))
+                .addGap(30, 30, 30))
         );
 
         pack();
