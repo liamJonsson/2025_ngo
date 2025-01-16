@@ -49,7 +49,10 @@ public void fyllTabell() {
                 int index = 0;
 
                 for (String enKolumn : kolumnNamn) {
-                    if (enKolumn.equals("land")) {
+                    if(enKolumn.equals("beskrivning")){
+                        enRad[index++] = "Klicka här för att se beskrivning!";
+                    }
+                    else if (enKolumn.equals("land")) {
                         // Hämta landets namn
                         String selectLand = 
                             "SELECT namn FROM land WHERE lid = (SELECT land FROM projekt WHERE pid = " + ettPID + ");";
@@ -271,6 +274,7 @@ private void hanteraStatusSok(String sokTerm) {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblProjekt.setEnabled(false);
         tblProjekt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblProjektMouseClicked(evt);

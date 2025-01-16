@@ -123,6 +123,7 @@ public class AllaLander extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7"
             }
         ));
+        tblAllaLander.setEnabled(false);
         jScrollPane8.setViewportView(tblAllaLander);
 
         jLabel1.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
