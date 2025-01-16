@@ -32,6 +32,8 @@ public class MinaSidor extends javax.swing.JFrame {
 
      private void taFramInfo(){
         try{
+            
+        //Hämtar aid, fornamn, efternamn,telefonnummer,epost,adress,avdelning och anstallningsdatum från anstalld där eposten är den inloggade användarens epost, som sedan hamnar i varsitt textfield.
         String selectAid = "select aid from anstalld where epost = '" + inloggadAnvandare + "';";
         String anstalldsId = idb.fetchSingle(selectAid);
         tfAid.setText(anstalldsId);
@@ -66,7 +68,7 @@ public class MinaSidor extends javax.swing.JFrame {
         
     }
         catch(InfException ex){
-            System.out.println(ex); //Ska det stå ex.getMessage()??
+            System.out.println(ex); 
             
         }
     }
@@ -76,31 +78,44 @@ public class MinaSidor extends javax.swing.JFrame {
         ArrayList<String> handlaggare = new ArrayList<>();
         text = "Administratör";
         try{
-             String selectAid = "select aid from anstalld where epost = '" + inloggadAnvandare + "';";
+            //Hämtar den inloggade användarens aid.
+            String selectAid = "select aid from anstalld where epost = '" + inloggadAnvandare + "';";
             String anstalldsId = idb.fetchSingle(selectAid); 
             
+            //Hämtar alla projektchefers ansällningsid och lägger dessa i en ArrayList "projektchef".
             String selectProjektchef = "select projektchef from projekt;";
             projektchef = idb.fetchColumn(selectProjektchef);
             
+            //Hämtar alla handläggares anställningsid och lägger dessa i ArrayListan "handlaggare".
             String selectHandlaggare = "select aid from handlaggare;";
             handlaggare = idb.fetchColumn(selectHandlaggare);
           
+            //Loopar igenom "handlaggare", om ett id från denna listan är samma som den inloggade användarens id sätts "text" till "Handläggare".
+            for(String enHandlaggare : handlaggare){
+                if(enHandlaggare.equals(anstalldsId)){
+                    text = "Handläggare";
+                }
+            //Loopar igenom "projektchef", om ett id från denna listan är samma som den inloggade användarens id sätts "text" till "Handläggare/Projektchef".
             for(String ettProjektchefsId : projektchef){
                 if(ettProjektchefsId.equals(anstalldsId)){
                     text = "Handläggare/Projektchef";
                 }
             }
-            for(String enHandlaggare : handlaggare){
-                if(enHandlaggare.equals(anstalldsId)){
-                    text = "Handläggare";
-                }
+            
             }
+            //Textfieldet "tfArbetsroll" sätts till det som "text" lagrar.
             tfArbetsRoll.setText(text); 
             }
             
         catch (InfException ex) {
             System.out.println(ex);
         }
+    }
+      private void enableOff(){
+        //Sätter textfälten för förnamn, efternamn, adress till att det inte går att ändra i dessa.
+        tfFornamn.setEditable(false);  
+        tfEfternamn.setEditable(false);
+        tfAdress.setEditable(false);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -218,7 +233,7 @@ public class MinaSidor extends javax.swing.JFrame {
         jLabel6.setText("Telefon");
 
         jLabel7.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
-        jLabel7.setText("Lösenord");
+        jLabel7.setText("Arbetsroll");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -312,23 +327,29 @@ public class MinaSidor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTillbakaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbakaActionPerformed
-        if(text.equals("Handläggare") || text.equals("Hansläggare/Projektchef")){
+    //Om text är lika med "Handläggare" eller om text är lika med "Handläggare/Projektchef" kommer tillbakaknappen att föra en till MenyHandlaggare.
+        if(text.equals("Handläggare") || text.equals("Handläggare/Projektchef")){
             new MenyHandlaggare(idb, inloggadAnvandare).setVisible(true);
         }
+        //Annars kommer man att skickas till MenyAdmin.
         else{
             new MenyAdmin(idb, inloggadAnvandare).setVisible(true);   
         }
+        //MinaSidor sätts till osynlig.
         this.setVisible(false);           
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void btnRedigeraUppgifterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedigeraUppgifterActionPerformed
+        //När man trycker på knappen "Redigera uppgifter" kommer textfältet för förnamn, efternamn samt adress att bli redigerbara.
         tfFornamn.setEditable(true);  
         tfEfternamn.setEditable(true);
         tfAdress.setEditable(true);
     }//GEN-LAST:event_btnRedigeraUppgifterActionPerformed
 
     private void btnSparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSparaActionPerformed
+
         try{
+            //Hämtar den sträng av text som står i textfältet för förnamn, efternamn samt adress och skickar sedan in dessa strängar till databasen så att datan uppdateras. 
             String fornamn = tfFornamn.getText();
             String updateFornamn = "UPDATE anstalld SET fornamn ='"+ fornamn + "' WHERE epost ='"+ inloggadAnvandare + "';";
             idb.update(updateFornamn);
@@ -349,11 +370,7 @@ public class MinaSidor extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnSparaActionPerformed
 
-    private void enableOff(){
-        tfFornamn.setEditable(false);  
-        tfEfternamn.setEditable(false);
-        tfAdress.setEditable(false);
-    }
+  
     /**
      * @param args the command line arguments
      */
