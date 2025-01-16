@@ -33,46 +33,48 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
     private void fyllTabell(){
 
         try{
+            //Skapar en array som lagrar kolumnnamnen
 
         String[] kolumnNamn = {"aid", "fornamn", "efternamn", "epost", "telefon"};
-
+        
+        //Skapar en DefaultTableModel som håller kolumnnamnen samt sätter antalet rader till noll.
         DefaultTableModel allaAnstallda = new DefaultTableModel(kolumnNamn, 0);
 
        
 
         String selectAid = "select aid from anstalld where avdelning = (select avdelning from anstalld where epost = '" + inloggadAnvandare + "')order by(aid);";
-                   
+        //Hämtar de aid som är anställda på samma avdelning som den inloggade användaren.
         ArrayList<String> aid = idb.fetchColumn(selectAid);
 
             if(aid != null){
 
                 for(String ettID:aid){
-
+                    //Hämtar data om varje anställd på avdelningen.
                     String selectInfo = "select aid,fornamn,efternamn,epost,telefon from anstalld where aid = " + ettID + ";";
 
                     HashMap<String,String> info = idb.fetchRow(selectInfo);
 
            
-
+                    //Skapar en array som håller data för en rad i tabellen.
                     Object[] enRad = new Object[kolumnNamn.length];
                     int index = 0;
 
-           
-
-                    for(String enKolumn:kolumnNamn){
+                    //Skapar en for-each loop som går igenom varje kolumn i kolumnNamn där värdet för den kolumn man är på läggs till i "enRad".
+                   for(String enKolumn:kolumnNamn){
                         enRad[index++] = info.get(enKolumn);
                     }
-
+                   //"enRad" läggs till i DefaultTableModel.
                     allaAnstallda.addRow(enRad);
 
                 }
-
+                //Jtable sätts med data från DefaultTableModel.
                 tblAnstallda.setModel(allaAnstallda);
 
             }
 
             tblAnstallda.setAutoResizeMode(tblAnstallda.AUTO_RESIZE_OFF);
-
+            
+        //Sätter storleken på tabellen.
         TableColumn col = tblAnstallda.getColumnModel().getColumn(0);
 
         col.setPreferredWidth(50);
@@ -104,13 +106,14 @@ public class AvdelningensAnstallda extends javax.swing.JFrame {
     
     private void hamtaAvdelning(){
         try{
+            //Försöker hämta namnet på avdelningen som den inloggade användaren jobbar på och sedan lägga in det i labeln "lblAvdelning".
         String selectAvdelning = "select namn from avdelning where avdid =(select avdelning from anstalld where epost ='" + inloggadAnvandare + "');";
         String Avdelning = idb.fetchSingle(selectAvdelning);
         lblAvdelning.setText(Avdelning);
         }
         catch(InfException ex){
 
-            System.out.println(ex);
+            System.out.println(ex.getMessage());
         }
     }
     

@@ -40,46 +40,52 @@ public class ProjektPartners extends javax.swing.JFrame {
             //Skapar en array som lagrar kolumnnamnen
 
         String[] kolumnNamn = {"pid", "namn", "kontaktperson", "kontaktepost", "telefon", "adress", "branch","stad"};
-
+        
+        
+            //Skapar en DefaultTableModel som håller kolumnnamnen samt sätter antalet rader till noll.
         DefaultTableModel projektetsPartners = new DefaultTableModel(kolumnNamn, 0);
-
+            
         String selectId = "select distinct pa.pid from partner pa join projekt_partner pp on pa.pid = pp.partner_pid join projekt pr on pp.pid = pr.pid join ans_proj ap on pr.pid = ap.pid join anstalld an on ap.aid = an.aid or pr.projektchef = an.aid where an.epost ='" + inloggadAnvandare + "' order by pa.pid;";
-
+        //Hämtar alla Partner id från projekt där den inloggade användaren är handläggare och eventuellt även projektchef.
         ArrayList<String> pid = idb.fetchColumn(selectId);
             if(pid != null){
             
                 for(String ettID:pid){
-                    //int ettPid = Integer.parseInt(ettID);
+                    //Hämtar all data om varje partner.
                     String selectInfo = "select pid,namn,kontaktperson,kontaktepost,telefon,adress,branch,stad from partner where pid = '" + ettID + "';";
 
-
-
+                    //Skapar en ArrayList av HashMaps som håller allt om varje partner.
                     ArrayList<HashMap<String,String>> info = idb.fetchRows(selectInfo);
-
+                    
+                    //Skapar en array som håller data för en rad i tabellen.
                     Object[] enRad = new Object[kolumnNamn.length];
                     int index = 0;
                     
-
-                    for(String enKolumn:kolumnNamn){      
+                    //Skapar en for-each loop som går igenom varje kolumn i kolumnNamn.
+                    for(String enKolumn:kolumnNamn){   
+                        //Om enKolumn är "stad" ska namnet på staden läggas in istället för stads id.
                         if(enKolumn.equals("stad")){
                             String selectStadNamn = "select namn from stad where sid = (select stad from partner where pid = '" + ettID + "');";
                             String stadNamn = idb.fetchSingle(selectStadNamn);
                             enRad[index++] = stadNamn;                          
-                        }                        
+                        }  
+                        //Värdet för den kolumn man är på läggs annars till i "enRad".
                         else{
                             enRad[index++] = info.get(0).get(enKolumn);
                                     
                         }
                     }
+                    //EnRad läggs till i DefaultTableModel.
                      projektetsPartners.addRow(enRad);
                 }
-
+                
+                //Jtable sätts med data från DefaultTableModel.
                 tblPartners.setModel( projektetsPartners);
 
             }
-
-            tblPartners.setAutoResizeMode(tblPartners.AUTO_RESIZE_OFF);
-
+        
+        tblPartners.setAutoResizeMode(tblPartners.AUTO_RESIZE_OFF);
+        //Sätter storleken på tabellen.
         TableColumn col = tblPartners.getColumnModel().getColumn(0);
 
         col.setPreferredWidth(50);
@@ -115,102 +121,113 @@ public class ProjektPartners extends javax.swing.JFrame {
         }
 
         catch(InfException ex){
-            System.out.println(ex);
+            System.out.println(ex.getMessage());
         }      
 
     }
      private void fyllComboBox(){
         try{
         
-        //Hämta projektID från projektchefen som är inloggad + pid från de projekt den inloggade användaren är med på.
+        //Hämtar projekt id och projektnamn där den inloggade användaren är handläggare och eventuellt projektchef.
         String selectPidProjektchef = "select pid, projektnamn from projekt where projektchef = (select aid from anstalld where epost = '" + inloggadAnvandare + "') order by (pid);";      
         ArrayList<HashMap<String, String>> allaPidProjektchef = idb.fetchRows(selectPidProjektchef);
         String selectPid= "select pid, projektnamn from projekt where pid in(select pid from ans_proj where aid =(select aid from anstalld where epost = '" + inloggadAnvandare + "')) order by (pid);";      
         ArrayList<HashMap<String, String>> allaPid = idb.fetchRows(selectPid);
         
         comboBoxProjekt.removeAllItems();
+        //Lägger till "Välj projekt" som ett alternativ i comboBoxen.
         comboBoxProjekt.addItem("Välj projekt");
         
+        //Lägger in de projektID som man är projektchef på i comboBoxen.
         for (HashMap<String, String> projekt : allaPidProjektchef) {
                 String projektInfoProjektchef = projekt.get("pid") + " - " + projekt.get("projektnamn");
                 comboBoxProjekt.addItem(projektInfoProjektchef);
             }
+        //Lägger in de projektID som man är handläggare på i comboBoxen.
          for (HashMap<String, String> projekt : allaPid) {
                 String projektInfo = projekt.get("pid") + " - " + projekt.get("projektnamn");
                 comboBoxProjekt.addItem(projektInfo);
-            }
-        
+         }
         }
-        catch (InfException e) {
-            JOptionPane.showMessageDialog(this, "Kunde inte fylla kopplade partners: " + e.getMessage());
+        catch (InfException ex) {
+            JOptionPane.showMessageDialog(this, "Kunde inte fylla kopplade partners: " + ex.getMessage());
         }
     }
      
      private void uppdateraTabell(){
         comboBoxProjekt.addActionListener(evt -> {
-            //Hämtar datan i comboboxen som valdes
+            //Hämtar datan i comboboxen som valdes.
             String projekt = comboBoxProjekt.getSelectedItem().toString();
-            System.out.println(projekt);
-            //Om comboboxen inte är vald på "Välj projekt"
             
+            //Om man valt "Välj projekt" i comboBoxen ska tabellen fyllas som den gjorde i början.
             if(projekt.equals("Välj projekt")) {
                 fyllTabell();
             }
             
+            //Om comboboxen inte är vald på "Välj projekt".
             if (!projekt.equals("Välj projekt")) {
-                // Regex för att matcha pid som står i starten av projekt
+                //Regex för att matcha pid som står i starten av projektet.
                 Pattern pattern = Pattern.compile("(\\d+)");
                 Matcher matcher = pattern.matcher(projekt);
-                // Kontrollera om mönstret hittades
+                //Kontrollera om mönstret hittades och om det är hittat sätts det som "ettProjektID".
                 if(matcher.find()){
-                    String ettProjekt = matcher.group(1);
+                    try{String ettProjekt = matcher.group(1);
                     ettProjektID = Integer.parseInt(ettProjekt);
+                    }
+                    catch(NumberFormatException ex){
+                        System.out.println(ex);
+                    }
                 }        
                     try{
             //Skapar en array som lagrar kolumnnamnen
 
         String[] kolumnNamn = {"pid", "namn", "kontaktperson", "kontaktepost", "telefon", "adress", "branch","stad"};
-
+        //Skapar en DefaultTableModel som håller kolumnnamnen samt sätter antalet rader till till noll.
         DefaultTableModel projektetsPartners = new DefaultTableModel(kolumnNamn, 0);
 
         String selectId = "select pid from partner where pid in(select partner_pid from projekt_partner where pid = " + ettProjektID + ");";
+        //Hämtar Partner id från ettProjektID, vilket är det projekt som valdes i comboBoxen.
         ArrayList<String> pid = idb.fetchColumn(selectId);
             if(pid != null){
-            
+                //För varje Partner id i "pid" tas data fram om partnern samt datan hämtas.
                 for(String ettID:pid){
-                    //int ettPid = Integer.parseInt(ettID);
+                    
                     String selectInfo = "select pid,namn,kontaktperson,kontaktepost,telefon,adress,branch,stad from partner where pid = '" + ettID + "';";
 
 
 
                     ArrayList<HashMap<String,String>> info = idb.fetchRows(selectInfo);
 
+                    //Skapar en array som håller data för en rad i tabellen.
                     Object[] enRad = new Object[kolumnNamn.length];
                     int index = 0;
-                    
-                    //ev ta bort for loop info + ändra else satsen
+                   
                     for(HashMap<String,String> enRadInfo:info){
-                            for(String enKolumn:kolumnNamn){      
+                        //Skapar en for-each loop som går igenom varje kolumn i kolumnNamn.
+                            for(String enKolumn:kolumnNamn){  
+                               //Om enKolumn är "stad" ska namnet på staden läggas in istället för sid.
                                 if(enKolumn.equals("stad")){
                                     String selectStadNamn = "select namn from stad where sid = (select stad from partner where pid = '" + ettID + "');";
                                     String stadNamn = idb.fetchSingle(selectStadNamn);
                                     enRad[index++] = stadNamn;                          
-                                }                        
+                                }   
+                                //Värdet för den kolumn man är på läggs annars till i enRad.
                                 else{
                                     enRad[index++] = enRadInfo.get(enKolumn);
 
                                 }
                             }
+                            //EnRad läggs till i DefaultTableModel.
                             projektetsPartners.addRow(enRad);
                     }
                 }
-
+                //Jtable sätts med data från DefaultTableModel.
                 tblPartners.setModel( projektetsPartners);
 
             }
-
+            
             tblPartners.setAutoResizeMode(tblPartners.AUTO_RESIZE_OFF);
-
+        //Sätter storleken på tabellen.
         TableColumn col = tblPartners.getColumnModel().getColumn(0);
 
         col.setPreferredWidth(50);
