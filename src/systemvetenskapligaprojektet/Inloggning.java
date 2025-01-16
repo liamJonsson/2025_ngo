@@ -47,7 +47,6 @@ public class Inloggning extends javax.swing.JFrame {
         lblLosenord.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 12)); // NOI18N
         lblLosenord.setText("Lösenord");
 
-        tfEPost.setText("maria.g@example.com");
         tfEPost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfEPostActionPerformed(evt);
@@ -68,8 +67,6 @@ public class Inloggning extends javax.swing.JFrame {
 
         lblLaggTillEttLand.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
         lblLaggTillEttLand.setText("LOGGA IN");
-
-        pwFalt.setText("password123");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -57,6 +57,7 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
                 ComboRedigeraProjekt.addItem(projektInfo);
             }
         }
+        //Om inte comboboxen fylls skrivs felmeddelandet ut
         catch (InfException e) {
             JOptionPane.showMessageDialog(this, "Kunde inte fylla kopplade partners: " + e.getMessage());
         }

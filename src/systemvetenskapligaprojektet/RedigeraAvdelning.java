@@ -323,12 +323,13 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
                 String namn = tfNamn.getText();
                 String beskrivning = tfBeskrivning.getText();
                 String adress = tfAdress.getText();
-                String epost = tfEpost.getText(); //Kolla så att det verkligen är en epost-adress!
+                String epost = tfEpost.getText(); 
                 String telefon = tfTelefon.getText();
                 String selectEnAvdelning = "select * from avdelning where avdid = " + avdid + ";";
                 HashMap<String,String> enAvdelning = idb.fetchRow(selectEnAvdelning);
                 
                 if(validera.valideringEmail(epost) && validera.valideringTelefonAvdelning(telefon)){
+                    //Kod för att hämta och tilldela variablarna som är tomma från textfieldsen data från databasen
                     String[] enRad = new String[enAvdelning.size()];
                         for(String ettAttribut:enAvdelning.keySet()){
                             switch (ettAttribut){
@@ -350,6 +351,7 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
                                     enRad[7] = enAvdelning.get("chef");
                             }
                         }
+                        //om man fyller i tomma fält när man redigerar så ska det hämtas från databasen
                         if(namn.isEmpty()){
                             namn = enRad[1];
                         }
@@ -373,7 +375,7 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
                             chef = enRad[7];
                             chefsID = Integer.parseInt(chef);
                         }
-                        //Hämta från databasen och tilldela variablerna värden från den så de inte är tomma när de uppdateras!!
+                        //Uppdaterar avdelning
                         String updateAvdelning = "update avdelning set namn = '" + namn + "', beskrivning = '" + beskrivning + "', adress = '" + adress + "', epost = '" 
                         + epost + "', telefon = '" + telefon + "', stad = " + stadsID + ", chef = " + chefsID + " where avdid = " + avdid + ";";
                         idb.update(updateAvdelning);
@@ -404,6 +406,7 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
 
     public void fyllComboBox(){
         try{
+            //Se RedigeraPartner för kommentarer
             String selectAvdid = "select avdid, namn from avdelning order by (avdid);";
             
             ArrayList<HashMap<String, String>> allaAvdid = idb.fetchRows(selectAvdid);
@@ -422,9 +425,11 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
     }
    
     private void fyllTextfields(){
+        //Fyller textfields med data från databasen om den avdelning som man valt i comboboxen
         ComboRedigeraAvdelning.addActionListener(evt -> {
+            //Hämtar det som står i comboboxen som en sträng
             String avdelning = ComboRedigeraAvdelning.getSelectedItem().toString();
-            
+            //Hämtar endast id från comboboxen så vi kan söka efter en specifik avdelnings information
             if (!avdelning.equals("Välj avdelning")) {
                 String textValdAvdelning = "Välj avdelning: " + avdelning;
                 System.out.println(textValdAvdelning);
@@ -447,7 +452,7 @@ public class RedigeraAvdelning extends javax.swing.JFrame {
             String selectInfo = "select * from avdelning where avdid = " + avdid + ";";
             System.out.println(selectInfo);
             ArrayList<HashMap<String, String>> info = idb.fetchRows(selectInfo);
-            
+            //Fyller textfieldsen
             for(HashMap<String, String> enRad:info){
                 for(String ettAttribut:enRad.keySet()){
                     switch(ettAttribut){
