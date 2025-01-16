@@ -49,28 +49,30 @@ public void fyllTabell() {
                 int index = 0;
 
                 for (String enKolumn : kolumnNamn) {
-                    if(enKolumn.equals("beskrivning")){
+                    if (enKolumn.equals("beskrivning")) {
                         enRad[index++] = "Klicka här för att se beskrivning!";
-                    }
+                    } 
                     else if (enKolumn.equals("land")) {
                         // Hämta landets namn
-                        String selectLand = 
-                            "SELECT namn FROM land WHERE lid = (SELECT land FROM projekt WHERE pid = " + ettPID + ");";
+                        String selectLand
+                                = "SELECT namn FROM land WHERE lid = (SELECT land FROM projekt WHERE pid = " + ettPID + ");";
                         String land = idb.fetchSingle(selectLand);
                         enRad[index++] = land;
-                    } else if (enKolumn.equals("projektchef")) {
+                    } 
+                    else if (enKolumn.equals("projektchef")) {
                         // Hämta projektchefens för- och efternamn
-                        String selectChefFornamn = 
-                            "SELECT fornamn FROM anstalld WHERE aid = (SELECT projektchef FROM projekt WHERE pid = " + ettPID + ");";
+                        String selectChefFornamn
+                                = "SELECT fornamn FROM anstalld WHERE aid = (SELECT projektchef FROM projekt WHERE pid = " + ettPID + ");";
                         String chefFornamn = idb.fetchSingle(selectChefFornamn);
 
-                        String selectChefEfternamn = 
-                            "SELECT efternamn FROM anstalld WHERE aid = (SELECT projektchef FROM projekt WHERE pid = " + ettPID + ");";
+                        String selectChefEfternamn
+                                = "SELECT efternamn FROM anstalld WHERE aid = (SELECT projektchef FROM projekt WHERE pid = " + ettPID + ");";
                         String chefEfternamn = idb.fetchSingle(selectChefEfternamn);
 
                         String chefFulltNamn = chefFornamn + " " + chefEfternamn;
                         enRad[index++] = chefFulltNamn;
-                    } else {
+                    } 
+                    else {
                         // Annars hämta data direkt från `info` HashMap
                         enRad[index++] = info.get(enKolumn);
                     }

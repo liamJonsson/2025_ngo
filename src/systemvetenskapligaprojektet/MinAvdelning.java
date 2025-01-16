@@ -29,7 +29,8 @@ public class MinAvdelning extends javax.swing.JFrame {
     }
     
     private void laggInData(){
-       
+                //Hämta data från databasen som är kopplad till den inloggade användaren
+                //och lägger in den i våra textfields
                 try{
                     String selectAvdid = "select avdelning from anstalld where aid = (select aid from anstalld where epost = '" + inloggadAnvandare + "');";
                     String avdid = idb.fetchSingle(selectAvdid);
@@ -67,12 +68,9 @@ public class MinAvdelning extends javax.swing.JFrame {
                     
                 }
                 catch(InfException ex){
-                System.out.println(ex);
-                
-                
-                
-    }
-    }
+                    System.out.println(ex);       
+            }
+        }
     
     
 
