@@ -112,11 +112,13 @@ public class AnsvarProjekt extends javax.swing.JFrame {
         btnPartner = new javax.swing.JButton();
         btnHandlaggare = new javax.swing.JButton();
         btnStatistik = new javax.swing.JButton();
+        lblAllaAnstallda = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jScrollPane1.setEnabled(false);
 
+        tblAnsvarProjekt.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         tblAnsvarProjekt.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null},
@@ -131,6 +133,7 @@ public class AnsvarProjekt extends javax.swing.JFrame {
         tblAnsvarProjekt.setEnabled(false);
         jScrollPane1.setViewportView(tblAnsvarProjekt);
 
+        btnTillbaka.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnTillbaka.setText("Tillbaka");
         btnTillbaka.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,27 +141,31 @@ public class AnsvarProjekt extends javax.swing.JFrame {
             }
         });
 
-        btnRedigera.setText("Redigera");
+        btnRedigera.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
+        btnRedigera.setText("Redigera ett projekt");
         btnRedigera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRedigeraActionPerformed(evt);
             }
         });
 
-        btnPartner.setText("Partner");
+        btnPartner.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
+        btnPartner.setText("Se partners");
         btnPartner.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPartnerActionPerformed(evt);
             }
         });
 
-        btnHandlaggare.setText("Handläggare");
+        btnHandlaggare.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
+        btnHandlaggare.setText("Se handläggare");
         btnHandlaggare.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHandlaggareActionPerformed(evt);
             }
         });
 
+        btnStatistik.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         btnStatistik.setText("Statistik");
         btnStatistik.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,39 +173,46 @@ public class AnsvarProjekt extends javax.swing.JFrame {
             }
         });
 
+        lblAllaAnstallda.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
+        lblAllaAnstallda.setText("MINA PROJEKT SOM PROJEKTCHEF");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnRedigera)
-                        .addGap(35, 35, 35)
-                        .addComponent(btnPartner)
-                        .addGap(38, 38, 38)
-                        .addComponent(btnHandlaggare)
-                        .addGap(29, 29, 29)
-                        .addComponent(btnStatistik)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnTillbaka))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 658, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblAllaAnstallda)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(btnRedigera)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnPartner)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnHandlaggare)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnStatistik)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnTillbaka))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 658, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
+                .addGap(35, 35, 35)
+                .addComponent(lblAllaAnstallda)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTillbaka)
                     .addComponent(btnRedigera)
                     .addComponent(btnPartner)
                     .addComponent(btnHandlaggare)
                     .addComponent(btnStatistik))
-                .addGap(47, 47, 47))
+                .addGap(35, 35, 35))
         );
 
         pack();
@@ -271,6 +285,7 @@ public class AnsvarProjekt extends javax.swing.JFrame {
     private javax.swing.JButton btnStatistik;
     private javax.swing.JButton btnTillbaka;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblAllaAnstallda;
     private javax.swing.JTable tblAnsvarProjekt;
     // End of variables declaration//GEN-END:variables
 }
