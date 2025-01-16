@@ -79,7 +79,7 @@ public class AvdelningsBeskrivning extends javax.swing.JFrame {
         });
 
         lblBeskrivningFor.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
-        lblBeskrivningFor.setText("BESKRIVNING FÖR");
+        lblBeskrivningFor.setText("Beskrivning för");
 
         lblAvdelning.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
         lblAvdelning.setText("jLabel1");
