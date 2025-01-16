@@ -29,72 +29,70 @@ public class AllaProjekt extends javax.swing.JFrame {
         hanteraSearchListener(); //separat metod för sök
         fyllTabell();
     }        
-
-    //Se AllaAnstallda för kommenterad kod
     
-public void fyllTabell() {
-    try {
-        String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "status", "prioritet", "projektchef", "land"};
-        DefaultTableModel projektTabellModel = new DefaultTableModel(kolumnNamn, 0);
+    public void fyllTabell() {
+        try {
+            String[] kolumnNamn = {"pid", "projektnamn", "beskrivning", "startdatum", "slutdatum", "status", "prioritet", "projektchef", "land"};
+            DefaultTableModel projektTabellModel = new DefaultTableModel(kolumnNamn, 0);
 
-        // Hämta alla projekt-ID
-        String selectPid = "SELECT pid FROM projekt ORDER BY pid;";
-        ArrayList<String> pidLista = idb.fetchColumn(selectPid);
+            // Hämta alla projekt-ID
+            String selectPid = "SELECT pid FROM projekt ORDER BY pid;";
+            ArrayList<String> pidLista = idb.fetchColumn(selectPid);
 
-        if (pidLista != null) {
-            for (String ettPID : pidLista) {
-                String selectInfo = "SELECT * FROM projekt WHERE pid = " + ettPID + ";";
-                HashMap<String, String> info = idb.fetchRow(selectInfo);
+            if (pidLista != null) {
+                for (String ettPID : pidLista) {
+                    String selectInfo = "SELECT * FROM projekt WHERE pid = " + ettPID + ";";
+                    HashMap<String, String> info = idb.fetchRow(selectInfo);
 
-                Object[] enRad = new Object[kolumnNamn.length];
-                int index = 0;
+                    Object[] enRad = new Object[kolumnNamn.length];
+                    int index = 0;
 
-                for (String enKolumn : kolumnNamn) {
-                    if (enKolumn.equals("beskrivning")) {
-                        enRad[index++] = "Klicka här för att se beskrivning!";
-                    } 
-                    else if (enKolumn.equals("land")) {
-                        // Hämta landets namn
-                        String selectLand
-                                = "SELECT namn FROM land WHERE lid = (SELECT land FROM projekt WHERE pid = " + ettPID + ");";
-                        String land = idb.fetchSingle(selectLand);
-                        enRad[index++] = land;
-                    } 
-                    else if (enKolumn.equals("projektchef")) {
-                        // Hämta projektchefens för- och efternamn
-                        String selectChefFornamn
-                                = "SELECT fornamn FROM anstalld WHERE aid = (SELECT projektchef FROM projekt WHERE pid = " + ettPID + ");";
-                        String chefFornamn = idb.fetchSingle(selectChefFornamn);
+                    for (String enKolumn : kolumnNamn) {
+                        if (enKolumn.equals("beskrivning")) {
+                            enRad[index++] = "Klicka här för att se beskrivning!";
+                        } 
+                        else if (enKolumn.equals("land")) {
+                            // Hämta landets namn
+                            String selectLand
+                                    = "SELECT namn FROM land WHERE lid = (SELECT land FROM projekt WHERE pid = " + ettPID + ");";
+                            String land = idb.fetchSingle(selectLand);
+                            enRad[index++] = land;
+                        } 
+                        else if (enKolumn.equals("projektchef")) {
+                            // Hämta projektchefens för- och efternamn
+                            String selectChefFornamn
+                                    = "SELECT fornamn FROM anstalld WHERE aid = (SELECT projektchef FROM projekt WHERE pid = " + ettPID + ");";
+                            String chefFornamn = idb.fetchSingle(selectChefFornamn);
 
-                        String selectChefEfternamn
-                                = "SELECT efternamn FROM anstalld WHERE aid = (SELECT projektchef FROM projekt WHERE pid = " + ettPID + ");";
-                        String chefEfternamn = idb.fetchSingle(selectChefEfternamn);
+                            String selectChefEfternamn
+                                    = "SELECT efternamn FROM anstalld WHERE aid = (SELECT projektchef FROM projekt WHERE pid = " + ettPID + ");";
+                            String chefEfternamn = idb.fetchSingle(selectChefEfternamn);
 
-                        String chefFulltNamn = chefFornamn + " " + chefEfternamn;
-                        enRad[index++] = chefFulltNamn;
-                    } 
-                    else {
-                        // Annars hämta data direkt från `info` HashMap
-                        enRad[index++] = info.get(enKolumn);
+                            String chefFulltNamn = chefFornamn + " " + chefEfternamn;
+                            enRad[index++] = chefFulltNamn;
+                        } 
+                        else {
+                            // Annars hämta data direkt från `info` HashMap
+                            enRad[index++] = info.get(enKolumn);
+                        }
                     }
+                    projektTabellModel.addRow(enRad);
                 }
-                projektTabellModel.addRow(enRad);
-            }
-                tblProjekt.setModel(projektTabellModel);
-            }
+                    tblProjekt.setModel(projektTabellModel);
+                }
 
-            // Anpassa kolumnbredd
-            tblProjekt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-            int[] kolumnBredd = {50, 150, 200, 100, 100, 100, 100, 150, 100};
-            for (int i = 0; i < kolumnBredd.length; i++) {
-                TableColumn col = tblProjekt.getColumnModel().getColumn(i);
-                col.setPreferredWidth(kolumnBredd[i]);
-            }
+                // Anpassa kolumnbredd
+                tblProjekt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                int[] kolumnBredd = {50, 150, 200, 100, 100, 100, 100, 150, 100};
+                for (int i = 0; i < kolumnBredd.length; i++) {
+                    TableColumn col = tblProjekt.getColumnModel().getColumn(i);
+                    col.setPreferredWidth(kolumnBredd[i]);
+                }
 
-        } catch (InfException ex) {
-            System.out.println("Ett fel uppstod: " + ex.getMessage());
+            } catch (InfException ex) {
+                System.out.println("Ett fel uppstod: " + ex.getMessage());
+            }
         }
-    }
     
   /** 
      *Hanterar sökknappen
@@ -135,105 +133,120 @@ public void fyllTabell() {
       });
     }
 
-// Hantera filtrering av projekt baserat på datumspann
-private void hanteraDatumSpannSok(String sokTerm) {
-    if (sokTerm.contains("till")) {
-        String[] datum = sokTerm.split("till");
-        if (datum.length == 2) {
-            String startDatumFilter = datum[0].trim();
-            String slutDatumFilter = datum[1].trim();
+    // Hantera filtrering av projekt baserat på datumspann
+    private void hanteraDatumSpannSok(String sokTerm) {
+        if (sokTerm.contains("till")) {
+            String[] datum = sokTerm.split("till");
+            if (datum.length == 2) {
+                String startDatumFilter = datum[0].trim();
+                String slutDatumFilter = datum[1].trim();
 
-            // Hämta den nuvarande tabellens modell
-            DefaultTableModel modell = (DefaultTableModel) tblProjekt.getModel();
+                // Hämta den nuvarande tabellens modell
+                DefaultTableModel modell = (DefaultTableModel) tblProjekt.getModel();
 
-            // Skapa en ny modell baserat på kolumnnamnen från den nuvarande modellen
-            int columnCount = modell.getColumnCount();
-            String[] kolumnNamn = new String[columnCount];
-            for (int i = 0; i < columnCount; i++) {
-                kolumnNamn[i] = modell.getColumnName(i);
+                // Skapa en ny modell baserat på kolumnnamnen från den nuvarande modellen
+                int columnCount = modell.getColumnCount();
+                String[] kolumnNamn = new String[columnCount];
+                for (int i = 0; i < columnCount; i++) {
+                    kolumnNamn[i] = modell.getColumnName(i);
+                }
+
+                // Skapa en ny tabellmodell med samma kolumnnamn
+                DefaultTableModel filtreradModell = new DefaultTableModel(kolumnNamn, 0);
+
+                // Loopa genom alla rader och filtrera baserat på datumspannet
+                for (int i = 0; i < modell.getRowCount(); i++) {
+                    String projektStart = modell.getValueAt(i, 3).toString(); // Förutsätter att startdatum är i kolumn 3
+                    String projektSlut = modell.getValueAt(i, 4).toString();  // Förutsätter att slutdatum är i kolumn 4
+
+                    // Kontrollera om något av projektdatumen är inom det angivna datumspannet
+                    boolean inomDatumspann = false;
+
+                    // Om projektets startdatum är inom spannet
+                    if (projektStart.compareTo(slutDatumFilter) <= 0 && projektStart.compareTo(startDatumFilter) >= 0) {
+                        inomDatumspann = true;
+                    }
+
+                    // Om projektets slutdatum är inom spannet
+                    if (projektSlut.compareTo(startDatumFilter) >= 0 && projektSlut.compareTo(slutDatumFilter) <= 0) {
+                        inomDatumspann = true;
+                    }
+
+                    // Om projektets start och slutdatum är innanför spannet, inkludera det
+                    if (projektStart.compareTo(startDatumFilter) <= 0 && projektSlut.compareTo(slutDatumFilter) >= 0) {
+                        inomDatumspann = true;
+                    }
+
+                    // Om något av datumen är inom spannet, lägg till raden i den filtrerade tabellen
+                    if (inomDatumspann) {
+                        filtreradModell.addRow(new Object[]{
+                                modell.getValueAt(i, 0), //PID
+                                modell.getValueAt(i, 1), //Projektnamn
+                                modell.getValueAt(i, 2), //Beskrivning
+                                projektStart, //Startdatum
+                                projektSlut,  //Slutdatum
+                                modell.getValueAt(i, 5), //Kostnad
+                                modell.getValueAt(i, 6), //Status
+                                modell.getValueAt(i, 7), //Prioritet
+                                modell.getValueAt(i, 8)  //Projektchef
+                        });
+                    }
+                }
+
+                    tblProjekt.setModel(filtreradModell);
+                }
+
+                // Anpassa kolumnbredd
+                tblProjekt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                int[] kolumnBredd = {50, 150, 200, 100, 100, 100, 100, 150, 100};
+                for (int i = 0; i < kolumnBredd.length; i++) {
+                    TableColumn col = tblProjekt.getColumnModel().getColumn(i);
+                    col.setPreferredWidth(kolumnBredd[i]);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Felaktigt format för datumspann. Använd 'yyyy-MM-dd till yyyy-MM-dd'.");
             }
+        }
 
-            // Skapa en ny tabellmodell med samma kolumnnamn
-            DefaultTableModel filtreradModell = new DefaultTableModel(kolumnNamn, 0);
+    private void hanteraStatusSok(String sokTerm) {
+        DefaultTableModel modell = (DefaultTableModel) tblProjekt.getModel();
+        DefaultTableModel filtreradModell = new DefaultTableModel();
 
-            // Loopa genom alla rader och filtrera baserat på datumspannet
-            for (int i = 0; i < modell.getRowCount(); i++) {
-                String projektStart = modell.getValueAt(i, 3).toString(); // Förutsätter att startdatum är i kolumn 3
-                String projektSlut = modell.getValueAt(i, 4).toString();  // Förutsätter att slutdatum är i kolumn 4
+        // Kopiera kolumnnamnen manuellt
+        for (int i = 0; i < modell.getColumnCount(); i++) {
+            filtreradModell.addColumn(modell.getColumnName(i));
+        }
 
-                // Kontrollera om något av projektdatumen är inom det angivna datumspannet
-                boolean inomDatumspann = false;
-
-                // Om projektets startdatum är inom spannet
-                if (projektStart.compareTo(slutDatumFilter) <= 0 && projektStart.compareTo(startDatumFilter) >= 0) {
-                    inomDatumspann = true;
-                }
-
-                // Om projektets slutdatum är inom spannet
-                if (projektSlut.compareTo(startDatumFilter) >= 0 && projektSlut.compareTo(slutDatumFilter) <= 0) {
-                    inomDatumspann = true;
-                }
-
-                // Om projektets start och slutdatum är innanför spannet, inkludera det
-                if (projektStart.compareTo(startDatumFilter) <= 0 && projektSlut.compareTo(slutDatumFilter) >= 0) {
-                    inomDatumspann = true;
-                }
-
-                // Om något av datumen är inom spannet, lägg till raden i den filtrerade tabellen
-                if (inomDatumspann) {
-                    filtreradModell.addRow(new Object[]{
-                            modell.getValueAt(i, 0), //PID
-                            modell.getValueAt(i, 1), //Projektnamn
-                            modell.getValueAt(i, 2), //Beskrivning
-                            projektStart, //Startdatum
-                            projektSlut,  //Slutdatum
-                            modell.getValueAt(i, 5), //Kostnad
-                            modell.getValueAt(i, 6), //Status
-                            modell.getValueAt(i, 7), //Prioritet
-                            modell.getValueAt(i, 8)  //Projektchef
-                    });
-                }
+        // Filtrera rader baserat på status
+        for (int i = 0; i < modell.getRowCount(); i++) {
+            String status = modell.getValueAt(i, 5).toString();
+            if (status.equalsIgnoreCase(sokTerm)) {
+                filtreradModell.addRow(new Object[]{
+                        modell.getValueAt(i, 0),
+                        modell.getValueAt(i, 1),
+                        modell.getValueAt(i, 2),
+                        modell.getValueAt(i, 3),
+                        modell.getValueAt(i, 4),
+                        status,
+                        modell.getValueAt(i, 6),
+                        modell.getValueAt(i, 7),
+                        modell.getValueAt(i, 8)
+                });
             }
+        }
 
-            // Sätt den filtrerade modellen som ny modell för tabellen
-            tblProjekt.setModel(filtreradModell);
-        } else {
-            JOptionPane.showMessageDialog(null, "Felaktigt format för datumspann. Använd 'yyyy-MM-dd till yyyy-MM-dd'.");
+                    tblProjekt.setModel(filtreradModell);
+
+                // Anpassa kolumnbredd
+                tblProjekt.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+                int[] kolumnBredd = {50, 150, 200, 100, 100, 100, 100, 150, 100};
+                for (int i = 0; i < kolumnBredd.length; i++) {
+                    TableColumn col = tblProjekt.getColumnModel().getColumn(i);
+                    col.setPreferredWidth(kolumnBredd[i]);
         }
     }
-}
             
-
-private void hanteraStatusSok(String sokTerm) {
-    DefaultTableModel modell = (DefaultTableModel) tblProjekt.getModel();
-    DefaultTableModel filtreradModell = new DefaultTableModel();
-
-    // Kopiera kolumnnamnen manuellt
-    for (int i = 0; i < modell.getColumnCount(); i++) {
-        filtreradModell.addColumn(modell.getColumnName(i));
-    }
-
-    // Filtrera rader baserat på status
-    for (int i = 0; i < modell.getRowCount(); i++) {
-        String status = modell.getValueAt(i, 5).toString();
-        if (status.equalsIgnoreCase(sokTerm)) {
-            filtreradModell.addRow(new Object[]{
-                    modell.getValueAt(i, 0),
-                    modell.getValueAt(i, 1),
-                    modell.getValueAt(i, 2),
-                    modell.getValueAt(i, 3),
-                    modell.getValueAt(i, 4),
-                    status,
-                    modell.getValueAt(i, 6),
-                    modell.getValueAt(i, 7),
-                    modell.getValueAt(i, 8)
-            });
-        }
-    }
-
-    tblProjekt.setModel(filtreradModell);
-}
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
