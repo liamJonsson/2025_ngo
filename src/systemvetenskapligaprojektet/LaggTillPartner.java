@@ -262,6 +262,8 @@ public class LaggTillPartner extends javax.swing.JFrame {
             String branch = tfBranch.getText();
             String textStadsID = tfStad.getText();
             
+            
+            //Kontrollera datum- och telefonformat och sen görs om String till int
             if(validera.valideringEmail(kontaktEpost) && validera.valideringTelefonPartner(telefon)){                       
                 try{
                     pid = Integer.parseInt(textPID);
@@ -277,7 +279,7 @@ public class LaggTillPartner extends javax.swing.JFrame {
                     lblFelStadsID.setVisible(true);
                     fel = true;
  
-                }
+                } //Om allt stämmer hämtar vi pid och stad
                 if(!fel){
                     String checkaPID = "select pid from partner where pid = " + pid + ";";
                     String idFinns = idb.fetchSingle(checkaPID);
@@ -285,20 +287,23 @@ public class LaggTillPartner extends javax.swing.JFrame {
                     String checkaStadsID = "select stad from partner where stad = " + stadsID + ";";
                     String stadsIDFinns = idb.fetchSingle(checkaStadsID);
 
+                    //Om idFinns inte är null så visar vi felmeddelande - Vi vill dubbelkolla att vi inte redan har en partner med ID:t vi fyller i 
                     if(idFinns != null){ 
                        lblFelID.setVisible(true);
                     }
 
+                    //Om stadsIDFinns är null visar vi felmeddelande - Om staden inte finns i systemet kan vi inte lägga in den på nya partnern
                     if(stadsIDFinns == null) {
                        lblFelStadsID.setVisible(true);
                     }
 
+                    //Vi lägger in det från textfieldsen i instertNyStad och därefter uppdaterar databasen
                     String insertNyStad = "insert into partner (pid, namn, kontaktperson, kontaktepost, telefon, adress, branch, stad) values (" + pid + ", '" + namn + "', '" + kontaktPerson + "', '" + kontaktEpost + "', '" + telefon + "', '" + adress + "', '" + branch + "', " + stadsID + ");";
                     idb.insert(insertNyStad);
                     lblLyckat.setVisible(true);
                 }
             }
-            else{
+            else{ //Validering format
                 if(!validera.valideringEmail(kontaktEpost)){
                     lblFelEmail.setVisible(true);
                 }

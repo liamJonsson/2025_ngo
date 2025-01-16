@@ -296,7 +296,6 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTillbakaActionPerformed
 
     private void btnTillbaka1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTillbaka1ActionPerformed
-// RÅKA LÄGGA TILL TVÅ GGR OCH KAN INTE TA BORT OBS
         new AllaAnstallda(idb,inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnTillbaka1ActionPerformed
@@ -343,13 +342,8 @@ public class LaggTillAnstalld extends javax.swing.JFrame {
                if(avdidFinns == null) {
                    lblFelAvdelning.setVisible(true);
                }
-
-               /*SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd"); // Konvertera anställningsdatum till rätt format
-               inputFormat.setLenient(false); // Gör parsning strikt
-               Date datumString = inputFormat.parse(anstallningsDatum); // Konvertera strängen till ett Date-objekt
-
-               String datum = inputFormat.format(datumString); // Om allt är OK, formatera datumet och sätt in i databasen*/
-
+               
+               //Uppdatera databasen
                String insertNyAnstalld = "insert into anstalld (aid, fornamn, efternamn, adress, epost, telefon, anstallningsdatum, losenord, avdelning) values (" + aid + ", '" + fornamn + "', '" + efternamn + "', '" + adress + "', '" + epost + "', '" + telefon + "', '" + anstallningsDatum + "', '" + losenord + "', " + avdelning +");";
                idb.insert(insertNyAnstalld);
                if(roll.equals("Handläggare")){

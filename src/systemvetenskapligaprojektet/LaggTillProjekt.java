@@ -331,6 +331,8 @@ public class LaggTillProjekt extends javax.swing.JFrame {
             String textProjektchef = tfProjektchef.getText();
             String textLand = tfLand.getText();
             
+            
+            //Gör om String till int
             if(validera.valideringDatum(startDatum) && validera.valideringDatum(slutDatum)){
                 try {
                     pid = Integer.parseInt(textProjektID);
@@ -351,6 +353,7 @@ public class LaggTillProjekt extends javax.swing.JFrame {
                     lblFelmeddelandeLand.setVisible(true);
                 }
                 
+                //Gör om String till decimal
                 BigDecimal kostnad;
                 try{
                     kostnad = new BigDecimal(textKostnad);
@@ -396,7 +399,7 @@ public class LaggTillProjekt extends javax.swing.JFrame {
                     }
                 
             }
-            else{
+            else{ 
                 if(!validera.valideringDatum(startDatum)){
                     lblFelmeddelandeStartdatum.setVisible(true);
                 }

@@ -220,6 +220,8 @@ public class LaggTillLand extends javax.swing.JFrame {
             String tidszon = tfTidszon.getText();
             String politiskStruktur = tfPolitiskStruktur.getText();
             String ekonomi = tfEkonomi.getText();
+            
+            //Gör om från String till int
             try{
                 lid = Integer.parseInt(textLID);
             }
@@ -228,6 +230,7 @@ public class LaggTillLand extends javax.swing.JFrame {
                 return;
             }
             
+            //Gör om från String till decimal
             BigDecimal valuta;
             try{
                 valuta = new BigDecimal(textValuta);
@@ -245,19 +248,16 @@ public class LaggTillLand extends javax.swing.JFrame {
             String checkaLID = "select lid from land where lid = " + lid + ";";
             String idFinns = idb.fetchSingle(checkaLID); 
 
+            //Om lid inte är null visar vi felmeddelande
             if(idFinns != null){
                 lblIDFel.setVisible(true);
                 return;
             }
 
-
+        //Vi lägger in det från textfieldsen i instertNyStad och därefter uppdaterar databasen   
         String insertNyttLand = "insert into land (lid, namn, sprak, valuta, tidszon, politisk_struktur, ekonomi) values (" + lid + ", '" + namn + "', '" + sprak + "', '" + valuta + "', '" + tidszon + "', '" + politiskStruktur + "', '" + ekonomi + "');";
         idb.insert(insertNyttLand);
-
         lblLaggTillLandLyckat.setVisible(true);
-
-        /*new AllaLander(idb,inloggadAnvandare).setVisible(true);
-        this.setVisible(false);   */ 
         }
 
         catch(InfException ex){ 

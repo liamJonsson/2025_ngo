@@ -326,13 +326,13 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
         lblFelmeddelandeStadsID.setVisible(false);
         lblFelmeddelandeAvdelningschef.setVisible(false);
         try{
-            try{
-                String ID = tfID.getText();
-                String selectAllaAvdid = "select avdid from avdelning;";
-                ArrayList<String> allaAvdid = idb.fetchColumn(selectAllaAvdid);
-                avdid = Integer.parseInt(ID);
-                for(String ettAvdid:allaAvdid){
-                    if(ettAvdid.equals(ID)){
+            try{ 
+                String ID = tfID.getText(); //Hämtar texten från textfield och lägger den i ID
+                String selectAllaAvdid = "select avdid from avdelning;"; //Hämtar avdid och lägger den i selectAllaAvdid
+                ArrayList<String> allaAvdid = idb.fetchColumn(selectAllaAvdid); //Skapar en ArrayList, allaAvdid, av alla avdids
+                avdid = Integer.parseInt(ID); //Gör om från String till int
+                for(String ettAvdid:allaAvdid){ //Loopar vår lista
+                    if(ettAvdid.equals(ID)){ //Om vår variabel matchar textfältet visar vi felmeddelande
                         lblFelmeddelandeID.setVisible(true);
                         hasError = true;
                     }
@@ -342,16 +342,17 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
                 lblFelmeddelandeID.setVisible(true);
                 hasError = true;    
             }
-            if(!hasError){
+            if(!hasError){ //Om ID inte matchar går vi in i try-satsen
+                // Hämtar texten från vår textfield och sid från databasen. Skapar en lista av alla sid's. Gör om från String till int
                 try{
                     hittad = false;
-                    String stad = tfStad.getText();
-                    String selectAllaStader = "select sid from stad;";
+                    String stad = tfStad.getText(); 
+                    String selectAllaStader = "select sid from stad;"; 
                     ArrayList<String> allaStader = idb.fetchColumn(selectAllaStader);
                     stadsID = Integer.parseInt(stad);
-                    for(String enStad:allaStader){
+                    for(String enStad:allaStader){ //Loopar igenom
                         int enStadsID = Integer.parseInt(enStad);
-                        if(enStadsID==stadsID){
+                        if(enStadsID==stadsID){ //Om de matchar blir hittad = true, vi abvryter loopen och kan inte lägga till avdelningen
                             hittad = true;
                             break;
                         }
@@ -375,7 +376,7 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
                     chefsID = Integer.parseInt(chef);
                     for(String enHandlaggare:allaHandlaggare){
                         int handlaggarID = Integer.parseInt(enHandlaggare);
-                        if(handlaggarID==chefsID){
+                        if(handlaggarID==chefsID){ //Om de matchar blir hittad = true, vi abvryter loopen och kan inte lägga till avdelningen
                             hittad = true;
                             break;
                         }
@@ -390,13 +391,16 @@ public class LaggTillAvdelning extends javax.swing.JFrame {
                     hasError = true;
                 }
             }
-            if(!hasError){
+            if(!hasError){ 
+                //Hämta texter
                 String namn = tfNamn.getText();
                 String beskrivning = tfBeskrivning.getText();
                 String adress = tfAdress.getText();
                 String epost = tfEpost.getText(); 
                 String telefon = tfTelefonnummer.getText();
+                //Validera format
                 if(validera.valideringEmail(epost) && validera.valideringTelefonAvdelning(telefon)){
+                    //Uppdatera databasen med de ifyllda värdena
                     String insertNyAvdelning = "insert into avdelning (avdid,namn,beskrivning,adress,epost,telefon,stad,chef) values "
                             + "(" + avdid + ",'" + namn + "','" + beskrivning + "','" + adress + "','" + epost + "','" + telefon + "',"
                             + stadsID + "," + chefsID + ");";
