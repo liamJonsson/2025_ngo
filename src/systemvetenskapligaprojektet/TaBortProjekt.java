@@ -13,6 +13,7 @@ import oru.inf.InfException;
 public class TaBortProjekt extends javax.swing.JFrame {
     private static InfDB idb;
     private String inloggadAnvandare;
+    private int pid;
     /**
      * Creates new form TaBortProjekt
      */
@@ -49,9 +50,9 @@ public class TaBortProjekt extends javax.swing.JFrame {
         tfTaBortID.setFont(new java.awt.Font("Microsoft JhengHei UI Light", 2, 12)); // NOI18N
         tfTaBortID.setForeground(new java.awt.Color(102, 102, 102));
         tfTaBortID.setText("Fyll i ID:t på det projekt du önskar ta bort");
-        tfTaBortID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfTaBortIDActionPerformed(evt);
+        tfTaBortID.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tfTaBortIDMouseClicked(evt);
             }
         });
 
@@ -122,14 +123,15 @@ public class TaBortProjekt extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfTaBortIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTaBortIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfTaBortIDActionPerformed
-
     private void btnTaBortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaBortActionPerformed
-try {
-            String taBortPid = tfTaBortID.getText();
-            int pid = Integer.parseInt(taBortPid);
+        try{
+            try{
+                String taBortPid = tfTaBortID.getText();
+                pid = Integer.parseInt(taBortPid);
+            }
+            catch(NumberFormatException ex){
+                lblFelIDTaBort.setVisible(true);            
+            }
 
             // Kontrollera om projektet finns
             String kontrolleraPid = "select pid from projekt where pid = " + pid + ";";
@@ -137,17 +139,36 @@ try {
 
             if (pidFinns != null) {
                 // Ta bort projektet
+                String selectProjekt_partner = "select pid from projekt_partner where pid = " + pid + ";";
+                String projekt_partner = idb.fetchSingle(selectProjekt_partner);
+                String selectProj_hallbarhet = "select pid from proj_hallbarhet where pid = " + pid + ";";
+                String proj_hallbarhet = idb.fetchSingle(selectProj_hallbarhet);
+                String selectAns_proj = "select pid from ans_proj where pid = " + pid + ";";
+                String ans_proj = idb.fetchSingle(selectAns_proj);
+                
+                if(projekt_partner != null){
+                    String taBortProjekt_partner = "delete from projekt_partner where pid = " + pid + ";";
+                    idb.delete(taBortProjekt_partner);
+                }
+                if(proj_hallbarhet != null){
+                    String taBortProj_hallbarhet = "delete from proj_hallbarhet where pid = " + pid + ";";
+                    idb.delete(taBortProj_hallbarhet);
+                }
+                if(ans_proj != null){
+                    String taBortAns_proj = "delete from ans_proj where pid = " + pid + ";";
+                    idb.delete(taBortAns_proj);
+                }
                 String taBort = "delete from projekt where pid = " + pid + ";";
                 idb.delete(taBort);
                 lblTaBortProjektLyckad.setVisible(true);
                 lblFelIDTaBort.setVisible(false);
-            } else {
+            } 
+            else {
                 lblFelIDTaBort.setVisible(true);
             }
-        } catch (InfException ex) {
+        } 
+        catch (InfException ex) {
             System.out.println(ex);
-        } catch (NumberFormatException ex) {
-            lblFelIDTaBort.setVisible(true);
         }
     }//GEN-LAST:event_btnTaBortActionPerformed
 
@@ -155,6 +176,10 @@ try {
     new AllaProjekt(idb, inloggadAnvandare).setVisible(true);
     this.setVisible(false);
     }//GEN-LAST:event_btnTillbakaActionPerformed
+
+    private void tfTaBortIDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tfTaBortIDMouseClicked
+        tfTaBortID.setText("");
+    }//GEN-LAST:event_tfTaBortIDMouseClicked
 
     /**
      * @param args the command line arguments
