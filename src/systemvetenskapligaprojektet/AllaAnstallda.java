@@ -23,6 +23,68 @@ public class AllaAnstallda extends javax.swing.JFrame {
         initComponents();
         fyllTabell();
     }
+    
+    
+    public void fyllTabell(){
+        try{
+            //Skapar en array som lagrar kolumnnamnen.
+            String kolumnNamn[] = {"aid", "fornamn", "efternamn", "adress", "epost", "telefon", "anstallningsdatum", "losenord", "avdelning"};
+            
+            //Skapar en DefaultTableModel som håller kolumnnamnen samt sätter antalet rader till noll.
+            DefaultTableModel allaAnstallda = new DefaultTableModel(kolumnNamn, 0);
+            
+            //Hämtar alla anställdas aid och lägger det i ArrayListan "aid". 
+            String selectAID = "select aid from anstalld order by(aid);";
+            ArrayList<String> aid = idb.fetchColumn(selectAID);
+            
+            //Om "aid" inte är tom körs en for-each loop som för varje aid hämtar all data om den anställda som placeras i HashMapen "Info".
+            if(aid != null){
+                for(String ettID:aid){
+                    String selectInfo = "select * from anstalld where aid = " + ettID + ";";
+                    HashMap<String, String> info = idb.fetchRow(selectInfo);
+                    
+                    //Skapar en array som håller data för en rad i tabellen.
+                    Object[] enRad = new Object[kolumnNamn.length];
+                    int index = 0;
+                    
+                    //For-each loop som går igenom varje kolumn i "kolumnNamn" där värdet för "enKolumn" läggs till i "enRad".
+                    for(String enKolumn:kolumnNamn){
+                        enRad[index++] = info.get(enKolumn);
+                        
+                    }
+                     //EnRad läggs till i DefaultTableModel.
+                    allaAnstallda.addRow(enRad);
+                   
+                }
+                //Jtable sätts med data från DefaultTableModel.
+                tblAllaAnstallda.setModel(allaAnstallda);
+            }
+            tblAllaAnstallda.setAutoResizeMode(tblAllaAnstallda.AUTO_RESIZE_OFF);
+            
+            //Sätter storleken på tabellen.
+            TableColumn col = tblAllaAnstallda.getColumnModel().getColumn(0); //ID
+            col.setPreferredWidth(50);
+            col = tblAllaAnstallda.getColumnModel().getColumn(1); //Fornamn
+            col.setPreferredWidth(100);
+            col = tblAllaAnstallda.getColumnModel().getColumn(2); //Efternamn
+            col.setPreferredWidth(100);
+            col = tblAllaAnstallda.getColumnModel().getColumn(3); //Adress
+            col.setPreferredWidth(250);
+            col = tblAllaAnstallda.getColumnModel().getColumn(4); //Epost
+            col.setPreferredWidth(200);
+            col = tblAllaAnstallda.getColumnModel().getColumn(5); //Telefon
+            col.setPreferredWidth(100);
+            col = tblAllaAnstallda.getColumnModel().getColumn(6); //Anstallningsdatum
+            col.setPreferredWidth(100);
+            col = tblAllaAnstallda.getColumnModel().getColumn(7); //Losenord
+            col.setPreferredWidth(100);
+            col = tblAllaAnstallda.getColumnModel().getColumn(8); //Avdelning
+            col.setPreferredWidth(75);   
+        }
+        catch(InfException ex){
+            System.out.println(ex);
+    }
+} 
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -82,6 +144,7 @@ public class AllaAnstallda extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9"
             }
         ));
+        tblAllaAnstallda.setEnabled(false);
         jScrollPane1.setViewportView(tblAllaAnstallda);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -135,54 +198,7 @@ public class AllaAnstallda extends javax.swing.JFrame {
         new TaBortAnstalld(idb,inloggadAnvandare).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnTaBortAnstalldActionPerformed
-
-    public void fyllTabell(){
-        try{
-            String kolumnNamn[] = {"aid", "fornamn", "efternamn", "adress", "epost", "telefon", "anstallningsdatum", "losenord", "avdelning"};
-            DefaultTableModel allaAnstallda = new DefaultTableModel(kolumnNamn, 0);
-            
-            String selectAID = "select aid from anstalld order by(aid);";
-            ArrayList<String> aid = idb.fetchColumn(selectAID);
-            if(aid != null){
-                for(String ettID:aid){
-                    String selectInfo = "select * from anstalld where aid = " + ettID + ";";
-                    HashMap<String, String> info = idb.fetchRow(selectInfo);
-                    
-                    Object[] enRad = new Object[kolumnNamn.length];
-                    int index = 0;
-                    
-                    for(String enKolumn:kolumnNamn){
-                        enRad[index++] = info.get(enKolumn);
-                        
-                    }
-                    allaAnstallda.addRow(enRad);
-                }
-                tblAllaAnstallda.setModel(allaAnstallda);
-            }
-            tblAllaAnstallda.setAutoResizeMode(tblAllaAnstallda.AUTO_RESIZE_OFF);
-            TableColumn col = tblAllaAnstallda.getColumnModel().getColumn(0); //ID
-            col.setPreferredWidth(50);
-            col = tblAllaAnstallda.getColumnModel().getColumn(1); //Fornamn
-            col.setPreferredWidth(100);
-            col = tblAllaAnstallda.getColumnModel().getColumn(2); //Efternamn
-            col.setPreferredWidth(100);
-            col = tblAllaAnstallda.getColumnModel().getColumn(3); //Adress
-            col.setPreferredWidth(250);
-            col = tblAllaAnstallda.getColumnModel().getColumn(4); //Epost
-            col.setPreferredWidth(200);
-            col = tblAllaAnstallda.getColumnModel().getColumn(5); //Telefon
-            col.setPreferredWidth(100);
-            col = tblAllaAnstallda.getColumnModel().getColumn(6); //Anstallningsdatum
-            col.setPreferredWidth(100);
-            col = tblAllaAnstallda.getColumnModel().getColumn(7); //Losenord
-            col.setPreferredWidth(100);
-            col = tblAllaAnstallda.getColumnModel().getColumn(8); //Avdelning
-            col.setPreferredWidth(75);   
-        }
-        catch(InfException ex){
-            System.out.println(ex);
-    }
-}    
+   
 
     /**
      * @param args the command line arguments
