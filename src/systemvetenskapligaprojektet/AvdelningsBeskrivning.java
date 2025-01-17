@@ -87,6 +87,7 @@ public class AvdelningsBeskrivning extends javax.swing.JFrame {
         taBeskrivning.setColumns(20);
         taBeskrivning.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 12)); // NOI18N
         taBeskrivning.setRows(5);
+        taBeskrivning.setEnabled(false);
         jScrollPane1.setViewportView(taBeskrivning);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

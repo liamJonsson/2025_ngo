@@ -88,6 +88,7 @@ public class BeskrivningAvdelningensProjekt extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblBeskrivning.setEnabled(false);
         jScrollPane1.setViewportView(tblBeskrivning);
 
         jLabel1.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N

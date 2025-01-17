@@ -431,6 +431,7 @@ private void hanteraDatumSpannSok(String sokTerm) {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblProjekt.setEnabled(false);
         tblProjekt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblProjektMouseClicked(evt);

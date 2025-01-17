@@ -98,6 +98,7 @@ public class BeskrivningHallbarhetsmal extends javax.swing.JFrame {
                 "Title 1", "Title 2"
             }
         ));
+        tblBeskrivning.setEnabled(false);
         jScrollPane1.setViewportView(tblBeskrivning);
 
         lblBeskrivning.setFont(new java.awt.Font("Microsoft JhengHei UI", 1, 18)); // NOI18N
