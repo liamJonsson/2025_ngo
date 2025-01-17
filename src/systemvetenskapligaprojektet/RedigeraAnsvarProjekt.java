@@ -44,14 +44,16 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
     private void fyllComboBox(){
         try{
         
-        //Hämta projektID från projektchefen som är inloggad
+        //Hämta projektID och projektnamnet från projektchefen som är inloggad
         String selectPid = "SELECT pid, projektnamn FROM projekt where projektchef in (select aid from anstalld where epost = '" + inloggadAnvandare + "');";
         
+        //Sen skapar vi en ArrayList av typen HashMap som representerar alla projekt som den inloggade projektchefen är projektchef över 
         ArrayList<HashMap<String, String>> allaPid = idb.fetchRows(selectPid);
-        
+        //Tar bort alla eventuella items som redan ligger i comboboxen
         ComboRedigeraProjekt.removeAllItems();
+        //Lägger till ett alternativ som säger "Välj projekt" i comboboxen
         ComboRedigeraProjekt.addItem("Välj projekt");
-        
+        //Sen loopar vi igenom ARrayListen där varje varv lägger till det som finns i den som ett item i comboboxen
         for (HashMap<String, String> projekt : allaPid) {
                 String projektInfo = projekt.get("pid") + " - " + projekt.get("projektnamn");
                 ComboRedigeraProjekt.addItem(projektInfo);
@@ -64,17 +66,18 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
     }
     
         private void fyllTextfields(){
-        ComboRedigeraProjekt.addActionListener(evt -> {
+            //Metoden lyssnar efter en actionListener
+            ComboRedigeraProjekt.addActionListener(evt -> {
             //Hämtar datan i comboboxen som valdes
             String projekt = ComboRedigeraProjekt.getSelectedItem().toString();
             //Om comboboxen inte är vald på "Välj projekt"
             if (!projekt.equals("Välj projekt")) {
-                // Regex för att matcha siffran direkt efter
+                // Regex för att matcha numret som står först i combobox fältet
                 Pattern pattern = Pattern.compile("(\\d+)");
                 Matcher matcher = pattern.matcher(projekt);
                 // Kontrollera om mönstret hittades
                 if (matcher.find()) {
-                    // Extrahera den första matchade gruppen
+                    //Hämtar den första matchade gruppen som matchar, i vårat fall första numret
                     String ettProjekt = matcher.group(1);
                     ettProjektID = Integer.parseInt(ettProjekt);
                     } 
@@ -84,12 +87,17 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
             } 
         });
         try{
+            //Hämtar allt om projekt där pid matchar med matchar med de projekt som den inloggade är projektchef över
             String selectInfo = "select * from projekt where pid = " + ettProjektID + ";";
+            //Gör en ArrayList av typen HashMap av infon
             ArrayList<HashMap<String, String>> info = idb.fetchRows(selectInfo);
             
-            //Lägger in datan vi hämtat i våra textfields
+            //Loopar igenom ArrayListen
             for(HashMap<String, String> enRad:info){
+                //För varje HashMap/rad i ArrayListen så ska nycklarna loopas igenom 
                 for(String ettAttribut:enRad.keySet()){
+                    //För varje nyckel så kollar man om det matchar med något av det nedanför och så får den textfielden värdet 
+                    //som stod i databasen för den raden/projektet
                     switch(ettAttribut){
                         case "projektnamn":
                             tfProjektnamn.setText(enRad.get(ettAttribut)); 
@@ -116,6 +124,7 @@ public class RedigeraAnsvarProjekt extends javax.swing.JFrame {
                 }
             }
         }
+        //Blir det fel i sql-frågorna så fångas detta upp och meddelar utvecklaren om vad som blir fel
         catch(InfException ex){
             System.out.println(ex);
         }
